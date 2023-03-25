@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import { Player } from '../../pages/api/schema'
-import PlayerCard from '../playerCard'
+import { Player } from '../../app/api/schema'
 import css from './home-page.module.css'
 
 function getManagers() {
@@ -48,15 +47,6 @@ export default function HomePage() {
             <Link href={'/league/2'}>
                 <img src="https://media.api-sports.io/football/leagues/2.png" alt="Spanish La Liga" />
             </Link>
-            </div>
-
-            <div>
-                <h2>Hair Ratings</h2>
-                {managers?.map(manager => 
-                    <div key={manager.id} className={css.list}>
-                        <PlayerCard player={manager}></PlayerCard>
-                    </div>)}
-                
             </div>
         </div>
     )
