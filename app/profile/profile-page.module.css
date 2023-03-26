@@ -1,0 +1,16 @@
+.profileImage {
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 0 2px #fff;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    border-radius: 100%;
+}
+
+.profile {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 0 2px #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+}

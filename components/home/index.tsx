@@ -22,8 +22,6 @@ function getManagers() {
 }
 
 export default function HomePage() {
-    
-    const managers: Player[] = getManagers()
 
     return (
         <div>

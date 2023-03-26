@@ -43,4 +43,5 @@ yarn-error.log*
 
 # Firebase
 firebase.json
+/functions
 

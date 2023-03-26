@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import Navbar from '../components/Navbar';
-import { UserContext } from '../lib/context'
-import { useUserData } from '../lib/hooks';
+import { AuthContextProvider } from '../lib/AuthContext';
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -14,18 +13,19 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-  const userData = useUserData();
 
-  return (
-    <html lang='en'>
-        <UserContext.Provider value={userData}> 
-        <body>
-            <Navbar />
-            {children}
-        </body>
-        </UserContext.Provider>
-    </html>
-  );
+    return (
+        <html lang='en'>
+            <body>
+            <AuthContextProvider> 
+                
+                    <Navbar />
+                    {children}
+               
+            </AuthContextProvider>
+            </body>
+        </html>
+    );
 }
 
 
