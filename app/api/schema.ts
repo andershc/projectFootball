@@ -67,11 +67,43 @@ export interface LeagueData {
   
   
 }
-
-export interface Player {
+export interface PlayerMetaData {
+  age: number,
+  birth: {
+    country: string,
+    date: string,
+    place: string,
+  },
+  firstname: string,
+  height: string,
   id: number,
+  injured: boolean,
+  lastname: string,
   name: string,
   nationality: string,
-  club: string,
-  flag: string,
+  photo: string,
+  weight: string,
+}
+
+export interface Player {
+  player: PlayerMetaData,
+  statistics: any[]
+}
+
+export interface PlayerData {
+  errors: string[],
+  paging: {
+    current: number,
+    total: number,
+  },
+  parameters: {
+    league: number,
+    season: number,
+  },
+  response: Player[]
+  results: number,
+}
+
+export interface PlayersResponse {
+  players: PlayerData
 }
