@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Player } from '../../app/api/schema'
+import { Player } from '../../app/api/types'
 import css from './home-page.module.css'
 
 function getManagers() {

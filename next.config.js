@@ -5,7 +5,12 @@ const nextConfig = {
     appDir: true,
   },
   images: { 
-    domains: ['lh3.googleusercontent.com'],
+    domains: [
+      'lh3.googleusercontent.com', 
+      'media-1.api-sports.io',
+      'media-2.api-sports.io',
+      'media-3.api-sports.io',
+    ],
   },
 }
 

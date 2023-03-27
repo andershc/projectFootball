@@ -1,10 +1,10 @@
-import { Player, PlayersResponse } from "../app/api/schema";
-import getData from "../firebase/firestore/getData";
+import { Player } from "./types";
+import getData from "../../firebase/firestore/getData";
 
 export default async function getAllPlayers(): Promise<Player[] | undefined> {
-    return getData('players', "data")
+    return getData('players', 'premierLeague')
       .then((data) => {
-        return data?.players.response;
+        return data?.players;
       })
       .catch((error) => {
         console.log(error);

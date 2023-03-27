@@ -1,5 +1,5 @@
 import React from "react";
-import { Standings } from "../../app/api/schema";
+import { Standings } from "../../app/api/types";
 import styles from "./League-table.module.css";
 
 export default function LeagueTable({ standings }: { standings: Standings[] }) {

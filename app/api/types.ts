@@ -85,25 +85,43 @@ export interface PlayerMetaData {
   weight: string,
 }
 
-export interface Player {
-  player: PlayerMetaData,
-  statistics: any[]
-}
-
-export interface PlayerData {
-  errors: string[],
-  paging: {
-    current: number,
+export interface PlayerStatistics {
+  cards: {
+    yellow: number,
+    yellowred: number,
+    red: number,
+  },
+  games: {
+    appearences: number,
+    lineups: number,
+    minutes: number,
+    number: number,
+    position: string,
+    rating: string,
+    captain: boolean,
+  },
+  goals: {
+    assists: number,
+    conceded: number,
+    saves: number,
     total: number,
   },
-  parameters: {
-    league: number,
+  league: {
+    id: number,
+    name: string,
+    country: string,
+    logo: string,
+    flag: string,
     season: number,
   },
-  response: Player[]
-  results: number,
+  team: {
+    id: number,
+    name: string,
+    logo: string,
+  },
 }
 
-export interface PlayersResponse {
-  players: PlayerData
+export interface Player {
+  player: PlayerMetaData,
+  statistics: PlayerStatistics[],
 }
