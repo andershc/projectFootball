@@ -1,10 +1,8 @@
 'use client'
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import { useContext } from 'react';
-import { UserContext } from '../lib/context';
-import signOutUser from '../firebase/auth/signout';
 import { AuthContext } from '../lib/AuthContext';
 
 // Top navbar
@@ -24,14 +22,14 @@ export default function Navbar() {
         {/* user is signed-in and has username */}
         {username && (
           <>
-            <li className="push-left">
-            <Link href="/admin">
-                <button className="btn-blue">Write Posts</button>
-              </Link>
-            </li>
             <li>
               <Link href="/profile">
-                <img src={user?.['photoURL'] || '/hacker.png'} />
+                {<Image 
+                  src={user?.['photoURL'] || '/hacker.png'}
+                  alt="user profile"
+                  width={32}
+                  height={32}
+                />}
               </Link>
             </li>
           </>
