@@ -2021,6 +2021,11 @@ cors@^2.8.5:
     object-assign "^4"
     vary "^1"
 
+country-list@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/country-list/-/country-list-2.3.0.tgz#1e7ceaf9834c1d1210054301eabf4dc445ab978c"
+  integrity sha512-qZk66RlmQm7fQjMYWku1AyjlKPogjPEorAZJG88owPExoPV8EsyCcuFLvO2afTXHEhi9liVOoyd+5A6ZS5QwaA==
+
 crc-32@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/crc-32/-/crc-32-1.2.2.tgz#3cad35a934b8bf71f25ca524b6da51fb7eace2ff"

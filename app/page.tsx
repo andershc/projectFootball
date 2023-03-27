@@ -1,20 +1,15 @@
 'use client'
 
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
-import css from 'styled-jsx/css'
-import ClubsRow from '../components/clubsRow/ClubsRow'
-import getAllPlayers from './api/getAllPlayers'
-import { Player, PlayerMetaData } from './api/types'
-import { SetStateAction, useEffect, useState } from 'react'
+import { Player } from './api/types'
+import { useEffect, useState } from 'react'
 import fetchPlayers from './api/fetchPlayers'
 import PlayerInput from '../components/playerInput/PlayerInput'
+import styles from '../styles/Home.module.css'
+import HintContainer from '../components/hintContainer/HintContainer'
 
-const Home: NextPage = () => {
-  const [randomPlayer, setRandomPlayer] = useState({} as Player);
+export default function Home() {
+  const [randomPlayer, setRandomPlayer] = useState({
+  } as Player);
   const [players, setPlayers] = useState([] as Player[]);
 
   useEffect(() => {
@@ -22,9 +17,8 @@ const Home: NextPage = () => {
       const playersList = await fetchPlayers() as Player[];
       if(playersList !== undefined){
         setPlayers(playersList);
-        const randomPlayerIndex = Math.floor(Math.random() * players.length);
+        const randomPlayerIndex = Math.floor(Math.random() * playersList.length);
         setRandomPlayer(playersList[randomPlayerIndex]);
-
       }
     };
 
@@ -33,7 +27,7 @@ const Home: NextPage = () => {
 
   const handlePlayerSelect = (player: Player) => {
     if (player.player.id === randomPlayer.player.id) {
-      alert('Correct! The player is ' + randomPlayer.player.name + '.');
+      alert('Correct! The player is ' + randomPlayer?.player.name + '.');
     } else {
       alert('Incorrect. Try again.');
     }
@@ -41,12 +35,11 @@ const Home: NextPage = () => {
 
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <h1>Guess the Player</h1>
+      <HintContainer correctPlayer={randomPlayer}/>
       <PlayerInput players={players} onSelect={handlePlayerSelect} />
-      <p>Correct Player: {randomPlayer.player?.name}</p>
+      <p>Correct Player: {randomPlayer?.player?.name}</p>
     </div>
   );
 }
-
-export default Home
