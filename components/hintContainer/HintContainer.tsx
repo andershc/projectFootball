@@ -1,10 +1,10 @@
-import { Player } from "../../app/api/types";
+import { Player, TransferData } from "../../app/api/types";
 import Image from "next/image";
 import styles from "./hint-container.module.css";
 import { getCountryCode } from "../../lib/CountryCode";
 import { useEffect, useState } from "react";
 
-export default function HintContainer({correctPlayer}: {correctPlayer: Player}) {
+export default function HintContainer({correctPlayer, transferData}: {correctPlayer: Player, transferData: TransferData[]}) {
     const [flagUrl, setFlagUrl] = useState('https://hatscripts.github.io/circle-flags/flags/xx.svg');
     const [player, setPlayer] = useState({} as Player);
 
@@ -44,6 +44,17 @@ export default function HintContainer({correctPlayer}: {correctPlayer: Player}) 
             player && player.player && player.player.photo &&
             <p className={"number"}>{correctPlayer?.player.age}</p>
           }
+          </div>
+          <div className={styles.transData}>
+            {transferData && transferData.map((data) => (
+              <Image
+                key={data.teams.in.id}
+                src={data.teams.in.logo}
+                alt="team logo"
+                width={32}
+                height={32}
+              />
+            ))}
           </div>      
         </div>
     );

@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 import { GuessContextProvider } from '../lib/GuessContext';
 
 export const metadata: Metadata = {
-    title: 'Football Standings',
+    title: 'BallerBingo',
     description: 'Football Standings',
 }
 

@@ -126,6 +126,16 @@
   height: 100%;
 }
 
+.guesses {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.25rem;
+  height: 100%;
+  background-color: #fff;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

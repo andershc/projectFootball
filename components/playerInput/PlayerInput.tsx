@@ -9,7 +9,7 @@ interface PlayerInputProps {
   onSelect: (player: Player) => void;
 }
 
-const PlayerInput: React.FC<PlayerInputProps> = ({ players, onSelect }) => {
+export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
   const [inputValue, setInputValue] = useState('');
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
 
@@ -66,5 +66,3 @@ const PlayerInput: React.FC<PlayerInputProps> = ({ players, onSelect }) => {
     </div>
   );
 };
-
-export default PlayerInput;

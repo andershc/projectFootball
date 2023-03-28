@@ -1,8 +1,8 @@
 'use client'
 
-import { Player } from './api/types'
+import { DailyPlayer, Player } from './api/types'
 import { useEffect, useState } from 'react'
-import fetchPlayers from './api/fetchPlayers'
+import { getDailyPlayer, getPlayers}  from './api/fetchPlayers'
 import PlayerInput from '../components/playerInput/PlayerInput'
 import styles from '../styles/Home.module.css'
 import HintContainer from '../components/hintContainer/HintContainer'
@@ -10,30 +10,40 @@ import { useGuessContext } from '../lib/GuessContext'
 import GuessContainer from '../components/guessContainer/GuessContainer'
 
 export default function Home() {
-  const [randomPlayer, setRandomPlayer] = useState({
-  } as Player);
   const [players, setPlayers] = useState([] as Player[]);
-  const { guessedPlayers, setGuessedPlayers } = useGuessContext();
+  const { 
+    guessedPlayers,
+    setGuessedPlayers,
+    correctPlayer,
+    setCorrectPlayer,
+    transferData,
+    setTransferData
+   } = useGuessContext();
 
   useEffect(() => {
     const fetchPlayer = async () => {
-      const playersList = await fetchPlayers() as Player[];
+      const playersList = await getPlayers() as Player[];
       if(playersList !== undefined){
         setPlayers(playersList);
-        const randomPlayerIndex = Math.floor(Math.random() * playersList.length);
-        setRandomPlayer(playersList[randomPlayerIndex]);
+      }
+    };
+    const fetchDaily = async () => {
+      const dailyPlayer = await getDailyPlayer() as DailyPlayer;
+      if(dailyPlayer !== undefined){
+        setCorrectPlayer(dailyPlayer.player);
+        setTransferData(dailyPlayer.transferData);
       }
     };
 
-    fetchPlayer();
+
+    fetchPlayer(), fetchDaily();
   }, []);
 
   const handlePlayerSelect = (player: Player) => {
-    if (player.player.id === randomPlayer.player.id) {
-      alert('Correct! The player is ' + randomPlayer?.player.name + '.');
+    if (player.player.id === correctPlayer.player.id) {
+      setGuessedPlayers((prev) => [...prev, player]);
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
-      alert('Incorrect. Try again.');
     }
   };
 
@@ -42,12 +52,18 @@ export default function Home() {
     <div className={styles.mainContainer}>
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
-        <HintContainer correctPlayer={randomPlayer}/>
+        <div className={styles.guesses}>
+          {guessedPlayers.map((guessedPlayer) => (
+              <GuessContainer
+                    key={guessedPlayer.player.id} 
+                    player={guessedPlayer}
+                    correct={guessedPlayer.player.id === correctPlayer.player.id}
+                    index={guessedPlayers.indexOf(guessedPlayer) + 1}
+                />
+            ))}
+          </div>
         <PlayerInput players={players} onSelect={handlePlayerSelect} />
-        {guessedPlayers.map((guessedPlayer) => (
-              <GuessContainer key={guessedPlayers.indexOf(guessedPlayer)} player={guessedPlayer}/>
-          ))}
-        <p>Correct Player: {randomPlayer?.player?.name}</p>
+        <HintContainer correctPlayer={correctPlayer} transferData={transferData}/>
       </div>
     </div>
   );
