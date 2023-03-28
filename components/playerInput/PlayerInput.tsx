@@ -16,7 +16,9 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
   useEffect(() => {
     const filterPlayers = () => {
       const filtered = players.filter((player) =>
-        (player.player.firstname + " " + player.player.lastname).toLowerCase().includes(inputValue.toLowerCase())
+        (player.player.firstname).toLowerCase().includes(inputValue.toLowerCase())
+        || (player.player.lastname).toLowerCase().includes(inputValue.toLowerCase())
+        || (player.player.name).toLowerCase().includes(inputValue.toLowerCase())
       );
       setFilteredPlayers(filtered);
     };
@@ -47,13 +49,15 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
           {filteredPlayers.map((player) => (
             <li className={styles.listItem} key={player.player.id} onClick={() => handleSelect(player)}>
               <Image
+                
                 src={player.statistics[0].team.logo}
                 alt={player.player.name}
                 width={50}
                 height={50}
               ></Image>
-              <p>{player.player.firstname} {player.player.lastname}</p>
+              <p>{player.player.name}</p>
               <Image
+                className={styles.playerPhoto}
                 src={player.player.photo}
                 alt={player.player.name}
                 width={50}

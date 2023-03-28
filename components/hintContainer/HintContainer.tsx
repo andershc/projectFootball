@@ -48,7 +48,7 @@ export default function HintContainer({correctPlayer, transferData}: {correctPla
           <div className={styles.transData}>
             {transferData && transferData.map((data) => (
               <Image
-                key={data.teams.in.id}
+                key={transferData.indexOf(data)}
                 src={data.teams.in.logo}
                 alt="team logo"
                 width={32}

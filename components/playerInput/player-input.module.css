@@ -45,3 +45,6 @@
     align-items: center;
     row-gap: 1rem;
 }
+.playerPhoto {
+    border-radius: 100%;
+}
