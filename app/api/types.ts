@@ -125,3 +125,21 @@ export interface Player {
   player: PlayerMetaData,
   statistics: PlayerStatistics[],
 }
+
+export interface TransferData {
+  date: string,
+  teams: Teams,
+  type: string,
+}
+
+export interface Teams {
+  in: Team,
+  out: Team,
+}
+
+export interface DailyPlayer {
+  player: Player,
+  transferData: TransferData[],
+}
+
+
