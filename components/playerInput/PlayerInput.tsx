@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Player } from '../../app/api/types';
 import styles from './player-input.module.css';
 import Image from 'next/image';
+import { useGuessContext } from '../../lib/GuessContext';
 
 interface PlayerInputProps {
   players: Player[];
@@ -11,6 +12,7 @@ interface PlayerInputProps {
 const PlayerInput: React.FC<PlayerInputProps> = ({ players, onSelect }) => {
   const [inputValue, setInputValue] = useState('');
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
+
   useEffect(() => {
     const filterPlayers = () => {
       const filtered = players.filter((player) =>

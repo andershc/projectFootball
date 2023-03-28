@@ -1,0 +1,47 @@
+.hintsRow {
+    display: flex;
+    flex-direction: column;
+    column-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0.5rem 0;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}
+
+.header > p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.values {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    border: 1px solid #eaeaea;
+    background-color: #fff;
+}
