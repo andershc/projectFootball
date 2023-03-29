@@ -8,6 +8,9 @@ import styles from '../styles/Home.module.css'
 import HintContainer from '../components/hintContainer/HintContainer'
 import { useGuessContext } from '../lib/GuessContext'
 import GuessContainer from '../components/guessContainer/GuessContainer'
+import Button from '../components/button/Button'
+
+const guessLimit = 8;
 
 export default function Home() {
   const [players, setPlayers] = useState([] as Player[]);
@@ -40,6 +43,7 @@ export default function Home() {
   }, []);
 
   const handlePlayerSelect = (player: Player) => {
+    if(guessedPlayers.length >= guessLimit) return;
     if (player.player.id === correctPlayer.player.id) {
       setGuessedPlayers((prev) => [...prev, player]);
     } else {
@@ -52,6 +56,9 @@ export default function Home() {
     <div className={styles.mainContainer}>
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
+        <h2>{guessedPlayers.length} / {guessLimit}</h2>
+        <HintContainer correctPlayer={correctPlayer} transferData={transferData} numberOfGuesses={guessedPlayers.length}/>
+        <PlayerInput players={players} onSelect={handlePlayerSelect}/>
         <div className={styles.guesses}>
           {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
@@ -62,8 +69,10 @@ export default function Home() {
                 />
             ))}
           </div>
-        <PlayerInput players={players} onSelect={handlePlayerSelect} />
-        <HintContainer correctPlayer={correctPlayer} transferData={transferData}/>
+          <Button
+            onClick={() => console.log('get new player')}
+            text="Get new player"
+          />
       </div>
     </div>
   );

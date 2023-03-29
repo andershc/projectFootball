@@ -18,9 +18,8 @@
     width: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    border-radius: 0.25rem;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
     background-color: #fff;
 }
 
@@ -40,8 +39,8 @@
     height: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-    border: 1px solid #eaeaea;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top: 1px solid #eaeaea;
     background-color: #fff;
 }
