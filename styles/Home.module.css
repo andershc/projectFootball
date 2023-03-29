@@ -134,6 +134,7 @@
   border-radius: 0.25rem;
   height: 100%;
   background-color: #fff;
+  width: 100%;
 }
 
 @media (max-width: 600px) {
