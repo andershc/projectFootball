@@ -107,18 +107,38 @@ export default function HintContainer({
               />
           }
           </div>
-          {/** 
-          <div className={styles.transData}>
-            {transferData && transferData.map((data) => (
-              <Image
-                key={transferData.indexOf(data)}
-                src={data.teams.in.logo}
-                alt="team logo"
-                width={32}
-                height={32}
-              />
-            ))}
-          </div> */}     
+          {
+            player && player.player && player.player.photo && transferData.length > 0 && numberOfGuesses  > 5 ?
+            
+            <div className={styles.transfersContainer}>
+              <p>Club history</p>
+                <div className={styles.clubs}>
+                  {transferData.map((data) => (
+                    <div key={transferData.indexOf(data)} className={styles.club}>
+                      <p>{data.date.split('-')[0]}</p>
+                      <Image
+                        src={data.teams.in.logo}
+                        alt="team logo"
+                        width={32}
+                        height={32}
+                      />
+                    </div>
+                ))}
+                <div  className={styles.club}>
+                  <p>{player?.statistics[0]?.league.season}</p>
+                  <Image
+                      src={player?.statistics[0]?.team.logo}
+                      alt="team logo"
+                      width={32}
+                      height={32}
+                    />
+                    </div>
+                  </div>
+                
+            </div>
+            :
+            null
+        }  
         </div>
     );
 }
