@@ -3,6 +3,7 @@ import { Player } from '../../app/api/types';
 import styles from './player-input.module.css';
 import Image from 'next/image';
 import { useGuessContext } from '../../lib/GuessContext';
+import accents from 'remove-accents';
 
 interface PlayerInputProps {
   players: Player[];
@@ -16,9 +17,9 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
   useEffect(() => {
     const filterPlayers = () => {
       const filtered = players.filter((player) =>
-        (player.player.firstname).toLowerCase().includes(inputValue.toLowerCase())
-        || (player.player.lastname).toLowerCase().includes(inputValue.toLowerCase())
-        || (player.player.name).toLowerCase().includes(inputValue.toLowerCase())
+        compareStrings(player.player.name, inputValue)
+        || compareStrings(player.player.firstname, inputValue)
+        || compareStrings(player.player.lastname, inputValue)
       );
       setFilteredPlayers(filtered);
     };
@@ -70,3 +71,9 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
     </div>
   );
 };
+
+
+
+function compareStrings(str1: string, str2: string) {
+  return accents.remove(str1).toLowerCase().includes(accents.remove(str2).toLowerCase());
+}
