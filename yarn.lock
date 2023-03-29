@@ -4798,6 +4798,11 @@ netmask@^2.0.2:
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
 
+"next-themes@npm:@wits/next-themes":
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/@wits/next-themes/-/next-themes-0.2.16.tgz#04f8ac4cf8931b9d2b9917bd4e48218911290660"
+  integrity sha512-tf2C7fE28JSOdE5fi4cUV3V5HT7viBahG6sh6G2V/VdzPinaXX5J5hTWuOhmfUnWuitU1JU7N1wIQe1q17SLUA==
+
 next@^13.2.4:
   version "13.2.4"
   resolved "https://registry.yarnpkg.com/next/-/next-13.2.4.tgz#2363330392b0f7da02ab41301f60857ffa7f67d6"

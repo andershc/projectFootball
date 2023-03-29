@@ -40,7 +40,7 @@ export default function Home() {
 
 
     fetchPlayer(), fetchDaily();
-  }, []);
+  }, [setCorrectPlayer, setTransferData]);
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;

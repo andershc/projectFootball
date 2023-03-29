@@ -4,15 +4,17 @@ import styles from './button.module.css';
 export default function Button({
     text,
     onClick,
-    icon
+    icon,
+    className,
 }: {
     text?: string,
     icon?: string,
     onClick: () => void
+    className?: string
 }) {
     return (
         <button 
-            className={styles.button}
+            className={className || styles.button}
             onClick={onClick}
         >
             {text ? <p>{text}</p> : null}
@@ -20,8 +22,9 @@ export default function Button({
                 <Image
                     src={icon}
                     alt="icon"
-                    width={32}
-                    height={32}
+                    width={10}
+                    height={10}
+                    className={styles.icon}
                 />
                 : null
             }
