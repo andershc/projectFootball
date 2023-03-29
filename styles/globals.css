@@ -1,25 +1,36 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root {
-  --color-bg: #eef0f1;
-  --color-text: #08090a;
-  --color-blue: #3b49df;
-  --color-red: #df3b3b;
-  --color-green: #3bdf72;
-  --color-gray: #b5bdc4;
+  /* Your default theme */
+/* CSS HEX */
+--accent-1: #ccd5aeff;
+--accent-4: #e9edc9ff;
+--accent-2: #fefae0ff;
+--accent-5: #faedcdff;
+--accent-3: #d4a373ff;
+--text-1: #000000ff;
+}
+
+[data-theme='dark'] {
+  --accent-1: #222629;
+  --accent-2: #474b4f;
+  --accent-3: #6b6e70;
+  --accent-4: #86c232;
+  --accent-5: #61892F;
+  --text-1: #ffffff;
+  --text-2: #000000ff;
+  --text-3: #86c232;
+
 }
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: 'Noto Sans', sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--accent-2);
+  color: var(--text-1);
   margin-top: 50px;
 }
-
-
-
 main {
   padding: 1rem 10vw;
 }
@@ -64,13 +75,13 @@ code {
 .navbar {
   height: 70px;
   width: 100%;
-  background: white;
-  color: var(--colors-text);
+  background: var(--accent-1);
+  color: var(--text-1);
   position: fixed;
   top: 0;
   padding: 0 10vw;
   font-weight: bold;
-  border-bottom: 1px solid var(--color-gray);
+  border-bottom: 1px solid var(--accent-3);
   z-index: 99;
 }
 
@@ -79,6 +90,7 @@ code {
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   height: 100%;
@@ -93,15 +105,16 @@ code {
 
 .navbar li {
   border-radius: 50%;
-  
+  display: flex;
+  flex-direction: row;
 }
 
 /* Buttons */
 
 .btn, button {
-  background-color: var(--color-gray);
+  background-color: var(--accent-2);
   border: none;
-  color: var(--color-text);
+  color: var(--text-3);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
@@ -159,8 +172,8 @@ button.btn-google {
 }
 
 button.btn-logo {
-  background-color: var(--color-text);
-  color: white;
+  background-color: var(--accent-1);
+  color: var(--text-3);
   text-transform: uppercase;
   font-size: 1.5rem;
   padding: 0.5rem 1rem;

@@ -1,8 +1,9 @@
 import '../styles/globals.css'
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar/Navbar';
 import { AuthContextProvider } from '../lib/AuthContext';
 import type { Metadata } from 'next'
 import { GuessContextProvider } from '../lib/GuessContext';
+import { ServerThemeProvider } from 'next-themes'
 
 export const metadata: Metadata = {
     title: 'BallerBingo',
@@ -16,16 +17,18 @@ export default function RootLayout({
 }) {
 
     return (
-        <html lang='en'>
-            <body>
-            <AuthContextProvider> 
-                <GuessContextProvider>
-                    <Navbar />
-                    {children}
-                </GuessContextProvider>
-            </AuthContextProvider>
-            </body>
-        </html>
+        <ServerThemeProvider>
+            <html lang='en'>
+                <body>
+                    <AuthContextProvider> 
+                        <GuessContextProvider>
+                            <Navbar />
+                            {children}
+                        </GuessContextProvider>
+                    </AuthContextProvider>
+                </body>
+            </html>
+        </ServerThemeProvider>
     );
 }
 
