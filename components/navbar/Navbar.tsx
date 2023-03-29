@@ -38,7 +38,7 @@ export default function Navbar() {
                     className={styles.themeButton}
                     />
                 </div>
-                <Link href="/profile">
+                <Link href="/profile" className={styles.profilePic}>
                   {<Image 
                     src={user?.['photoURL'] || '/hacker.png'}
                     alt="user profile"

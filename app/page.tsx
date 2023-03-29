@@ -72,6 +72,7 @@ export default function Home() {
           <Button
             onClick={() => console.log('get new player')}
             text="Get new player"
+            className={styles.newPlayerButton}
           />
       </div>
     </div>

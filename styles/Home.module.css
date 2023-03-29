@@ -149,6 +149,12 @@
   height: 100%;
 }
 
+.newPlayerButton {
+  background-color: var(--accent-4);
+  color: var(--white);
+  font-size: large;
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

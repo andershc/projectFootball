@@ -3,6 +3,7 @@
 :root {
   /* Your default theme */
 /* CSS HEX */
+--white: #ffffff;
 --accent-1: #ccd5aeff;
 --accent-4: #e9edc9ff;
 --accent-2: #fefae0ff;
@@ -12,6 +13,7 @@
 }
 
 [data-theme='dark'] {
+  --white: #ffffff;
   --accent-1: #222629;
   --accent-2: #474b4f;
   --accent-3: #6b6e70;

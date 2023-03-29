@@ -12,7 +12,7 @@
     padding: 1rem;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
     border-radius: 0.25rem;
-    background-color: var(--text-1);
+    background-color: var(--white);
     color: var(--text-2);
     font: 2rem "Roboto", sans-serif;
     display: flex;
