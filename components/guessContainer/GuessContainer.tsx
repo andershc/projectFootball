@@ -33,7 +33,6 @@ export default function GuessContainer({
                         width={32}
                         height={32}
                     />
-                
                 :
                 <Image
                     src={'/remove.png'}
@@ -41,9 +40,6 @@ export default function GuessContainer({
                     width={36}
                     height={36}
                 />
-                
-
-
             }
             
         </div>

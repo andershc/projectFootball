@@ -2,7 +2,7 @@
 
 import { DailyPlayer, Player } from './api/types'
 import { useEffect, useState } from 'react'
-import { getDailyPlayer, getPlayers}  from './api/fetchPlayers'
+import { getDailyPlayer, getPlayers, getRandomPlayer}  from './api/fetchPlayers'
 import PlayerInput from '../components/playerInput/PlayerInput'
 import styles from '../styles/Home.module.css'
 import HintContainer from '../components/hintContainer/HintContainer'
@@ -14,6 +14,7 @@ const guessLimit = 8;
 
 export default function Home() {
   const [players, setPlayers] = useState([] as Player[]);
+  const [completed, setCompleted] = useState(false);
   const { 
     guessedPlayers,
     setGuessedPlayers,
@@ -45,6 +46,7 @@ export default function Home() {
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
     if (player.player.id === correctPlayer.player.id) {
+      setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
@@ -57,7 +59,7 @@ export default function Home() {
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
-        <HintContainer correctPlayer={correctPlayer} transferData={transferData} numberOfGuesses={guessedPlayers.length}/>
+        <HintContainer correctPlayer={correctPlayer} transferData={transferData} numberOfGuesses={guessedPlayers.length} completed={completed}/>
         <PlayerInput players={players} onSelect={handlePlayerSelect}/>
         <div className={styles.guesses}>
           {guessedPlayers.map((guessedPlayer) => (
@@ -70,7 +72,14 @@ export default function Home() {
             ))}
           </div>
           <Button
-            onClick={() => console.log('get new player')}
+            onClick={() => getRandomPlayer(players).then((player) => {
+              if(player === undefined) return;
+              setCompleted(false);
+              setGuessedPlayers([])
+              setCorrectPlayer(player?.player)
+              setTransferData(player?.transferData)
+              }
+            )}
             text="Get new player"
             className={styles.newPlayerButton}
           />
