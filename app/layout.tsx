@@ -4,6 +4,8 @@ import { AuthContextProvider } from '../lib/AuthContext';
 import type { Metadata } from 'next'
 import { GuessContextProvider } from '../lib/GuessContext';
 import { ServerThemeProvider } from 'next-themes'
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export const metadata: Metadata = {
     title: 'BallerBingo',
@@ -18,16 +20,20 @@ export default function RootLayout({
 
     return (
         <ServerThemeProvider>
-            <html lang='en'>
-                <body>
-                    <AuthContextProvider> 
-                        <GuessContextProvider>
-                            <Navbar />
-                            {children}
-                        </GuessContextProvider>
-                    </AuthContextProvider>
-                </body>
-            </html>
+            
+                <html lang='en'>
+                    <body>
+                    <Suspense fallback={<Loading />}>
+                        <AuthContextProvider> 
+                            <GuessContextProvider>
+                                <Navbar />
+                                {children}
+                            </GuessContextProvider>
+                        </AuthContextProvider>
+                        </Suspense>
+                    </body>
+                </html>
+            
         </ServerThemeProvider>
     );
 }

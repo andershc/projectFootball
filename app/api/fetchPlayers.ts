@@ -6,7 +6,7 @@ import moment from "moment";
 import "moment-timezone";
 import axios from "axios";
 
-const APIKey = process.env.API_KEY;
+const APIKey = process.env.NEXT_PUBLIC_API_SPORTS_KEY;
 
 async function callApi(endpoint: string, params = {}) {
   const url = `https://v3.football.api-sports.io/${endpoint}`;
