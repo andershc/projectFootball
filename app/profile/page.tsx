@@ -3,8 +3,9 @@ import React from "react";
 import Image from "next/image";
 import { useAuthContext } from "../../lib/AuthContext";
 import { useRouter } from "next/navigation";
-import css from "./profile-page.module.css";
+import styles from "./profile-page.module.css";
 import signOutUser from "../../firebase/auth/signout";
+import Button from "../../components/button/Button";
 function ProfilePage() {
     const { user } = useAuthContext()
     const router = useRouter()
@@ -15,14 +16,14 @@ function ProfilePage() {
 
     return (
         <main>
-        <section className={css.profile}>
+        <section className={styles.profile}>
           <div className="">
             <Image
               src={user?.['photoURL'] || '/hacker.png'}
               alt="Profile Image"
               width={150}
               height={150}
-              className={css.profileImage}
+              className={styles.profileImage}
               quality={100}
             />
           </div>
@@ -33,7 +34,7 @@ function ProfilePage() {
           </div>
         </section>
         <section>
-            <button onClick={signOutUser}>Sign Out</button>
+            <Button onClick={signOutUser} text={"Sign out"} className={styles.signOut}/>
         </section>
         {/* Add additional sections for user content, such as posts, photos, etc. */}
       </main>

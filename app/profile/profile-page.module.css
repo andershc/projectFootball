@@ -1,16 +1,25 @@
 .profileImage {
     border-radius: 50%;
-    border: 2px solid #fff;
-    box-shadow: 0 0 0 2px #fff;
+    border: 2px solid var(--accent-4);
+    box-shadow: 0 0 0 2px var(--accent-2);
     margin: 0 auto;
     margin-bottom: 10px;
     border-radius: 100%;
 }
 
 .profile {
-    background-color: #fff;
+    background-color: var(--accent-1);
     border-radius: 5px;
-    box-shadow: 0 0 0 2px #fff;
     padding: 10px;
     margin-bottom: 10px;
+}
+
+.signOut {
+    background-color: var(--accent-4);
+    color: var(--white);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    height: 3.5rem;
+    width: 10%;
 }

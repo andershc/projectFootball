@@ -17,7 +17,6 @@ export default function HintContainer({
 }) {
     const [flagUrl, setFlagUrl] = useState('https://hatscripts.github.io/circle-flags/flags/xx.svg');
     const [player, setPlayer] = useState({} as Player);
-
     useEffect(() => {
         if (correctPlayer && correctPlayer.player) {
           setFlagUrl('https://hatscripts.github.io/circle-flags/flags/' + 
@@ -115,7 +114,7 @@ export default function HintContainer({
             <div className={styles.transfersContainer}>
               <p>Club history</p>
                 <div className={styles.clubs}>
-                  {transferData.map((data) => (
+                  {transferData.slice(0).reverse().map((data) => (
                     <div key={transferData.indexOf(data)} className={styles.club}>
                       <p>{data.date.split('-')[0]}</p>
                       <Image
