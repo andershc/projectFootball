@@ -1,6 +1,6 @@
 'use client'
 
-import { DailyPlayer, Player } from './api/types'
+import { DailyPlayer, Player } from '../types'
 import { useEffect, useState } from 'react'
 import { getDailyPlayer, getPlayers, getRandomPlayer}  from './api/fetchPlayers'
 import PlayerInput from '../components/playerInput/PlayerInput'
@@ -48,11 +48,12 @@ export default function Home() {
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
-    if (player.player.id === correctPlayer.player.id) {
+    if (player.id === correctPlayer.id) {
       setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
+      if(guessedPlayers.length === guessLimit - 1) setCompleted(true);
     }
   };
 
@@ -64,13 +65,14 @@ export default function Home() {
         <h1>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
         <HintContainer correctPlayer={correctPlayer} transferData={transferData} numberOfGuesses={guessedPlayers.length} completed={completed}/>
-        <PlayerInput players={players} onSelect={handlePlayerSelect}/>
+        {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         <div className={styles.guesses}>
+          <p>Guessed players:</p>
           {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
-                    key={guessedPlayer.player.id} 
+                    key={guessedPlayer.id} 
                     player={guessedPlayer}
-                    correct={guessedPlayer.player.id === correctPlayer.player.id}
+                    correct={guessedPlayer.id === correctPlayer.id}
                     index={guessedPlayers.indexOf(guessedPlayer) + 1}
                 />
             ))}

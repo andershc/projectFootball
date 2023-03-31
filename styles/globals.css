@@ -4,11 +4,11 @@
   /* Your default theme */
 /* CSS HEX */
 --white: #ffffff;
---accent-1: #ccd5aeff;
+--accent-1: #79B4B7;
+--accent-2: #f3fcfb;
+--accent-3: #9D9D9D;
 --accent-4: #e9edc9ff;
---accent-2: #fefae0ff;
---accent-5: #faedcdff;
---accent-3: #d4a373ff;
+--accent-5: #F8F0DF;
 --text-1: #000000ff;
 }
 
@@ -17,11 +17,11 @@
   --accent-1: #222629;
   --accent-2: #474b4f;
   --accent-3: #6b6e70;
-  --accent-4: #86c232;
-  --accent-5: #61892F;
+  --accent-4: #79B4B7;
+  --accent-5: #79B4B7;
   --text-1: #ffffff;
   --text-2: #000000ff;
-  --text-3: #86c232;
+  --text-3: #79B4B7;
 
 }
 html,

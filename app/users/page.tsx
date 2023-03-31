@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getDailyPlayer, getPlayers } from "../api/fetchPlayers";
-import { DailyPlayer, Player } from "../api/types";
+import { DailyPlayer, Player } from "../../types";
 import Image from 'next/image';
 
 export const metadata: Metadata = {
@@ -17,8 +17,8 @@ export default async function UsersPage() {
         <h1>Daily player</h1>
         {player !== undefined && 
         <Image
-            src={player?.player.player.photo}
-            alt={player?.player.player.name}
+            src={player?.player.photo}
+            alt={player?.player.name}
             width={32}
             height={32}
         />

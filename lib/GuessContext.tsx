@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useEffect } from 'react';
-import { Player, TransferData } from '../app/api/types';
+import { Player, TransferData } from '../types';
 
 type GuessContextType = {
     guessedPlayers: Player[]

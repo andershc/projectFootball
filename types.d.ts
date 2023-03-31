@@ -67,64 +67,32 @@ export interface LeagueData {
   
   
 }
-export interface PlayerMetaData {
-  age: number,
-  birth: {
-    country: string,
-    date: string,
-    place: string,
-  },
-  firstname: string,
-  height: string,
-  id: number,
-  injured: boolean,
-  lastname: string,
-  name: string,
-  nationality: string,
-  photo: string,
-  weight: string,
-}
+export type Player = {
+  id: number;
+  name: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  position: string;
+  photo: string;
+  season: number;
+  team: Team;
+  nationality: string;
+  league: League;
+};
 
-export interface PlayerStatistics {
-  cards: {
-    yellow: number,
-    yellowred: number,
-    red: number,
-  },
-  games: {
-    appearences: number,
-    lineups: number,
-    minutes: number,
-    number: number,
-    position: string,
-    rating: string,
-    captain: boolean,
-  },
-  goals: {
-    assists: number,
-    conceded: number,
-    saves: number,
-    total: number,
-  },
-  league: {
-    id: number,
-    name: string,
-    country: string,
-    logo: string,
-    flag: string,
-    season: number,
-  },
-  team: {
-    id: number,
-    name: string,
-    logo: string,
-  },
-}
+export type Team = {
+  id: number;
+  name: string;
+  logo: string;
+};
 
-export interface Player {
-  player: PlayerMetaData,
-  statistics: PlayerStatistics[],
-}
+export type League = {
+  id: number;
+  name: string;
+  country: string;
+  logo: string;
+};
 
 export interface TransferData {
   date: string,

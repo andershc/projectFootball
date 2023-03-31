@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import LeagueTable from "../../components/leagueTable";
-import { LeagueData } from "../api/types";
+import { LeagueData } from "../../types";
 import useSWR from 'swr';
 import css from './league.module.css'
 import Head from "next/head";

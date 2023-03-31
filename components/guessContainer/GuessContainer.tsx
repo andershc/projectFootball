@@ -1,4 +1,4 @@
-import { Player } from "../../app/api/types";
+import { Player } from "../../types";
 import { useGuessContext } from "../../lib/GuessContext";
 import Image from "next/image";
 import styles from "./guess-container.module.css";
@@ -18,12 +18,12 @@ export default function GuessContainer({
             <div className={styles.player}>
                 <Image
                     className={styles.playerPhoto}
-                    src={player.player.photo}
-                    alt={player.player.name}
+                    src={player.photo}
+                    alt={player.name}
                     width={50}
                     height={50}
                 />
-                <p>{player.player.name}</p>
+                <p>{player.name}</p>
             </div>
             {
                 correct ?

@@ -1,4 +1,4 @@
-import { Player } from '../../app/api/types';
+import { Player } from '../../types';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import firebase_app from '../config';
 
@@ -8,8 +8,7 @@ const leagues = ['premierLeague', 'laLiga', 'bundesliga', 'serieA', 'ligue1'];
 export default async function getAllPlayers(): Promise<Player[] | undefined> {
   const players: Player[] = [];
   for (let i = 0; i < 5; i++) {
-    for(let j = 0; j < 2; j++) {
-      const docRef = doc(db, "players", leagues[i] + "-" + j);
+      const docRef = doc(db, "players", leagues[i]);
       
       try {
         const doc  = await getDoc(docRef);
@@ -23,7 +22,6 @@ export default async function getAllPlayers(): Promise<Player[] | undefined> {
       } catch (e) {
         console.log('Error getting cached document:', e);
       }
-    }
   }
   return players;
 };

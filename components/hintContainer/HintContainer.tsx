@@ -1,4 +1,4 @@
-import { Player, TransferData } from "../../app/api/types";
+import { Player, TransferData } from "../../types";
 import Image from "next/image";
 import styles from "./hint-container.module.css";
 import { getCountryCode } from "../../lib/CountryCode";
@@ -18,9 +18,9 @@ export default function HintContainer({
     const [flagUrl, setFlagUrl] = useState('https://hatscripts.github.io/circle-flags/flags/xx.svg');
     const [player, setPlayer] = useState({} as Player);
     useEffect(() => {
-        if (correctPlayer && correctPlayer.player) {
+        if (correctPlayer && correctPlayer) {
           setFlagUrl('https://hatscripts.github.io/circle-flags/flags/' + 
-          getCountryCode(correctPlayer.player.nationality) + 
+          getCountryCode(correctPlayer.nationality) + 
           '.svg');
           setPlayer(correctPlayer);
         }
@@ -28,6 +28,19 @@ export default function HintContainer({
     
     return (
         <div className={styles.hintsRow}>
+          { completed &&
+            <div className={styles.completedRow}>
+              <p>{numberOfGuesses <= 8 ? "Congratulations!" : "Tough luck.."} Correct player: </p>
+              <Image
+                className={styles.playerPhoto}
+                src={player.photo}
+                alt="player"
+                width={50}
+                height={50}
+              />
+              <p className={styles.playerName}>{correctPlayer.name}</p>
+            </div>
+          }
           <div className={styles.header}>
             <p>Nation</p>
             <p>League</p>
@@ -53,9 +66,9 @@ export default function HintContainer({
               />
             }
             {
-            player && player.statistics && player.statistics[0] && player.statistics[0].team && player.statistics[0].team.logo && (numberOfGuesses > 1 || completed) ?
+            player  && player.league && player.league.logo && (numberOfGuesses > 1 || completed) ?
               <Image
-                src={player.statistics[0].league.logo}
+                src={player.league.logo}
                 alt="team logo"
                 width={32}
                 height={32}
@@ -70,9 +83,9 @@ export default function HintContainer({
           }
           
           {
-            player && player.statistics && player.statistics[0] && player.statistics[0].team && player.statistics[0].team.logo && (numberOfGuesses > 2 || completed)?
+            player && player.team && player.team.logo && (numberOfGuesses > 2 || completed)?
               <Image
-                src={player.statistics[0].team.logo}
+                src={player.team.logo}
                 alt="team logo"
                 width={32}
                 height={32}
@@ -86,8 +99,8 @@ export default function HintContainer({
               />
           }
           {
-            player && player.player && player.player.photo && (numberOfGuesses > 3 || completed) ?
-            <p className={"number"}>{correctPlayer?.player.age}</p>
+            player && player && player.photo && (numberOfGuesses > 3 || completed) ?
+            <p className={"number"}>{correctPlayer?.age}</p>
             :
             <Image
                 src={'https://hatscripts.github.io/circle-flags/flags/xx.svg'}
@@ -97,8 +110,8 @@ export default function HintContainer({
               />
           }
           {
-            player && player.player && player.player.photo && (numberOfGuesses > 4 || completed)  ?
-            <p className={"number"}>{correctPlayer?.statistics[0].games.position}</p>
+            player && player.photo && (numberOfGuesses > 4 || completed)  ?
+            <p className={"number"}>{correctPlayer?.position}</p>
             :
             <Image
                 src={'https://hatscripts.github.io/circle-flags/flags/xx.svg'}
@@ -109,7 +122,7 @@ export default function HintContainer({
           }
           </div>
           {
-            player && player.player && player.player.photo && transferData.length > 0 && (numberOfGuesses  > 5 || completed) ?
+            player && player.photo && transferData.length > 0 && (numberOfGuesses  > 5 || completed) ?
             
             <div className={styles.transfersContainer}>
               <p>Club history</p>
@@ -126,16 +139,15 @@ export default function HintContainer({
                     </div>
                 ))}
                 <div  className={styles.club}>
-                  <p>{player?.statistics[0]?.league.season}</p>
+                  <p>{player?.season}</p>
                   <Image
-                      src={player?.statistics[0]?.team.logo}
+                      src={player?.team.logo}
                       alt="team logo"
                       width={32}
                       height={32}
                     />
                     </div>
                   </div>
-                
             </div>
             :
             null

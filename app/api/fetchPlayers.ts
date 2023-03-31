@@ -1,7 +1,7 @@
 import { DocumentData } from "firebase-admin/firestore";
 import getAllPlayers from "../../firebase/firestore/getAllPlayers";
 import getData from "../../firebase/firestore/getData";
-import { DailyPlayer, Player, TransferData } from "./types";
+import { DailyPlayer, Player, TransferData } from "../../types";
 import moment from "moment";
 import "moment-timezone";
 import axios from "axios";
@@ -35,7 +35,7 @@ export async function getPlayers(): Promise<Player[] | undefined> {
         // Remove all duplicate players
         const players: Player[] = [];
         data?.forEach((player) => {
-          if(!players.some((p) => p.player.id === player.player.id)) {
+          if(!players.some((p) => p.id === player.id)) {
             players.push(player);
           }
         });
@@ -74,11 +74,11 @@ export async function getRandomPlayer(players: Player[]): Promise<DailyPlayer | 
       let majorTeam = false;
       let calls = 0;
       let randomPlayer = players[Math.floor(Math.random() * players.length)];
-      console.log("PLayer " + randomPlayer.player.id)
+      console.log("Player " + randomPlayer.id)
       while(!majorTeam && calls <= 10) {
         calls++;
         randomPlayer = players[Math.floor(Math.random() * players.length)];
-        const transfers = await callApi('transfers', {player: randomPlayer.player.id})
+        const transfers = await callApi('transfers', {player: randomPlayer.id})
         const transferData = transfers.response[0].transfers as TransferData[];  
         majorTeam = checkMajorTeam(transferData, randomPlayer)
         console.log('Data fetched successfully:', transferData);
@@ -106,7 +106,7 @@ function checkMajorTeam(transferData: TransferData[], player: Player): boolean {
     return (
       Object.values(majorTeams).includes(transfer.teams.in.id) ||
       Object.values(majorTeams).includes(transfer.teams.out.id) ||
-      Object.values(majorTeams).includes(player.statistics[0].team.id)
+      Object.values(majorTeams).includes(player.team.id)
     );
   });
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Player } from '../../app/api/types';
+import { Player } from '../../types';
 import styles from './player-input.module.css';
 import Image from 'next/image';
 import { useGuessContext } from '../../lib/GuessContext';
@@ -17,9 +17,9 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
   useEffect(() => {
     const filterPlayers = () => {
       const filtered = players.filter((player) =>
-        compareStrings(player.player.name, inputValue)
-        || compareStrings(player.player.firstname, inputValue)
-        || compareStrings(player.player.lastname, inputValue)
+        compareStrings(player.name, inputValue)
+        || compareStrings(player.firstName, inputValue)
+        || compareStrings(player.lastName, inputValue)
       );
       setFilteredPlayers(filtered);
     };
@@ -48,18 +48,18 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
       {inputValue.length > 2 ? (
         <ul className={styles.list}>
           {filteredPlayers.map((player) => (
-            <li className={styles.listItem} key={player.player.id} onClick={() => handleSelect(player)}>
+            <li className={styles.listItem} key={player.id} onClick={() => handleSelect(player)}>
               <Image
                 className={styles.playerPhoto}
-                src={player.player.photo}
-                alt={player.player.name}
+                src={player.photo}
+                alt={player.name}
                 width={50}
                 height={50}
               ></Image>
-              <p>{player.player.name}</p>
+              <p>{player.name}</p>
               <Image
-                src={player.statistics[0].team.logo}
-                alt={player.player.name}
+                src={player.team.logo}
+                alt={player.name}
                 width={50}
                 height={50}
               ></Image>
