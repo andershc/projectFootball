@@ -1,0 +1,112 @@
+.hintsRow {
+    display: flex;
+    flex-direction: column;
+    column-gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    width: 95%;
+    border-radius: 0.25rem;
+    padding: 1rem 0;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.1rem;;
+}
+
+.header > p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.values {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-top: 1px solid #eaeaea;
+}
+
+.values > p {
+    font-size: 1rem;
+    font-weight: 200;
+    color: var(--text-1);
+}
+
+.transfersContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0 1.5rem 1rem 1.5rem;
+    border-top: #eaeaea 1px solid;
+}
+
+.transfersContainer > p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-1);
+}
+
+.clubs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    column-gap: 1rem;
+    width: 100%;
+    height: 100%;
+}
+
+.club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0.5rem;
+    width: 100%;
+    height: 100%;
+}
+
+.completedRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border-radius: 0.25rem;
+    background-color: var(--accent-1);
+}
+
+.completedRow > p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-1);
+}
+
+.playerPhoto {
+    border-radius: 100%;
+}
+
+.playerName {
+    font-size: 0.8rem;
+    font-weight: 200;
+    color: var(--text-1);
+}

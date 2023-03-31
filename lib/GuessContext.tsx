@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useEffect } from 'react';
-import { Player, TransferData } from '../types';
+import React, { useContext, useEffect } from 'react';
+import { Player, TransferData } from '../src/types';
 
 type GuessContextType = {
     guessedPlayers: Player[]
@@ -12,16 +12,16 @@ type GuessContextType = {
     setTransferData: React.Dispatch<React.SetStateAction<TransferData[]>>
 }
 
-export const GuessContext = React.createContext({
+export const GuessContext = React.createContext<GuessContextType>({
     guessedPlayers: Array.apply({}, Array(8)) as Player[],
     setGuessedPlayers: () => {},
     correctPlayer: {} as Player,
     setCorrectPlayer: () => {},
     transferData: [] as TransferData[],
     setTransferData: () => {},
-} as GuessContextType);
+});
 
-export const useGuessContext = () => React.useContext(GuessContext);
+export const useGuessContext = () => useContext(GuessContext);
 
 export const GuessContextProvider = ({
     children,

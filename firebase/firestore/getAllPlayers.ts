@@ -1,4 +1,4 @@
-import { Player } from '../../types';
+import { Player } from '../../src/types';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import firebase_app from '../config';
 
