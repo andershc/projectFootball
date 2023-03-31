@@ -21,7 +21,7 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
         || compareStrings(player.firstName, inputValue)
         || compareStrings(player.lastName, inputValue)
       );
-      setFilteredPlayers(filtered);
+      setFilteredPlayers(filtered.slice(0, 10));
     };
 
     filterPlayers();

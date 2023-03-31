@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./hint-container.module.css";
 import { getCountryCode } from "../../../lib/CountryCode";
 import { useEffect, useState } from "react";
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 export default function HintContainer({
   correctPlayer,
@@ -30,7 +31,7 @@ export default function HintContainer({
         <div className={styles.hintsRow}>
           { completed &&
             <div className={styles.completedRow}>
-              <p>{numberOfGuesses <= 8 ? "Congratulations! 🏆\n" : "Tough luck.."}</p>
+              <p>{numberOfGuesses < 8 ? "Congratulations! 🏆\n" : "Tough luck.."}</p>
               <Image
                 className={styles.playerPhoto}
                 src={player.photo}
@@ -122,36 +123,38 @@ export default function HintContainer({
           }
           </div>
           {
-            player && player.photo && transferData.length > 0 && (numberOfGuesses  > 5 || completed) ?
-            
+            true ?
             <div className={styles.transfersContainer}>
               <p>Club history</p>
                 <div className={styles.clubs}>
-                  {transferData.slice(0).reverse().map((data) => (
-                    <div key={transferData.indexOf(data)} className={styles.club}>
-                      <p>{data.date.split('-')[0]}</p>
-                      <Image
-                        src={data.teams.in.logo}
-                        alt="team logo"
-                        width={32}
-                        height={32}
-                      />
-                    </div>
-                ))}
-                <div  className={styles.club}>
-                  <p>{player?.season}</p>
-                  <Image
-                      src={player?.team.logo}
+                  <div className={styles.transfer}>
+                    <Image
+                      src={transferData[transferData.length-1].teams.out.logo}
                       alt="team logo"
                       width={32}
                       height={32}
                     />
-                    </div>
                   </div>
+                  {transferData.slice(0).reverse().map((data) => (
+                    <div key={transferData.indexOf(data)} className={styles.transfer}>
+                      <DoubleArrowIcon />
+                      <div className={styles.club}>
+                        <p>{data.type == 'Loan' && data.type}</p>
+                        <Image
+                          src={data.teams.in.logo}
+                          alt="team logo"
+                          width={32}
+                          height={32}
+                        />
+                      </div>
+                      
+                    </div>
+                ))}
+                </div>
             </div>
             :
             null
-        }  
+          }
         </div>
     );
 }
