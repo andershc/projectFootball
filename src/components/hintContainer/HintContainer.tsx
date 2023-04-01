@@ -19,7 +19,7 @@ export default function HintContainer({
     const [flagUrl, setFlagUrl] = useState('https://hatscripts.github.io/circle-flags/flags/xx.svg');
     const [player, setPlayer] = useState({} as Player);
     useEffect(() => {
-        if (correctPlayer && correctPlayer) {
+        if (correctPlayer && correctPlayer.nationality) {
           setFlagUrl('https://hatscripts.github.io/circle-flags/flags/' + 
           getCountryCode(correctPlayer.nationality) + 
           '.svg');
@@ -122,39 +122,6 @@ export default function HintContainer({
               />
           }
           </div>
-          {
-            true ?
-            <div className={styles.transfersContainer}>
-              <p>Club history</p>
-                <div className={styles.clubs}>
-                  <div className={styles.transfer}>
-                    <Image
-                      src={transferData[transferData.length-1].teams.out.logo}
-                      alt="team logo"
-                      width={32}
-                      height={32}
-                    />
-                  </div>
-                  {transferData.slice(0).reverse().map((data) => (
-                    <div key={transferData.indexOf(data)} className={styles.transfer}>
-                      <DoubleArrowIcon />
-                      <div className={styles.club}>
-                        <p>{data.type == 'Loan' && data.type}</p>
-                        <Image
-                          src={data.teams.in.logo}
-                          alt="team logo"
-                          width={32}
-                          height={32}
-                        />
-                      </div>
-                      
-                    </div>
-                ))}
-                </div>
-            </div>
-            :
-            null
-          }
         </div>
     );
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Player } from "../types";
 import { getPlayers } from "./api/fetchPlayers"
 
@@ -7,13 +8,19 @@ export default async function Home() {
 
     return (
         <main>
-            <h1>Players</h1>
-            {players?.slice(0, 10).map((player) => (
-                <div key={player.id}>
-                    <h2>{player.name}</h2>
-                    <p>{player.position}</p>
-                </div>
-            ))}
+            <h1>Games</h1>
+            <ul>
+                <li>
+                    <Link href="/default">
+                        <div>Default</div>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/career">
+                        <div>Career</div>
+                    </Link>
+                </li>
+            </ul>
         </main>
     )
     
