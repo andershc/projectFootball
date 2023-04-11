@@ -29,7 +29,7 @@ function ProfilePage() {
           </div>
           <div className="profile-info">
             <h1 className="name">{user?.displayName}</h1>
-            <p className="username">@johndoe</p>
+            <p className="username">@{user?.username}</p>
             <p className="email">{user?.email}</p>
           </div>
         </section>

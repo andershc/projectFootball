@@ -13,7 +13,7 @@ import Loading from '../loading'
 import Image from 'next/image'
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
-const guessLimit = 8;
+const guessLimit = 5;
 
 export default function Career() {
   const [players, setPlayers] = useState([] as Player[]);

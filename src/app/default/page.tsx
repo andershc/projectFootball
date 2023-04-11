@@ -11,7 +11,7 @@ import GuessContainer from '../../components/guessContainer/GuessContainer'
 import Button from '../../components/button/Button'
 import Loading from '../loading'
 
-const guessLimit = 8;
+const guessLimit = 5;
 
 export default function Default() {
   const [players, setPlayers] = useState([] as Player[]);
