@@ -8,6 +8,7 @@ import { useTheme } from 'next-themes'
 import Button from '../button/Button';
 import styles from './navbar.module.css';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
+import HomeIcon from '@mui/icons-material/Home';
 
 // Top navbar
 export default function Navbar() {
@@ -20,10 +21,14 @@ export default function Navbar() {
       <ul>
         <li className={styles.leftSide}>
           <Link href="/">
-            <button className="btn-logo">NXT</button>
+            <button className="btn-logo">
+              <HomeIcon/>
+            </button>
           </Link>
           <Link href="/leaderboard">
-            <LeaderboardIcon fontSize='medium'/>
+            <button className="btn-logo">
+              <LeaderboardIcon fontSize='medium'/>
+            </button>
           </Link>
         </li>
         <li>
