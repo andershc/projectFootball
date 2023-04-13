@@ -44,4 +44,5 @@ yarn-error.log*
 # Firebase
 firebase.json
 /functions
+/firebase/config.ts
 
