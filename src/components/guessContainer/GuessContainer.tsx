@@ -28,14 +28,14 @@ export default function GuessContainer({
             {
                 correct ?
                     <Image
-                        src={'/accept.png'}
+                        src={'/static/images/accept.png'}
                         alt="correct"
                         width={32}
                         height={32}
                     />
                 :
                 <Image
-                    src={'/remove.png'}
+                    src={'/static/images/remove.png'}
                     alt="incorrect"
                     width={36}
                     height={36}

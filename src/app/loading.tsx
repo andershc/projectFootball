@@ -4,7 +4,7 @@ export default function Loading() {
     return (
       <>
         <Image 
-          src={"/loading.gif"}
+          src={"static/images/loading.gif"}
           alt={""}
           width={640}
           height={360}
