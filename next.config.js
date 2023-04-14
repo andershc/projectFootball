@@ -13,6 +13,11 @@ const nextConfig = {
       'www.countryflags.io',
     ],
   },
+  // Use the prefix for assets and page routes
+  basePath: '/projectFootball',
+  assetPrefix: '/projectFootball/',
+  // Enable static HTML export
+  target: "serverless",
 }
 
 module.exports = nextConfig
