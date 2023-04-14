@@ -24,11 +24,12 @@ export const AuthContextProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [user, setUser] = React.useState(null as UserType | null);
+    const [user, setUser] = React.useState({} as UserType);
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            console.log('user', user);
             if (user) {
                 // Fetch user data from firestore
                 const userRef = doc(getFirestore(firebase_app), 'users', user.uid);
@@ -46,7 +47,7 @@ export const AuthContextProvider = ({
                     }
                 });
             } else {
-                setUser(null);
+                setUser({} as UserType);
             }
             setLoading(false);
         });
