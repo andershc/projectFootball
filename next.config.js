@@ -12,8 +12,6 @@ const nextConfig = {
   // Use the prefix for assets and page routes
   basePath: process.env.NODE_ENV === 'production' ? '/projectFootball' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/projectFootball/' : '',
-  // Enable static HTML export
-  target: "serverless",
 
   // Add the experimental options here
   experimental: {
