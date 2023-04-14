@@ -4,6 +4,7 @@ import { signIn, signInWithGoogle, auth} from "../../../firebase/auth/signIn";
 import { useRouter } from 'next/navigation'
 import { useAuthContext } from "../../../lib/AuthContext";
 import Image from 'next/image'
+import styles from "./signIn-page.module.css"
 
 function SignInPage() {
     const [email, setEmail] = React.useState('')
@@ -39,8 +40,8 @@ function SignInPage() {
     
 
     return (
-    <div className="wrapper">
-        <div className="form-wrapper">
+    <div className={styles.wrapper}>
+        <div className={styles.formWrapper}>
             <h1 className="mt-60 mb-30">Sign in</h1>
             <form onSubmit={handleForm} className="form">
                 <label htmlFor="email">
@@ -58,7 +59,7 @@ function SignInPage() {
             {/*Google Sign in */}
             
         </div>
-        <button className="btn-google" onClick={handleGoogleSignIn}>
+        <button className={styles.googleButton} onClick={handleGoogleSignIn}>
             <Image src={'/google.png'} alt={"Profile Image"} width="30" height={30} /> Sign in with Google
         </button>
     </div>);
