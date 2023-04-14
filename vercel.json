@@ -6,10 +6,10 @@
         "use": "@vercel/next"
       }
     ],
-    "routes": [
+    "rewrites": [
       {
-        "src": "/(.*)",
-        "dest": "/projectFootball/$1"
+        "source": "/(.*)",
+        "destination": "/projectFootball/$1"
       }
     ],
     "cleanUrls": true
