@@ -33,7 +33,7 @@ export default function Navbar() {
         </li>
         <li>
           {/* user is signed-in and has username */}
-          {username && (
+          {user && (
               <>
                 <div className={styles.themeContainer}>
                   <Button 
@@ -49,7 +49,7 @@ export default function Navbar() {
                 </div>
                 <Link href="/profile" className={styles.profilePic}>
                   {<Image 
-                    src={user?.['photoURL'] || '/hacker.png'}
+                    src={user?.['photoURL'] || '/static/images/hacker.png'}
                     alt="user profile"
                     width={32}
                     height={32}
@@ -59,7 +59,7 @@ export default function Navbar() {
           )}
         </li>
         {/* user is not signed OR has not created username */}
-        {!username && (
+        {!user && (
           <li>
             <Link href="/signIn">
               <button className="btn-blue">Log in</button>
