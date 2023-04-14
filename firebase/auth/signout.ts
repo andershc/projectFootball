@@ -9,6 +9,7 @@ export default async function signOutUser() {
         error = null;
     try {
         result = await signOut();
+        
     } catch (e) {
         error = e;
     }
