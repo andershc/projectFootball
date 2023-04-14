@@ -68,7 +68,7 @@ export default function Career() {
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
         { completed &&
             <div className={styles.completedRow}>
-              <p>{guessedPlayers.length < 8 ? "Congratulations! 🏆\n" : "Tough luck.."}</p>
+              <p>{guessedPlayers.length < 5 ? "Congratulations! 🏆\n" : "Tough luck.."}</p>
               <Image
                 className={styles.playerPhoto}
                 src={correctPlayer.photo}

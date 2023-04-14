@@ -1,15 +1,29 @@
+'use client'
+
 import { Metadata } from "next";
 import { getUsers } from "../api/fetchUsers";
 import { DailyPlayer, Player, User } from "../../types";
 import Image from 'next/image';
-
-export const metadata: Metadata = {
-    title: 'Leaderboard',
-    description: 'Leaderboard page',
-}
+import { useAuthContext } from "../../../lib/AuthContext";
+import { useEffect, useState } from "react";
 
 export default async function UsersPage() {
-    const users = await getUsers() as User[];
+    const [users, setUsers] = useState([] as User[]);
+    const {user} = useAuthContext()
+    useEffect( () => {
+        const fetchUsers = async () => {
+            if(user === undefined || user === null) return;
+            // Fetch all users from getUsers
+            const req: Promise<User[] | undefined> = getUsers(user);
+            const users: User[] | undefined = await req;
+            if(users === undefined) return;
+            // Sort users by points
+            users.sort((a, b) => b.points - a.points);
+            // Set the users state
+            setUsers(users);
+        }
+        fetchUsers();
+    }, [user]);
     console.log("Users " + users);
 
     return (
