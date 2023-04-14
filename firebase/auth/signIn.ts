@@ -2,7 +2,7 @@ import Error from "next/error";
 import firebase_app from "../config";
 import { signInWithEmailAndPassword, getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-const auth = getAuth(firebase_app);
+export const auth = getAuth(firebase_app);
 const googleAuthProvider = new GoogleAuthProvider();
 
 export async function signIn(email: string, password: string) {
@@ -39,7 +39,7 @@ export async function signInWithGoogle() {
             const email = error.email;
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
-            console.log(errorCode)
+            console.log("ERROR ", errorCode)
         });
     return { result, error };
 }

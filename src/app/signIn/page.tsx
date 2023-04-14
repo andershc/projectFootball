@@ -1,13 +1,13 @@
 'use client'
 import React, { useContext } from "react";
-import { signIn, signInWithGoogle} from "../../../firebase/auth/signIn";
+import { signIn, signInWithGoogle, auth} from "../../../firebase/auth/signIn";
 import { useRouter } from 'next/navigation'
 import { useAuthContext } from "../../../lib/AuthContext";
+import Image from 'next/image'
 
 function SignInPage() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
-    
     const router = useRouter()
 
     const handleGoogleSignIn = async () => {
@@ -59,7 +59,7 @@ function SignInPage() {
             
         </div>
         <button className="btn-google" onClick={handleGoogleSignIn}>
-            <img src={'/google.png'} width="30px" /> Sign in with Google
+            <Image src={'/google.png'} alt={"Profile Image"} width="30" height={30} /> Sign in with Google
         </button>
     </div>);
 }

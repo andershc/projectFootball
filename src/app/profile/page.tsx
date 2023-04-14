@@ -12,7 +12,7 @@ function ProfilePage() {
 
     React.useEffect(() => {
         if (user == null) router.push("/")
-    }, [user])
+    }, [router, user])
 
     return (
         <main>
