@@ -14,6 +14,16 @@ function ProfilePage() {
         if (user == null) router.push("/")
     }, [router, user])
 
+    const handleSignOut = async () => {
+        const { result, error } = await signOutUser();
+        if (error) {
+            return console.log(error)
+        }
+        // else successful
+        console.log("Result ", result)
+        return router.push("/signIn")
+    }
+
     return (
         <main>
         <section className={styles.profile}>
@@ -34,7 +44,7 @@ function ProfilePage() {
           </div>
         </section>
         <section>
-            <Button onClick={signOutUser} text={"Sign out"} className={styles.signOut}/>
+            <Button onClick={handleSignOut} text={"Sign out"} className={styles.signOut}/>
         </section>
         {/* Add additional sections for user content, such as posts, photos, etc. */}
       </main>
