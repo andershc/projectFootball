@@ -2,6 +2,8 @@ import { Player } from "../../types";
 import { useGuessContext } from "../../../lib/GuessContext";
 import Image from "next/image";
 import styles from "./guess-container.module.css";
+import CheckMarkIcon from "../../../public/static/images/accept.png";
+import CrossIcon from "../../../public/static/images/remove.png";
 
 export default function GuessContainer({
     player,
@@ -28,14 +30,14 @@ export default function GuessContainer({
             {
                 correct ?
                     <Image
-                        src={'/static/images/accept.png'}
+                        src={CheckMarkIcon}
                         alt="correct"
                         width={32}
                         height={32}
                     />
                 :
                 <Image
-                    src={'/static/images/remove.png'}
+                    src={CrossIcon}
                     alt="incorrect"
                     width={36}
                     height={36}

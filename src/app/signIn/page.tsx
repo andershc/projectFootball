@@ -6,6 +6,7 @@ import { useAuthContext } from "../../../lib/AuthContext";
 import Image from 'next/image'
 import styles from "./signIn-page.module.css"
 import GoogleImage from "../../../public/static/images/google.png"
+import Link from "next/link";
 
 function SignInPage() {
     const [email, setEmail] = React.useState('')
@@ -54,7 +55,7 @@ function SignInPage() {
                     <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
                 </label>
                 {/* Don't have a user? */}
-                <p>Do not have an account?<a href="/signup">Sign up</a></p>
+                <p>Do not have an account?<Link href="/signup">Sign up</Link></p>
                 <button type="submit">Sign In</button>
             </form>
             {/*Google Sign in */}

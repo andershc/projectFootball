@@ -11,7 +11,37 @@ export async function signIn(email: string, password: string) {
     let result = null,
         error = null;
     try {
-        result = await signInWithEmailAndPassword(auth, email, password);
+        await signInWithEmailAndPassword(auth, email, password)
+            .then(async (result) => {
+                // Signed in
+                const user = result.user;
+                // Store user in DB if not already there
+                const userDocRef = doc(db, "users", user?.uid);
+                const userDocSnap = await getDoc(userDocRef);
+
+                if (!userDocSnap.exists()) {
+                    await setDoc(userDocRef, {
+                        displayName: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                        points: 0,
+                        username: ''
+                    });
+                } else {
+                    await setDoc(userDocRef, {
+                        displayName: user.displayName,
+                        email: user.email,
+                        photoURL: user.photoURL,
+                    }, { merge: true });
+                }
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log("ERROR ", errorCode, errorMessage)
+            }
+        );
     } catch (e) {
         console.log(e)
         error = e;

@@ -13,25 +13,35 @@ import Loading from "./loading";
 import Image from "next/image";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import Button from "../components/button/Button";
+import { useRouter } from "next/navigation";
+import { usePlayersContext } from "../../lib/PlayersContext";
+import { updateScore } from "./api/updateScore";
 
 const guessLimit = 5;
 
+
 export default function Home() {
-  const [players, setPlayers] = useState([] as Player[]);
-  const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isDailyPlayer, setIsDailyPlayer] = useState(true);
   const { user } = useAuthContext();
+  const router = useRouter();
+
   const { 
     guessedPlayers,
     setGuessedPlayers,
     correctPlayer,
     setCorrectPlayer,
     transferData,
-    setTransferData
+    setTransferData,
+    completed,
+    setCompleted,
    } = useGuessContext();
+
+   const {players, setPlayers} = usePlayersContext();
 
   useEffect(() => {
     const fetchPlayer = async () => {
+      if(players.length > 0) return setLoading(false);;
       const playersList = await getPlayers() as Player[];
       if(playersList !== undefined){
         setLoading(false);
@@ -48,17 +58,25 @@ export default function Home() {
 
     if(user?.email){
       fetchPlayer(), fetchDaily();
+    } else {
+      router.push('/signIn');
     }
-  }, [setCorrectPlayer, setTransferData, user]);
+  }, [setCorrectPlayer, setTransferData, user, router, players.length, setPlayers]);
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
     if (player.id === correctPlayer.id) {
       setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
+      if(isDailyPlayer) {
+        updateScore(user, guessedPlayers.length + 1, guessLimit, true)
+      }
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
-      if(guessedPlayers.length === guessLimit - 1) setCompleted(true);
+      if(guessedPlayers.length === guessLimit) {
+        setCompleted(true)
+        updateScore(user, guessedPlayers.length + 1, guessLimit, false)
+      };
     }
   };
 
@@ -114,7 +132,7 @@ export default function Home() {
           }
         {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         <div className={styles.guesses}>
-          <p>Guessed players:</p>
+          <p>Guessed playersData:</p>
           {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
                     key={guessedPlayer.id} 
@@ -124,21 +142,23 @@ export default function Home() {
                 />
             ))}
           </div>
-          <Button
-            onClick={() => getRandomPlayer(players).then((player) => {
-              if(player === undefined) return;
-              setCompleted(false);
-              setGuessedPlayers([])
-              setCorrectPlayer(player?.player)
-              setTransferData(player?.transferData)
-              }
-            )}
-            text="Get new player"
-            className={styles.newPlayerButton}
-          />
-      </div>
+          
+    </div>
       }
-        <div className={styles.gamesContainer}>
+      <div className={styles.gamesContainer}>
+        <Button
+          onClick={() => getRandomPlayer(players).then((player) => {
+            if(player === undefined) return;
+            setIsDailyPlayer(false);
+            setCompleted(false);
+            setGuessedPlayers([])
+            setCorrectPlayer(player?.player)
+            setTransferData(player?.transferData)
+            }
+          )}
+          text="Get new player"
+          className={styles.newPlayerButton}
+        />
         <Link className={styles.game} href="/default">
             <p>👤 Standard</p>
         </Link>

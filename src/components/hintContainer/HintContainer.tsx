@@ -7,12 +7,10 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 
 export default function HintContainer({
   correctPlayer,
-  transferData,
   numberOfGuesses,
   completed,
 }: {
   correctPlayer: Player,
-  transferData: TransferData[],
   numberOfGuesses: number,
   completed: boolean
 }) {

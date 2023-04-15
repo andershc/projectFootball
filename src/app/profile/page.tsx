@@ -41,6 +41,7 @@ function ProfilePage() {
             <h1 className="name">{user?.displayName}</h1>
             <p className="username">@{user?.username}</p>
             <p className="email">{user?.email}</p>
+            <p>Total points: {user?.points}</p>
           </div>
         </section>
         <section>

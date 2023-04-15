@@ -1,6 +1,6 @@
 'use client'
 
-import { DailyPlayer, Player } from '../../types'
+import { DailyPlayer, Player, TransferData } from '../../types'
 import { useEffect, useState } from 'react'
 import { getDailyPlayer, getPlayers, getRandomPlayer}  from '../api/fetchPlayers'
 import PlayerInput from '../../components/playerInput/PlayerInput'
@@ -11,47 +11,38 @@ import GuessContainer from '../../components/guessContainer/GuessContainer'
 import Button from '../../components/button/Button'
 import Loading from '../loading'
 import { useAuthContext } from '../../../lib/AuthContext'
+import { usePlayersContext } from '../../../lib/PlayersContext'
 
 const guessLimit = 5;
 
 export default function Default() {
-  const [players, setPlayers] = useState([] as Player[]);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [correctPlayer, setCorrectPlayer] = useState({} as DailyPlayer);
+  const [guessedPlayers, setGuessedPlayers] = useState([] as Player[]);
   const { user } = useAuthContext();
-  const { 
-    guessedPlayers,
-    setGuessedPlayers,
-    correctPlayer,
-    setCorrectPlayer,
-    transferData,
-    setTransferData
-   } = useGuessContext();
+  const {
+    players,
+   } = usePlayersContext();
 
   useEffect(() => {
-    const fetchPlayer = async () => {
-      const playersList = await getPlayers() as Player[];
-      if(playersList !== undefined){
-        setLoading(false);
-        setPlayers(playersList);
-      }
-    };
     const fetchDaily = async () => {
-      const dailyPlayer = await getDailyPlayer() as DailyPlayer;
-      if(dailyPlayer !== undefined){
-        setCorrectPlayer(dailyPlayer.player);
-        setTransferData(dailyPlayer.transferData);
+      if(guessedPlayers.length > 0) return setLoading(false);
+      await getRandomPlayer(players).then((player) => {
+        if(player === undefined) return;
+        setCorrectPlayer(player)
+        setLoading(false);
       }
-    };
+    )}
 
-    if(user?.email){
-      fetchPlayer(), fetchDaily();
+    if(user?.email){ 
+      fetchDaily();
     }
-  }, [setCorrectPlayer, setTransferData, user]);
+  }, [guessedPlayers.length, players, setCorrectPlayer, user]);
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
-    if (player.id === correctPlayer.id) {
+    if (player.id === correctPlayer.player.id) {
       setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
     } else {
@@ -67,7 +58,7 @@ export default function Default() {
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
-        <HintContainer correctPlayer={correctPlayer} transferData={transferData} numberOfGuesses={guessedPlayers.length} completed={completed}/>
+        <HintContainer correctPlayer={correctPlayer.player} numberOfGuesses={guessedPlayers.length} completed={completed}/>
         {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         <div className={styles.guesses}>
           <p>Guessed players:</p>
@@ -75,7 +66,7 @@ export default function Default() {
               <GuessContainer
                     key={guessedPlayer.id} 
                     player={guessedPlayer}
-                    correct={guessedPlayer.id === correctPlayer.id}
+                    correct={guessedPlayer.id === correctPlayer.player.id}
                     index={guessedPlayers.indexOf(guessedPlayer) + 1}
                 />
             ))}
@@ -85,8 +76,7 @@ export default function Default() {
               if(player === undefined) return;
               setCompleted(false);
               setGuessedPlayers([])
-              setCorrectPlayer(player?.player)
-              setTransferData(player?.transferData)
+              setCorrectPlayer(player)
               }
             )}
             text="Get new player"

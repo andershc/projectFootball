@@ -15,13 +15,11 @@ export default function UsersPage() {
         const fetchUsers = async () => {
             // Fetch all users from getUsers
             const users = await getUsers(user) as UserType[];
-            console.log("Users response " + users.length);
             if(users === undefined) return;
             // Sort users by points
             users.sort((a, b) => b.points - a.points);
             // Set the users state
             setUsers(users);
-            console.log("Users " + users.length);
         }
         fetchUsers();
     }, [user, setUsers]);
@@ -45,7 +43,7 @@ export default function UsersPage() {
                         {users.map((user, index) => (
                             <tr key={user.uid}>
                                 <td>{index + 1}</td>
-                                <td>{user.username}</td>
+                                <td>{user.username || user.displayName}</td>
                                 <td>{user.points}</td>
                             </tr>
                         ))}
