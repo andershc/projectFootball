@@ -22,7 +22,7 @@ export async function signIn(email: string, password: string) {
 export async function signInWithGoogle() {
     let result = null,
         error: Error | null = null;
-    signInWithPopup(auth, googleAuthProvider)
+    await signInWithPopup(auth, googleAuthProvider)
         .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);

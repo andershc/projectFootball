@@ -61,7 +61,7 @@ function SignInPage() {
             
         </div>
         <button className={styles.googleButton} onClick={handleGoogleSignIn}>
-            <Image src={GoogleImage} alt={"Profile Image"} width="30" height={30} /> Sign in with Google
+            <Image src={GoogleImage} alt={"Google"} width={30} height={30} /> Sign in with Google
         </button>
     </div>);
 }
