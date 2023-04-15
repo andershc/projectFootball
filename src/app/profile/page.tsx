@@ -29,7 +29,7 @@ function ProfilePage() {
         <section className={styles.profile}>
           <div className="">
             <Image
-              src={user?.['photoURL'] || '/static/images/hacker.png'}
+              src={require(user?.['photoURL'] || '/static/images/hacker.png')}
               alt="Profile Image"
               width={150}
               height={150}
