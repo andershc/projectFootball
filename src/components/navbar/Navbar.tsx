@@ -33,7 +33,7 @@ export default function Navbar() {
         </li>
         <li>
           {/* user is signed-in and has username */}
-          {user && (
+          {user?.email && (
               <>
                 <div className={styles.themeContainer}>
                   <Button 
@@ -59,7 +59,7 @@ export default function Navbar() {
           )}
         </li>
         {/* user is not signed OR has not created username */}
-        {!user && (
+        {!user?.email && (
           <li>
             <Link href="/signIn">
               <button className="btn-blue">Log in</button>

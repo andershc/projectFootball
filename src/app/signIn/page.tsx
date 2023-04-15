@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuthContext } from "../../../lib/AuthContext";
 import Image from 'next/image'
 import styles from "./signIn-page.module.css"
+import GoogleImage from "../../../public/static/images/google.png"
 
 function SignInPage() {
     const [email, setEmail] = React.useState('')
@@ -60,7 +61,7 @@ function SignInPage() {
             
         </div>
         <button className={styles.googleButton} onClick={handleGoogleSignIn}>
-            <Image src={'/google.png'} alt={"Profile Image"} width="30" height={30} /> Sign in with Google
+            <Image src={GoogleImage} alt={"Google"} width={30} height={30} /> Sign in with Google
         </button>
     </div>);
 }

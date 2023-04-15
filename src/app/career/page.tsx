@@ -12,6 +12,7 @@ import Button from '../../components/button/Button'
 import Loading from '../loading'
 import Image from 'next/image'
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import { useAuthContext } from '../../../lib/AuthContext'
 
 const guessLimit = 5;
 
@@ -19,6 +20,7 @@ export default function Career() {
   const [players, setPlayers] = useState([] as Player[]);
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
+  const { user } = useAuthContext();
   const { 
     guessedPlayers,
     setGuessedPlayers,
@@ -44,9 +46,10 @@ export default function Career() {
       }
     };
 
-
-    fetchPlayer(), fetchDaily();
-  }, [setCorrectPlayer, setTransferData]);
+    if(user?.email){
+      fetchPlayer(), fetchDaily();
+    }
+  }, [setCorrectPlayer, setTransferData, user]);
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
