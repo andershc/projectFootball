@@ -1,13 +1,13 @@
 import { getApps, initializeApp } from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+  apiKey: 'AIzaSyC8st1L4AccM24HHK8Gv8gu61ErjsxDXWE',
+  authDomain: 'football-app-d5d9d.firebaseapp.com',
+  projectId: 'football-app-d5d9d',
+  storageBucket: 'football-app-d5d9d.appspot.com',
+  messagingSenderId: '1055122427615',
+  appId: '1:1055122427615:web:77a4213c6f4057014fe36a',
+  measurementId: 'G-R08HLPZCXM'
 };
   
 // Initialize Firebase
