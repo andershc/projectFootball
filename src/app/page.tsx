@@ -124,9 +124,23 @@ export default function Home() {
                           height={48}
                         />
                       </div>
-                      
+                     
                     </div>
                 ))}
+                 {
+                    transferData[transferData.length-1].teams.in.id !== correctPlayer.team.id &&
+                    <div className={styles.transfer}>
+                    <DoubleArrowIcon className={styles.arrow}/>
+                    <div className={styles.club}>
+                      <Image
+                        src={correctPlayer.team.logo}
+                        alt="team logo"
+                        width={48}
+                        height={48}
+                      />
+                    </div>
+                    </div>
+                 }
                 </div>
             </div>
           }
