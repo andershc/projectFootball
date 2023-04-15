@@ -6,7 +6,7 @@ import {UserType } from '../../lib/AuthContext';
 
 const db = getFirestore(firebase_app);
 
-export default async function getAllUsers(currentUser: UserType | null): Promise<User[] | undefined> {
+export default async function getAllUsers(currentUser: UserType | null): Promise<UserType[] | undefined> {
   
     if (!currentUser) {
       console.log('User not authenticated');
@@ -16,9 +16,9 @@ export default async function getAllUsers(currentUser: UserType | null): Promise
     const docRef = collection(db, "users");
     try {
       const doc  = await getDocs(docRef);
-      const users: User[] = [];
+      const users: UserType[] = [];
       doc.forEach((user) => {
-        users.push(user.data() as User);
+        users.push(user.data() as UserType);
       });
       return users;
     } catch (e) {

@@ -1,0 +1,27 @@
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.table td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    justify-content: center;
+}
+
+.table th {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.table th {
+    background-color: var(--accent-1);
+    font-weight: bold;
+}
+
+.table tr:hover {
+    background-color: var(--accent-3);
+}
