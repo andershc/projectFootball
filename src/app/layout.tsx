@@ -7,6 +7,12 @@ import { PlayersContextProvider } from '../../lib/PlayersContext';
 import { ServerThemeProvider } from 'next-themes'
 import { Suspense } from 'react';
 import Loading from './loading';
+import
+ { Analytics } 
+from
+ 
+'@vercel/analytics/react'
+;
 
 export const metadata: Metadata = {
     title: 'BallerBingo',
@@ -24,7 +30,6 @@ export default function RootLayout({
             <html lang='en'>
                 <body>
                     <Suspense fallback={<Loading />}>
-
                             <AuthContextProvider> 
                                 <PlayersContextProvider>
                                     <GuessContextProvider>
@@ -35,6 +40,7 @@ export default function RootLayout({
                                 </PlayersContextProvider>
                             </AuthContextProvider>
                     </Suspense>
+                    <Analytics/>
                 </body>
             </html>
         
