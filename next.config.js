@@ -1,8 +1,6 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    loader: 'imgix',
-    path: '/',
     domains: [
       'lh3.googleusercontent.com',
       'media-1.api-sports.io',
