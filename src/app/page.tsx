@@ -2,7 +2,6 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 
 export default async function Home() {
-
     return (
         <main className={styles.mainContainer}>
             <div className={styles.mainContent}>

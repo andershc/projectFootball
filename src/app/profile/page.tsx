@@ -11,7 +11,7 @@ function ProfilePage() {
     const router = useRouter()
 
     React.useEffect(() => {
-        if (user == null) router.push("/")
+        if (user?.email == null) router.push("/signIn")
     }, [router, user])
 
     const handleSignOut = async () => {
