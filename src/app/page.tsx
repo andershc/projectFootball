@@ -125,7 +125,7 @@ export default function Home() {
                       {clubs.indexOf(data) !== 0 && <DoubleArrowIcon className={styles.arrow}/>}
                       <div className={styles.club}>
                         
-                        {clubs.indexOf(data) <= guessedPlayers.length ?
+                        {clubs.indexOf(data) <= guessedPlayers.length || completed ?
                         (
                           <>
                             <p>{data.type == 'Loan' && data.type}</p>
