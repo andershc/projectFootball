@@ -146,7 +146,7 @@ export default function Home() {
           }
         {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         <div className={styles.guesses}>
-          <p>Guessed playersData:</p>
+          <p>Guessed players:</p>
           {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
                     key={guessedPlayer.id} 

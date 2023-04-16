@@ -31,7 +31,10 @@ export default function Navbar() {
             </button>
           </Link>
         </li>
-        <li>
+        <li className={styles.center}>
+          <h1 >CarrerPath</h1>
+        </li>
+        <li className={styles.rightSide}>
           {/* user is signed-in and has username */}
           {user?.email && (
               <>

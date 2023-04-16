@@ -29,4 +29,17 @@
   align-items: center;
   justify-content: center;
   height: 100%;
+  width: 30%;
+}
+
+.rightSide {
+  width: 30%;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 40%;
 }
