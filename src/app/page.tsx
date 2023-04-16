@@ -120,17 +120,32 @@ export default function Home() {
             transferData && transferData.length > 0 &&
             <div className={styles.transfersContainer}>
                 <div className={styles.clubs}>
-                  {clubs.slice(0, completed ? clubs.length : guessedPlayers.length+1).map((data) => (
+                  {clubs.map((data) => (
                     <div key={clubs.indexOf(data)} className={styles.transfer}>
                       {clubs.indexOf(data) !== 0 && <DoubleArrowIcon className={styles.arrow}/>}
                       <div className={styles.club}>
-                        <p>{data.type == 'Loan' && data.type}</p>
-                        <Image
-                          src={data.logo}
-                          alt={data.name}
-                          width={48}
-                          height={48}
-                        />
+                        
+                        {clubs.indexOf(data) <= guessedPlayers.length ?
+                        (
+                          <>
+                            <p>{data.type == 'Loan' && data.type}</p>
+                            <Image
+                              src={data.logo}
+                              alt={data.name}
+                              width={48}
+                              height={48}
+                            />
+                          </>
+                          
+                        ):(
+                          <Image
+                            src={'https://hatscripts.github.io/circle-flags/flags/xx.svg'}
+                            alt="flag"
+                            width={32}
+                            height={32}
+                          />
+                        )}
+                        
                         <p>{data.year}</p>
                       </div>
                     </div>
@@ -181,7 +196,7 @@ export default function Home() {
 function getTransferClubs(transferData: TransferData[], currentTeam: Team): Transfer[] {
   // reverse the transfer data so the last club is first
   transferData = transferData.slice(0).reverse();
-  const currentYear = new Date().getFullYear() + 1;
+  const currentYear = new Date().getFullYear();
   // If the transfer is a loan, dont include the parent club and skip next transfer
   const clubs = transferData.map((data) => {
     // Don't add N/A transfers
