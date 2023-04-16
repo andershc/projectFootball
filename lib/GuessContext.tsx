@@ -2,6 +2,12 @@
 
 import React, { useContext, useEffect } from 'react';
 import { Player, TransferData } from '../src/types';
+import firebase_app from '../firebase/config';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import moment from 'moment';
+
+const auth = getAuth(firebase_app);
 
 type GuessContextType = {
     guessedPlayers: Player[]
@@ -36,6 +42,34 @@ export const GuessContextProvider = ({
     const [correctPlayer, setCorrectPlayer] = React.useState({} as Player);
     const [transferData, setTransferData] = React.useState([] as TransferData[]);
     const [completed, setCompleted] = React.useState(false);
+    const date = moment().tz('America/New_York');
+    const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
+    React.useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+            console.log('user', user);
+            if (user) {
+                // Fetch user data from firestore
+                const userRef = doc(getFirestore(firebase_app),
+                'users',
+                user.uid,
+                'history',
+                formatCurrentDate
+                );
+                await getDoc(userRef).then((doc) => {
+                    if (doc.exists()) {
+                        const data = doc.data();
+                        setCompleted(data.completed)                       
+                    } else {
+                        setCompleted(false)
+                    }
+                });
+            } else {
+                return
+            }
+        });
+
+        return () => unsubscribe();
+    }, [formatCurrentDate]);
 
     return (
         <GuessContext.Provider value={{ 
