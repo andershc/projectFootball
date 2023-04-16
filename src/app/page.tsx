@@ -199,21 +199,13 @@ function getTransferClubs(transferData: TransferData[], currentTeam: Team): Tran
   const currentYear = new Date().getFullYear();
   // If the transfer is a loan, dont include the parent club and skip next transfer
   const clubs = transferData.map((data) => {
-    // Don't add N/A transfers
-    if(data.type === 'N/A') return;
-    if(data.type === 'Loan'){
+    // If the previous transfer is a loan, skip it
+    if(transferData[transferData.indexOf(data)-1]?.type === 'Loan') return;
       return {
         type: data.type,
         year: data.date.split('-')[0],
         ...data.teams.in
       }
-    } else {
-      return {
-        type: data.type,
-        year: data.date.split('-')[0],
-        ...data.teams.out
-      }
-    }
   });
   // Add the first out club to first spot in the list
   clubs.unshift({...transferData[0].teams.out, type: 'First', year: transferData[0].date.split('-')[0],});
@@ -223,12 +215,6 @@ function getTransferClubs(transferData: TransferData[], currentTeam: Team): Tran
       ...currentTeam,
       type: 'Current',
       year: currentYear.toString()
-    });
-  } else {
-    clubs.push({
-      ...transferData[transferData.length-1].teams.in,
-      type: 'Current',
-      year: transferData[transferData.length-1].date.split('-')[0]
     });
   }
   // Remove undefined values
