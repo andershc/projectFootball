@@ -7,5 +7,7 @@ export async function updateScore(
     guessLimit: number,
     completed: boolean
 ) {
-    await updateDailyScore(currentUser, guessLimit-guesses+1 , completed, guesses)
+    // Calculate score
+    const score = Math.round(((guessLimit - guesses + 1) / guessLimit)*10);
+    await updateDailyScore(currentUser, score , completed, guesses)
 }

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Player } from '../../types';
 import styles from './player-input.module.css';
 import Image from 'next/image';
-import { useGuessContext } from '../../../lib/GuessContext';
 import accents from 'remove-accents';
 
 interface PlayerInputProps {
@@ -58,12 +57,6 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
                 height={50}
               ></Image>
               <p>{player.name}</p>
-              <Image
-                src={player.team.logo}
-                alt={player.name}
-                width={50}
-                height={50}
-              ></Image>
             </li>
           ))}
         </ul>

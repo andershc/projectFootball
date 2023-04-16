@@ -7,7 +7,7 @@ import { useAuthContext } from "../../lib/AuthContext";
 import { useGuessContext } from "../../lib/GuessContext";
 import GuessContainer from "../components/guessContainer/GuessContainer";
 import PlayerInput from "../components/playerInput/PlayerInput";
-import { Player, DailyPlayer } from "../types";
+import { Player, DailyPlayer, Team, TransferData } from "../types";
 import { getPlayers, getDailyPlayer, getRandomPlayer } from "./api/fetchPlayers";
 import Loading from "./loading";
 import Image from "next/image";
@@ -16,13 +16,18 @@ import Button from "../components/button/Button";
 import { useRouter } from "next/navigation";
 import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateScore";
+import moment from "moment";
 
-const guessLimit = 5;
+interface Transfer extends Team {
+  type: string;
+  year: string;
+}
 
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
+  const [clubs, setClubs] = useState<Transfer[]>([]);
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -35,9 +40,9 @@ export default function Home() {
     setTransferData,
     completed,
     setCompleted,
-   } = useGuessContext();
+  } = useGuessContext();
 
-   const {players, setPlayers} = usePlayersContext();
+  const {players, setPlayers} = usePlayersContext();
 
   useEffect(() => {
     const fetchPlayer = async () => {
@@ -53,6 +58,7 @@ export default function Home() {
       if(dailyPlayer !== undefined){
         setCorrectPlayer(dailyPlayer.player);
         setTransferData(dailyPlayer.transferData);
+        setClubs(getTransferClubs(dailyPlayer.transferData, dailyPlayer.player.team));
       }
     };
 
@@ -62,6 +68,8 @@ export default function Home() {
       router.push('/signIn');
     }
   }, [setCorrectPlayer, setTransferData, user, router, players.length, setPlayers]);
+
+  const guessLimit = clubs?.length || 0;
 
   const handlePlayerSelect = (player: Player) => {
     if(guessedPlayers.length >= guessLimit) return;
@@ -79,25 +87,23 @@ export default function Home() {
     }
   };
 
-
   return (
     <div className={styles.mainContainer}>
       {loading ? <Loading /> :
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
-        { completed || guessedPlayers.length === guessLimit &&
+        { completed || guessedPlayers.length === guessLimit ?
             <div className={styles.completedRow}>
-              
               {completed ? 
-              (<h2>Congratulations! 🏆</h2>)
-              :
-              (
-                <>
-                  <h2>Tough luck...😞</h2>
-                  <p>The correct player was:</p>
-                </>
-              )
+                (
+                  <h2>Congratulations! 🏆</h2>
+                ):(
+                  <>
+                    <h2>Tough luck...😞</h2>
+                    <p>The correct player was:</p>
+                  </>
+                )
               }
 
               <Image
@@ -108,49 +114,27 @@ export default function Home() {
                 height={60}
               />
               <p className={styles.playerName}>{correctPlayer.name}</p>
-            </div>
+            </div> : null
           }
         {
             transferData && transferData.length > 0 &&
             <div className={styles.transfersContainer}>
                 <div className={styles.clubs}>
-                  <div className={styles.transfer}>
-                    <Image
-                      src={transferData[transferData.length-1].teams.out.logo}
-                      alt="team logo"
-                      width={48}
-                      height={48}
-                    />
-                  </div>
-                  {transferData.slice(0).reverse().map((data) => (
-                    <div key={transferData.indexOf(data)} className={styles.transfer}>
-                      <DoubleArrowIcon className={styles.arrow}/>
+                  {clubs.slice(0, completed ? clubs.length : guessedPlayers.length+1).map((data) => (
+                    <div key={clubs.indexOf(data)} className={styles.transfer}>
+                      {clubs.indexOf(data) !== 0 && <DoubleArrowIcon className={styles.arrow}/>}
                       <div className={styles.club}>
                         <p>{data.type == 'Loan' && data.type}</p>
                         <Image
-                          src={data.teams.in.logo}
-                          alt="team logo"
+                          src={data.logo}
+                          alt={data.name}
                           width={48}
                           height={48}
                         />
+                        <p>{data.year}</p>
                       </div>
-                     
                     </div>
                 ))}
-                 {
-                    transferData[transferData.length-1].teams.in.id !== correctPlayer.team.id &&
-                    <div className={styles.transfer}>
-                    <DoubleArrowIcon className={styles.arrow}/>
-                    <div className={styles.club}>
-                      <Image
-                        src={correctPlayer.team.logo}
-                        alt="team logo"
-                        width={48}
-                        height={48}
-                      />
-                    </div>
-                    </div>
-                 }
                 </div>
             </div>
           }
@@ -192,4 +176,49 @@ export default function Home() {
         
     </div>
   );
+}
+
+function getTransferClubs(transferData: TransferData[], currentTeam: Team): Transfer[] {
+  // reverse the transfer data so the last club is first
+  transferData = transferData.slice(0).reverse();
+  const currentYear = new Date().getFullYear() + 1;
+  // If the transfer is a loan, dont include the parent club and skip next transfer
+  const clubs = transferData.map((data) => {
+    // Don't add N/A transfers
+    if(data.type === 'N/A') return;
+    if(data.type === 'Loan'){
+      return {
+        type: data.type,
+        year: data.date.split('-')[0],
+        ...data.teams.in
+      }
+    } else {
+      return {
+        type: data.type,
+        year: data.date.split('-')[0],
+        ...data.teams.out
+      }
+    }
+  });
+  // Add the first out club to first spot in the list
+  clubs.unshift({...transferData[0].teams.out, type: 'First', year: transferData[0].date.split('-')[0],});
+  // If the last club in is not the current club, add it to the list
+  if(transferData[transferData.length-1].teams.in.id !== currentTeam.id){
+    clubs.push({
+      ...currentTeam,
+      type: 'Current',
+      year: currentYear.toString()
+    });
+  } else {
+    clubs.push({
+      ...transferData[transferData.length-1].teams.in,
+      type: 'Current',
+      year: transferData[transferData.length-1].date.split('-')[0]
+    });
+  }
+  // Remove undefined values
+  for(let i = 0; i < clubs.length; i++){
+    if(clubs[i] === undefined) clubs.splice(i, 1);
+  }
+  return clubs as Transfer[];
 }
