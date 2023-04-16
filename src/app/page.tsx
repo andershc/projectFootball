@@ -159,7 +159,8 @@ export default function Home() {
           
     </div>
       }
-      <div className={styles.gamesContainer}>
+      { process.env.NODE_ENV === 'development' &&
+        <div className={styles.gamesContainer}>
         <Button
           onClick={() => getRandomPlayer(players).then((player) => {
             if(player === undefined) return;
@@ -176,7 +177,7 @@ export default function Home() {
         <Link className={styles.game} href="/default">
             <p>👤 Standard</p>
         </Link>
-      </div>
+      </div>}
         
     </div>
   );
