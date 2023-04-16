@@ -45,6 +45,7 @@ export const GuessContextProvider = ({
     const date = moment().tz('America/New_York');
     const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
     React.useEffect(() => {
+        if(process.env.NODE_ENV === 'development') return;
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             console.log('user', user);
             if (user) {
