@@ -44,6 +44,7 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
         value={inputValue}
         onChange={handleInputChange}
         autoComplete="off"
+        placeholder="Guess a player..."
       />
       {inputValue.length > 2 ? (
         <ul className={styles.list}>

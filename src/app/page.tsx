@@ -74,7 +74,6 @@ export default function Home() {
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
       if(guessedPlayers.length === guessLimit) {
-        setCompleted(true)
         updateScore(user, guessedPlayers.length + 1, guessLimit, false)
       };
     }
@@ -87,9 +86,20 @@ export default function Home() {
       <div className={styles.mainContent}>
         <h1>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
-        { completed &&
+        { completed || guessedPlayers.length === guessLimit &&
             <div className={styles.completedRow}>
-              <p>{guessedPlayers.length < 5 ? "Congratulations! 🏆\n" : "Tough luck.."}</p>
+              
+              {completed ? 
+              (<h2>Congratulations! 🏆</h2>)
+              :
+              (
+                <>
+                  <h2>Tough luck...😞</h2>
+                  <p>The correct player was:</p>
+                </>
+              )
+              }
+
               <Image
                 className={styles.playerPhoto}
                 src={correctPlayer.photo}
@@ -145,7 +155,8 @@ export default function Home() {
             </div>
           }
         {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
-        <div className={styles.guesses}>
+        { guessedPlayers.length > 0 &&
+          <div className={styles.guesses}>
           <p>Guessed players:</p>
           {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
@@ -155,7 +166,7 @@ export default function Home() {
                     index={guessedPlayers.indexOf(guessedPlayer) + 1}
                 />
             ))}
-          </div>
+          </div>}
           
     </div>
       }

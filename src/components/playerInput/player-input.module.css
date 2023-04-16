@@ -14,7 +14,7 @@
     border-radius: 0.25rem;
     background-color: var(--white);
     color: var(--text-2);
-    font: 2rem "Roboto", sans-serif;
+    font: 1.4rem "Roboto", sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
