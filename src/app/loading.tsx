@@ -1,5 +1,5 @@
 import Image from "next/image";
-import LoadingSpinner from "../../public/static/images/loading.gif";
+import LoadingSpinner from "../../public/static/images/tail-spin.svg";
 
 export default function Loading() {
     return (
@@ -7,8 +7,8 @@ export default function Loading() {
         <Image 
           src={LoadingSpinner}
           alt={"/"}
-          width={200}
-          height={200}
+          width={50}
+          height={50}
           priority
           />
         <div>Loading...</div>
