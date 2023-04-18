@@ -209,7 +209,6 @@ function getTransferClubs(transferData: TransferData[], currentTeam: Team): Tran
   // Add the first out club to first spot in the list
   clubs.unshift({...transferData[0].teams.out, type: 'First', year: transferData[0].date.split('-')[0],});
   // If the last club in is not the current club, add it to the list
-  console.log(transferData[transferData.length-1].teams.in.id, currentTeam.id);
   if(transferData[transferData.length-1].teams.in.id !== currentTeam.id){
     clubs.push({
       ...currentTeam,
@@ -221,6 +220,5 @@ function getTransferClubs(transferData: TransferData[], currentTeam: Team): Tran
   for(let i = 0; i < clubs.length; i++){
     if(clubs[i] === undefined) clubs.splice(i, 1);
   }
-  console.log(clubs);
   return clubs as Transfer[];
 }

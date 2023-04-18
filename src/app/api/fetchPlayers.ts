@@ -55,7 +55,7 @@ export async function getDailyPlayer(): Promise<DailyPlayer | undefined> {
     let dailyPlayer: DailyPlayer | undefined;
     await getData('dailyPlayer', formatCurrentDate)
       .then((data) => {
-        console.log('Data fetched successfully:', data);
+        console.log('Daily player data fetched successfully');
         dailyPlayer = data as DailyPlayer;
         return dailyPlayer;
       })
