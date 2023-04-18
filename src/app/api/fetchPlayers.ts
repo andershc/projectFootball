@@ -50,7 +50,7 @@ export async function getPlayers(): Promise<Player[] | undefined> {
 // Fetch the daily players from firestore
 export async function getDailyPlayer(): Promise<DailyPlayer | undefined> {
     const date = moment().tz('America/New_York');
-    const formatCurrentDate = `${date.date()}-${date.month() + 1}-${date.year()}`;
+    const formatCurrentDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
     console.log(date)
     let dailyPlayer: DailyPlayer | undefined;
     await getData('dailyPlayer', formatCurrentDate)
