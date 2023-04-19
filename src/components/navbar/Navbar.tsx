@@ -18,8 +18,6 @@ export default function Navbar() {
   const { theme, setTheme } = useTheme()
   const width = useWindowWidth();
   
-  console.log(width);
-  
   return (
     <nav className={styles.navbar}>
       <ul>
