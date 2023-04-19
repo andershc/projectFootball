@@ -37,7 +37,7 @@ export default function Navbar() {
         </li>
         <li className={styles.center}>
           <Link href="/">
-            <h1 >CarrerPath</h1>
+            <h1 >CareerPath</h1>
           </Link>
         </li>
         <li className={styles.rightSide}>
