@@ -9,22 +9,14 @@ import Button from '../button/Button';
 import styles from './navbar.module.css';
 import LeaderboardIcon from '@mui/icons-material/Leaderboard';
 import HomeIcon from '@mui/icons-material/Home';
+import useWindowWidth from '../../../lib/hooks';
 
 // Top navbar
 export default function Navbar() {
   const { user } = useContext(AuthContext);
   const username = user?.['displayName'];
   const { theme, setTheme } = useTheme()
-
-  // useWindowDimension.js
-  const [width, setWidth]   = useState(window?.visualViewport?.width);
-  const updateDimensions = () => {
-      setWidth(window.innerWidth);
-  }
-  useEffect(() => {
-      window.addEventListener("resize", updateDimensions);
-      return () => window.removeEventListener("resize", updateDimensions);
-  }, []);
+  const width = useWindowWidth();
   
   console.log(width);
   
@@ -32,7 +24,7 @@ export default function Navbar() {
     <nav className={styles.navbar}>
       <ul>
         <li className={styles.leftSide}>
-          { width !== undefined && width > 900 &&
+          { width !== null && width > 900 &&
              <Link href="/">
              <button className="btn-logo">
                <HomeIcon/>
@@ -54,7 +46,7 @@ export default function Navbar() {
           {/* user is signed-in and has username */}
           {user?.email && (
               <>
-                { width !== undefined &&width > 900 &&
+                { width !== null && width > 900 &&
                  <div className={styles.themeContainer}>
                   <Button 
                     onClick={() => setTheme('light')}
