@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     padding: 1rem;
+    max-width: 450px;
 }
 .input {
     width: 100%;

@@ -91,7 +91,7 @@ export default function Home() {
     <div className={styles.mainContainer}>
       {loading ? <Loading /> :
       <div className={styles.mainContent}>
-        <h1>Guess the Player</h1>
+        <h1 className={styles.title}>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
         { completed || guessedPlayers.length === guessLimit ?
             <div className={styles.completedRow}>

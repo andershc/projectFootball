@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../../lib/AuthContext';
 import { useTheme } from 'next-themes'
 import Button from '../button/Button';
@@ -15,16 +15,30 @@ export default function Navbar() {
   const { user } = useContext(AuthContext);
   const username = user?.['displayName'];
   const { theme, setTheme } = useTheme()
+
+  // useWindowDimension.js
+  const [width, setWidth]   = useState(window?.visualViewport?.width);
+  const updateDimensions = () => {
+      setWidth(window.innerWidth);
+  }
+  useEffect(() => {
+      window.addEventListener("resize", updateDimensions);
+      return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+  
+  console.log(width);
   
   return (
-    <nav className="navbar">
+    <nav className={styles.navbar}>
       <ul>
         <li className={styles.leftSide}>
-          <Link href="/">
-            <button className="btn-logo">
-              <HomeIcon/>
-            </button>
-          </Link>
+          { width !== undefined && width > 900 &&
+             <Link href="/">
+             <button className="btn-logo">
+               <HomeIcon/>
+             </button>
+           </Link>
+          }
           <Link href="/leaderboard">
             <button className="btn-logo">
               <LeaderboardIcon fontSize='medium'/>
@@ -32,13 +46,16 @@ export default function Navbar() {
           </Link>
         </li>
         <li className={styles.center}>
-          <h1 >CarrerPath</h1>
+          <Link href="/">
+            <h1 >CarrerPath</h1>
+          </Link>
         </li>
         <li className={styles.rightSide}>
           {/* user is signed-in and has username */}
           {user?.email && (
               <>
-                <div className={styles.themeContainer}>
+                { width !== undefined &&width > 900 &&
+                 <div className={styles.themeContainer}>
                   <Button 
                     onClick={() => setTheme('light')}
                     text='Light'
@@ -49,13 +66,13 @@ export default function Navbar() {
                     text='Dark'
                     className={styles.themeButton}
                     />
-                </div>
+                </div>}
                 <Link href="/profile" className={styles.profilePic}>
                   {<Image 
                     src={user?.['photoURL'] || '/static/images/hacker.png'}
                     alt="user profile"
-                    width={32}
-                    height={32}
+                    width={50}
+                    height={50}
                   />}
                 </Link>
               </>

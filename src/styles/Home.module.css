@@ -30,7 +30,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  row-gap: 1rem;
+  row-gap: 0.5rem;
   width: 100%;
   height: 100%;
 }
@@ -40,7 +40,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
+  width: 80%;
   height: 100%;
 }
 
@@ -113,15 +113,17 @@
     width: 100%;
     flex-direction: column;
   }
+  .clubs {
+    flex-direction: column;
+  }
 }
 
 .transfersContainer {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  padding: 0 1.5rem 1rem 1.5rem;
+  width: 90vw;
 }
 
 .transfersContainer > p {
@@ -134,6 +136,7 @@
 .clubs {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: flex-end;
   justify-content: center;
   width: 100%;
@@ -213,4 +216,10 @@
 .arrow {
   width: 20px;
   margin: 42px 0.3rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-1);
 }
