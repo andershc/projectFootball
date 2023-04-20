@@ -43,7 +43,7 @@ export default function UsersPage() {
                         {users.map((user, index) => (
                             <tr key={user.uid}>
                                 <td>{index + 1}</td>
-                                <td>{user.username || user.displayName}</td>
+                                <td>{user.username || user.displayName || user.email?.split('@')[0]}</td>
                                 <td>{user.points}</td>
                             </tr>
                         ))}

@@ -15,14 +15,13 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import Button from "../components/button/Button";
 import { useRouter } from "next/navigation";
 import { usePlayersContext } from "../../lib/PlayersContext";
-import { updateScore } from "./api/updateScore";
+import { updateScore } from "./api/updateUser";
 import moment from "moment";
 
 interface Transfer extends Team {
   type: string;
   year: string;
 }
-
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
