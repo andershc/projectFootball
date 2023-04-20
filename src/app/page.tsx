@@ -71,17 +71,16 @@ export default function Home() {
   const guessLimit = clubs?.length || 0;
 
   const handlePlayerSelect = (player: Player) => {
-    if(guessedPlayers.length >= guessLimit) return;
+    setGuessedPlayers((prev) => [...prev, player]);
+    const playersCopy = [...guessedPlayers, player];
     if (player.id === correctPlayer.id) {
       setCompleted(true);
-      setGuessedPlayers((prev) => [...prev, player]);
       if(isDailyPlayer) {
-        updateScore(user, guessedPlayers, guessLimit, true)
+        updateScore(user, playersCopy, guessLimit, true)
       }
     } else {
-      setGuessedPlayers((prev) => [...prev, player]);
-      if(guessedPlayers.length === guessLimit) {
-        updateScore(user, guessedPlayers, guessLimit, false)
+      if(playersCopy.length === guessLimit) {
+        updateScore(user, playersCopy, guessLimit, false)
       };
     }
   };
