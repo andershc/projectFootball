@@ -14,7 +14,7 @@
     border-top: 0;
 }
 .player {
-    width: 100%;
+    width: 80%;
     height: 100%;
     display: flex;
     flex-direction: row;
@@ -26,7 +26,14 @@
     font-size: 1.1rem;
     font-weight: bold;
     margin-right: 1rem;
+    width: 2.5%;
 }
 .playerPhoto {
     border-radius: 100%;
 }
+
+@media (max-width: 600px) {
+    .indexNumber {
+        margin-right: 0.3rem;
+    }
+  }
