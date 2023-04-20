@@ -16,8 +16,8 @@ type GuessContextType = {
     setCorrectPlayer: React.Dispatch<React.SetStateAction<Player>>
     transferData: TransferData[]
     setTransferData: React.Dispatch<React.SetStateAction<TransferData[]>>
-    completed: boolean
-    setCompleted: React.Dispatch<React.SetStateAction<boolean>>
+    completed: boolean | undefined
+    setCompleted: React.Dispatch<React.SetStateAction<boolean | undefined>>
 }
 
 export const GuessContext = React.createContext<GuessContextType>({
@@ -27,8 +27,8 @@ export const GuessContext = React.createContext<GuessContextType>({
     setCorrectPlayer: () => {},
     transferData: [] as TransferData[],
     setTransferData: () => {},
-    completed: false,
-    setCompleted: () => {},
+    completed: undefined,
+    setCompleted: () => {}
 });
 
 export const useGuessContext = () => useContext(GuessContext);
@@ -41,7 +41,7 @@ export const GuessContextProvider = ({
     const [guessedPlayers, setGuessedPlayers ] = React.useState([] as Player[]);
     const [correctPlayer, setCorrectPlayer] = React.useState({} as Player);
     const [transferData, setTransferData] = React.useState([] as TransferData[]);
-    const [completed, setCompleted] = React.useState(false);
+    const [completed, setCompleted] = React.useState<boolean | undefined>(undefined);
     const date = moment().tz('America/New_York');
     const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
     React.useEffect(() => {
@@ -62,7 +62,7 @@ export const GuessContextProvider = ({
                         setCompleted(data.completed)
                         setGuessedPlayers(data.guessedPlayers)                       
                     } else {
-                        setCompleted(false)
+                        setCompleted(undefined)
                     }
                 });
             } else {
