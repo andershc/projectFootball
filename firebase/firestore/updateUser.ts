@@ -11,7 +11,7 @@ export async function updateDailyScore(
     currentUser: UserType | null,
     points: number,
     completed: boolean,
-    guesses: number
+    guessedPlayers: Player[]
 ) {
     // Update the user's score in DB
     if (currentUser) {
@@ -27,7 +27,8 @@ export async function updateDailyScore(
             await setDoc(userRef, {
                 completed: completed,
                 points: points,
-                guesses: guesses
+                guesses: guessedPlayers.length,
+                guessedPlayers: guessedPlayers, 
             }, { merge: true });
             await setDoc(doc(db, 'users', currentUser.uid), {
                 points: currentUser.points + points

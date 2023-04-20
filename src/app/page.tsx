@@ -76,12 +76,12 @@ export default function Home() {
       setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
       if(isDailyPlayer) {
-        updateScore(user, guessedPlayers.length + 1, guessLimit, true)
+        updateScore(user, guessedPlayers, guessLimit, true)
       }
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
       if(guessedPlayers.length === guessLimit) {
-        updateScore(user, guessedPlayers.length + 1, guessLimit, false)
+        updateScore(user, guessedPlayers, guessLimit, false)
       };
     }
   };

@@ -59,7 +59,8 @@ export const GuessContextProvider = ({
                 await getDoc(userRef).then((doc) => {
                     if (doc.exists()) {
                         const data = doc.data();
-                        setCompleted(data.completed)                       
+                        setCompleted(data.completed)
+                        setGuessedPlayers(data.guessedPlayers)                       
                     } else {
                         setCompleted(false)
                     }

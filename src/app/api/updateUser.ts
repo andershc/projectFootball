@@ -1,14 +1,15 @@
 import {updateDailyScore, setUsername} from "../../../firebase/firestore/updateUser";
 import { UserType } from "../../../lib/AuthContext";
+import { Player } from "../../types";
 
 export async function updateScore(
     currentUser: UserType | null,
-    guesses: number,
+    guesses: Player[],
     guessLimit: number,
     completed: boolean
 ) {
     // Calculate score
-    const score = Math.round(((guessLimit - guesses + 1) / guessLimit)*10);
+    const score = Math.round(((guessLimit - guesses.length + 1) / guessLimit)*10);
     await updateDailyScore(currentUser, score , completed, guesses)
 }
 
