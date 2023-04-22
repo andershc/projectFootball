@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import styles from "./profile-page.module.css";
 import signOutUser from "../../../firebase/auth/signout";
 import Button from "../../components/button/Button";
-import { updateUsername } from "../api/updateUser";
+import { updateUsername } from "../api/updateData";
 function ProfilePage() {
     const { user } = useAuthContext()
     const router = useRouter()

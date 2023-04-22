@@ -15,7 +15,7 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import Button from "../components/button/Button";
 import { useRouter } from "next/navigation";
 import { usePlayersContext } from "../../lib/PlayersContext";
-import { updateScore } from "./api/updateUser";
+import { updateScore } from "./api/updateData";
 import Lottie from 'react-lottie';
 import confetti from '../../public/static/lotti/confetti.json'
 

@@ -110,6 +110,8 @@ export interface Teams {
 export interface DailyPlayer {
   player: Player,
   transferData: TransferData[],
+  totalAttempts: number,
+  totalCorrect: number,
 }
 
 

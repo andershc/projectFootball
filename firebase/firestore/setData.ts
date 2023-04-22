@@ -1,4 +1,4 @@
-import { Player, User } from '../../src/types';
+import { DailyPlayer, Player, User } from '../../src/types';
 import { getFirestore, doc, getDoc, collection, getDocs, setDoc, deleteDoc } from 'firebase/firestore';
 import firebase_app from '../config';
 import { getAuth } from 'firebase/auth';
@@ -72,5 +72,28 @@ export async function setUsername(
             console.log(e);
             return false;
         }
+    }
+}
+
+// Update the stats of the daily player in DB
+export async function updateDailyPlayerStats(
+    completed: boolean
+) {
+    const date = moment().tz('America/New_York');
+    const formatCurrentDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
+    const dailyPlayerRef = doc(db, 'dailyPlayer', formatCurrentDate);
+    try {
+        const dailyPlayerDoc = await getDoc(dailyPlayerRef);
+        if(dailyPlayerDoc.exists()) {
+            const dailyPlayer = dailyPlayerDoc.data() as DailyPlayer;
+            await setDoc(dailyPlayerRef, {
+                totalCorrect: (dailyPlayer.totalCorrect ? dailyPlayer.totalCorrect : 0) + (completed ? 1 : 0),
+                totalAttempts: (dailyPlayer.totalAttempts ? dailyPlayer.totalAttempts : 0) + 1,
+            }, { merge: true });
+        } else {
+            console.log('Daily player not found for ' + formatCurrentDate);
+        }
+    } catch (e) {
+        console.log(e);
     }
 }

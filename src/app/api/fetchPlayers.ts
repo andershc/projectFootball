@@ -67,6 +67,7 @@ export async function getDailyPlayer(): Promise<DailyPlayer | undefined> {
     return dailyPlayer;
 }
 
+
 // Fetch one random player from firestore
 export async function getRandomPlayer(players: Player[]): Promise<DailyPlayer | undefined> {
     
@@ -85,6 +86,8 @@ export async function getRandomPlayer(players: Player[]): Promise<DailyPlayer | 
         const dailyPlayer: DailyPlayer = {
           player: randomPlayer,
           transferData: transferData,
+          totalAttempts: 0,
+          totalCorrect: 0,
         };
         return dailyPlayer;
           
