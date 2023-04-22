@@ -86,7 +86,9 @@ export default function Home() {
       if(playersCopy.length === guessLimit) {
         setCompleted(false);
         updateScore(user, playersCopy, guessLimit, false)
-      };
+      } else {
+        updateScore(user, playersCopy, 0, null)
+      }
     }
   };
 
@@ -165,7 +167,7 @@ export default function Home() {
                 </div>
             </div>
           }
-        {completed === undefined && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
+        {completed === null && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         { guessedPlayers.length > 0 &&
           <div className={styles.guesses}>
           <p>Guessed players:</p>

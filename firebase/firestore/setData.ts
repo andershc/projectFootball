@@ -10,7 +10,7 @@ const db = getFirestore(firebase_app);
 export async function updateDailyScore(
     currentUser: UserType | null,
     points: number,
-    completed: boolean,
+    completed: boolean | null,
     guessedPlayers: Player[]
 ) {
     // Update the user's score in DB
@@ -20,7 +20,7 @@ export async function updateDailyScore(
         const userRef = doc(db, 'users', currentUser.uid, 'history', formatCurrentDate);
         try {
             const userDoc = await getDoc(userRef);
-            if(userDoc.exists()) {
+            if(userDoc.exists() && userDoc.data()?.completed ) {
                 console.log('User already completed a puzzle today.');
                 return;
             }

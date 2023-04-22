@@ -6,7 +6,7 @@ export async function updateScore(
     currentUser: UserType | null,
     guesses: Player[],
     guessLimit: number,
-    completed: boolean
+    completed: boolean | null
 ) {
     // Calculate score
     const score = completed ? Math.round(((guessLimit - guesses.length + 1) / guessLimit)*10) : 0;
