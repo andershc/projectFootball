@@ -10,6 +10,15 @@ const nextConfig = {
       'www.countryflags.io',
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/default',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   // Use the prefix for assets and page routes
   basePath: process.env.NODE_ENV === 'production' ? '/projectFootball' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/projectFootball/' : '',

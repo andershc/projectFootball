@@ -108,16 +108,6 @@
   margin: 0.5rem 0;
 }
 
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-  .clubs {
-    flex-direction: column;
-  }
-}
-
 .transfersContainer {
   display: flex;
   flex-direction: row;
@@ -227,4 +217,23 @@
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--text-1);
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+  .completedRow {
+    width: 100%;
+  }
 }

@@ -4,6 +4,9 @@ import Image from "next/image";
 import styles from "./guess-container.module.css";
 import CheckMarkIcon from "../../../public/static/images/accept.png";
 import CrossIcon from "../../../public/static/images/remove.png";
+import Lottie from 'react-lottie';
+import checkmark from '../../../public/static/lotti/checkmark.json';
+import cross from '../../../public/static/lotti/red-cross.json';
 
 export default function GuessContainer({
     player,
@@ -14,6 +17,22 @@ export default function GuessContainer({
     correct: boolean,
     index: number
 }) {
+    const checkmarkOptions = {
+        loop: false,
+        autoplay: true,
+        animationData: checkmark,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
+    const crossOptions = {
+        loop: false,
+        autoplay: true,
+        animationData: cross,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice",
+        },
+    };
     return (
         <div className={styles.container}>
             <p className={styles.indexNumber}>{index}</p>
@@ -29,19 +48,17 @@ export default function GuessContainer({
             </div>
             {
                 correct ?
-                    <Image
-                        src={CheckMarkIcon}
-                        alt="correct"
-                        width={32}
-                        height={32}
-                    />
+                    <Lottie
+                        options={checkmarkOptions}
+                        height={50}
+                        width={50}
+                    ></Lottie>
                 :
-                <Image
-                    src={CrossIcon}
-                    alt="incorrect"
-                    width={36}
-                    height={36}
-                />
+                <Lottie
+                    options={crossOptions}
+                    height={50}
+                    width={50}
+                ></Lottie>
             }
             
         </div>

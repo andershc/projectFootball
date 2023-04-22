@@ -16,7 +16,8 @@ import Button from "../components/button/Button";
 import { useRouter } from "next/navigation";
 import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateUser";
-import moment from "moment";
+import Lottie from 'react-lottie';
+import confetti from '../../public/static/lotti/confetti.json'
 
 interface Transfer extends Team {
   type: string;
@@ -27,6 +28,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
   const [clubs, setClubs] = useState<Transfer[]>([]);
+  const [playConfetti, setPlayConfetti] = useState(false);
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -44,25 +46,26 @@ export default function Home() {
   const {players, setPlayers} = usePlayersContext();
 
   useEffect(() => {
-    const fetchPlayer = async () => {
-      if(players.length > 0) return setLoading(false);;
-      const playersList = await getPlayers() as Player[];
-      if(playersList !== undefined){
-        setLoading(false);
-        setPlayers(playersList);
-      }
-    };
-    const fetchDaily = async () => {
-      const dailyPlayer = await getDailyPlayer() as DailyPlayer;
-      if(dailyPlayer !== undefined){
-        setCorrectPlayer(dailyPlayer.player);
-        setTransferData(dailyPlayer.transferData);
-        setClubs(getTransferClubs(dailyPlayer.transferData, dailyPlayer.player.team));
-      }
-    };
-
     if(user?.email){
-      fetchPlayer(), fetchDaily();
+      if(players.length === 0) {
+        (async () => {
+          const playersList = await getPlayers() as Player[];
+          if(playersList !== undefined){
+            setLoading(false);
+            setPlayers(playersList);
+          }
+        })();
+      } else {
+        setLoading(false);
+      }
+      (async () => {
+        const dailyPlayer = await getDailyPlayer() as DailyPlayer;
+        if(dailyPlayer !== undefined){
+          setCorrectPlayer(dailyPlayer.player);
+          setTransferData(dailyPlayer.transferData);
+          setClubs(getTransferClubs(dailyPlayer.transferData, dailyPlayer.player.team));
+        }
+      })();
     } else {
       router.push('/signIn');
     }
@@ -76,6 +79,7 @@ export default function Home() {
     if (player.id === correctPlayer.id) {
       setCompleted(true);
       if(isDailyPlayer) {
+        setPlayConfetti(true);
         updateScore(user, playersCopy, guessLimit, true)
       }
     } else {
@@ -85,6 +89,15 @@ export default function Home() {
       } else {
         updateScore(user, playersCopy, 0, null)
       }
+    }
+  };
+
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: confetti,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice'
     }
   };
 
@@ -189,7 +202,15 @@ export default function Home() {
             <p>👤 Standard</p>
         </Link>
       </div>}
-        
+      {playConfetti && 
+      <div className={styles.confetti}>
+        <Lottie
+          options={defaultOptions}
+          height={'100%'}
+          width={'100%'}
+        />
+      </div>
+      }
     </div>
   );
 }
