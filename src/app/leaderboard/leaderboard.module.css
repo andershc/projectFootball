@@ -54,6 +54,4 @@
 .loading {
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--accent-4);
-    text-shadow: 1px 1px 2px var(--accent-5);
 }
