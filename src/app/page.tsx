@@ -18,6 +18,7 @@ import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateData";
 import Lottie from 'react-lottie';
 import confetti from '../../public/static/lotti/confetti.json'
+import WhatshotIcon from '@mui/icons-material/Whatshot';
 
 interface Transfer extends Team {
   type: string;
@@ -29,6 +30,10 @@ export default function Home() {
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
   const [clubs, setClubs] = useState<Transfer[]>([]);
   const [playConfetti, setPlayConfetti] = useState(false);
+  const [stats, setStats] = useState<{[key: string]: number}>({
+    totalAttempts: 0,
+    totalCorrect: 0,
+  });
   const { user } = useAuthContext();
   const router = useRouter();
 
@@ -64,6 +69,10 @@ export default function Home() {
           setCorrectPlayer(dailyPlayer.player);
           setTransferData(dailyPlayer.transferData);
           setClubs(getTransferClubs(dailyPlayer.transferData, dailyPlayer.player.team));
+          setStats({
+            totalAttempts: dailyPlayer.totalAttempts,
+            totalCorrect: dailyPlayer.totalCorrect,
+          });
         }
       })();
     } else {
@@ -107,6 +116,7 @@ export default function Home() {
       <div className={styles.mainContent}>
         <h1 className={styles.title}>Guess the Player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
+        <p className={styles.comeback}>{completed && "Come back tomorrow for a new challenge!"}</p>
         { completed || guessedPlayers.length === guessLimit ?
             <div className={styles.completedRow}>
               {completed ? 
@@ -170,17 +180,36 @@ export default function Home() {
         {completed === null && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         { guessedPlayers.length > 0 &&
           <div className={styles.guesses}>
-          <p>Guessed players:</p>
-          {guessedPlayers.map((guessedPlayer) => (
+            <p>Guessed players:</p>
+            {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
-                    key={guessedPlayer.id} 
-                    player={guessedPlayer}
-                    correct={guessedPlayer.id === correctPlayer.id}
-                    index={guessedPlayers.indexOf(guessedPlayer) + 1}
-                />
+                key={guessedPlayer.id} 
+                player={guessedPlayer}
+                correct={guessedPlayer.id === correctPlayer.id}
+                index={guessedPlayers.indexOf(guessedPlayer) + 1}
+              />
             ))}
-          </div>}
-          
+          </div>
+        }
+        <div className={styles.stats}>
+          <WhatshotIcon
+            className={styles.statsIcon}
+          />
+          <p>{stats.totalCorrect !== 0 ? 
+          (stats.totalAttempts > 1 ?
+            (
+              `${stats.totalCorrect} people have guessed the correct player today`
+            ) : (
+              `${stats.totalCorrect} person has guessed the correct player today`
+            )
+          ) : (
+            "You can be the first to guess the correct player!"
+          )
+          }
+          </p>
+        </div>
+        
+        
     </div>
       }
       { process.env.NODE_ENV === 'development' &&

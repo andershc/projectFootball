@@ -26,10 +26,10 @@ export default function UsersPage() {
     
 
     return (
-        <main >
-            <h1>Leaderboard</h1>
+        <main className={styles.leaderboard}>
+            <h1 className={styles.header}>Leaderboard</h1>
             {!users || users.length === 0 ? (
-                <p>Loading...</p>
+                <p className={styles.loading}>Loading...</p>
             ) : (
                 <table className={styles.table}>
                     <thead>
@@ -43,7 +43,7 @@ export default function UsersPage() {
                         {users.map((user, index) => (
                             <tr key={user.uid}>
                                 <td>{index + 1}</td>
-                                <td>{user.username || user.displayName || user.email?.split('@')[0]}</td>
+                                <td>{user.username || user.displayName?.split(" ")[0] || user.email?.split("@")[0]}</td>
                                 <td>{user.points}</td>
                             </tr>
                         ))}
