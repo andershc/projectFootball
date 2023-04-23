@@ -191,11 +191,13 @@ export default function Home() {
             ))}
           </div>
         }
+        {(stats.totalCorrect === undefined || stats.totalCorrect === 0) && completed !== null ? 
+        null : 
         <div className={styles.stats}>
           <WhatshotIcon
             className={styles.statsIcon}
           />
-          <p>{stats.totalCorrect !== 0 ? 
+          <p>{stats.totalCorrect !== undefined && stats.totalCorrect !== 0 ? 
           (stats.totalAttempts > 1 ?
             (
               `${stats.totalCorrect} people have guessed the correct player today`
@@ -207,7 +209,7 @@ export default function Home() {
           )
           }
           </p>
-        </div>
+        </div>}
         
         
     </div>
