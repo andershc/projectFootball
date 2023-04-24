@@ -4,6 +4,7 @@
   /* Your default theme */
 /* CSS HEX */
 --white: #ffffff;
+--black: #000000;
 --accent-1: #79B4B7;
 --accent-2: #f3fcfb;
 --accent-3: #9D9D9D;
@@ -16,6 +17,7 @@
 
 [data-theme='dark'] {
   --white: #ffffff;
+  --black: #000000;
   --accent-1: #222629;
   --accent-2: #474b4f;
   --accent-3: #6b6e70;
