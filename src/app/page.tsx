@@ -253,6 +253,7 @@ function getTransferClubs(transferData: TransferData[], currentTeam: Team): Tran
   // If the transfer is a loan, dont include the parent club and skip next transfer
   const clubs = transferData.map((data) => {
     // If the previous transfer is a loan, skip it
+    if(data.teams.in.id === null) return;
       return {
         type: data.type,
         year: data.date.split('-')[0],
