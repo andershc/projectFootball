@@ -247,34 +247,45 @@ export default function Home() {
 }
 
 function getTransferClubs(transferData: TransferData[], currentTeam: Team): Transfer[] {
-  // reverse the transfer data so the last club is first
-  transferData = transferData.slice(0).reverse();
+  // Reverse the transfer data so the last club is first
+  transferData = transferData.slice().reverse();
   const currentYear = new Date().getFullYear();
-  // If the transfer is a loan, dont include the parent club and skip next transfer
-  const clubs = transferData.map((data) => {
-    // If the previous transfer is a loan, skip it
-    if(data.teams.in.id === null) return;
+
+  const clubs: Transfer[] = transferData.reduce((acc: Transfer[], data, index) => {
+    if (data.teams.in.id === null) return acc;
+
     // If the previous transfer is a loan, and the in-club is the same as the out-club, skip it
-    if(transferData.indexOf(data) !== 0 && transferData[transferData.indexOf(data)-1].type === 'Loan' && data.teams.in.id === transferData[transferData.indexOf(data)-1].teams.out.id) return;
-      return {
-        type: data.type,
-        year: data.date.split('-')[0],
-        ...data.teams.in
-      }
+    if (
+      index !== 0 &&
+      transferData[index - 1].type === 'Loan' &&
+      data.teams.in.id === transferData[index - 1].teams.out.id
+    )
+      return acc;
+
+    acc.push({
+      type: data.type,
+      year: data.date.split('-')[0],
+      ...data.teams.in,
+    });
+
+    return acc;
+  }, []);
+
+  // Add the first out club to the first spot in the list
+  clubs.unshift({
+    ...transferData[0].teams.out,
+    type: 'First',
+    year: transferData[0].date.split('-')[0],
   });
-  // Add the first out club to first spot in the list
-  clubs.unshift({...transferData[0].teams.out, type: 'First', year: transferData[0].date.split('-')[0],});
+
   // If the last club in is not the current club, add it to the list
-  if(transferData[transferData.length-1].teams.in.id !== currentTeam.id){
+  if (transferData[transferData.length - 1].teams.in.id !== currentTeam.id) {
     clubs.push({
       ...currentTeam,
       type: 'Current',
-      year: currentYear.toString()
+      year: currentYear.toString(),
     });
   }
-  // Remove undefined values
-  for(let i = 0; i < clubs.length; i++){
-    if(clubs[i] === undefined) clubs.splice(i, 1);
-  }
-  return clubs as Transfer[];
+
+  return clubs;
 }
