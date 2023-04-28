@@ -10,25 +10,17 @@ import moment from 'moment';
 const auth = getAuth(firebase_app);
 
 type GuessContextType = {
-    guessedPlayers: Player[]
-    setGuessedPlayers: React.Dispatch<React.SetStateAction<Player[]>>
     correctPlayer: Player
     setCorrectPlayer: React.Dispatch<React.SetStateAction<Player>>
     transferData: TransferData[]
     setTransferData: React.Dispatch<React.SetStateAction<TransferData[]>>
-    completed: boolean | null
-    setCompleted: React.Dispatch<React.SetStateAction<boolean | null>>
 }
 
 export const GuessContext = React.createContext<GuessContextType>({
-    guessedPlayers: Array.apply({}, Array(8)) as Player[],
-    setGuessedPlayers: () => {},
     correctPlayer: {} as Player,
     setCorrectPlayer: () => {},
     transferData: [] as TransferData[],
     setTransferData: () => {},
-    completed: null,
-    setCompleted: () => {}
 });
 
 export const useGuessContext = () => useContext(GuessContext);
@@ -38,49 +30,13 @@ export const GuessContextProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [guessedPlayers, setGuessedPlayers ] = React.useState([] as Player[]);
     const [correctPlayer, setCorrectPlayer] = React.useState({} as Player);
     const [transferData, setTransferData] = React.useState([] as TransferData[]);
-    const [completed, setCompleted] = React.useState<boolean | null>(null);
-    const date = moment().tz('America/New_York');
-    const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
-    React.useEffect(() => {
-        //if(process.env.NODE_ENV === 'development') return;
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log('user', user);
-            if (user) {
-                // Fetch user data from firestore
-                const userRef = doc(getFirestore(firebase_app),
-                'users',
-                user.uid,
-                'history',
-                formatCurrentDate
-                );
-                await getDoc(userRef).then((doc) => {
-                    if (doc.exists()) {
-                        const data = doc.data();
-                        setCompleted(data.completed)
-                        setGuessedPlayers(data.guessedPlayers)  
-                        console.log('Document data:', data);                     
-                    } else {
-                        setCompleted(null)
-                        console.log('No such document!');
-                    }
-                });
-            } else {
-                return
-            }
-        });
-
-        return () => unsubscribe();
-    }, [formatCurrentDate]);
 
     return (
         <GuessContext.Provider value={{ 
-            guessedPlayers, setGuessedPlayers,
             correctPlayer, setCorrectPlayer,
             transferData, setTransferData,
-            completed, setCompleted,
             }}>
             {children}
         </GuessContext.Provider>
