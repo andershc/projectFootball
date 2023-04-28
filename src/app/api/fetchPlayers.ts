@@ -48,23 +48,26 @@ export async function getPlayers(): Promise<Player[] | undefined> {
 }
 
 // Fetch the daily players from firestore
-export async function getDailyPlayer(): Promise<DailyPlayer | undefined> {
-    const date = moment().tz('America/New_York');
-    const formatCurrentDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
-    console.log(date)
-    let dailyPlayer: DailyPlayer | undefined;
-    await getData('dailyPlayer', formatCurrentDate)
-      .then((data) => {
-        console.log('Daily player data fetched successfully');
-        dailyPlayer = data as DailyPlayer;
-        return dailyPlayer;
-      })
-      .catch((error) => {
-        console.log(error);
-        return undefined;
-      }
-    );
-    return dailyPlayer;
+export async function getDailyPlayer(fetchDate: string | null): Promise<DailyPlayer | undefined> {
+  let date = moment().tz('America/New_York');
+  if(fetchDate) {
+    date = moment(fetchDate).tz('America/New_York');
+  }
+  const formatDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
+  console.log(date)
+  let dailyPlayer: DailyPlayer | undefined;
+  await getData('dailyPlayer', formatDate)
+    .then((data) => {
+      console.log('Daily player data fetched successfully');
+      dailyPlayer = data as DailyPlayer;
+      return dailyPlayer;
+    })
+    .catch((error) => {
+      console.log(error);
+      return undefined;
+    }
+  );
+  return dailyPlayer;
 }
 
 

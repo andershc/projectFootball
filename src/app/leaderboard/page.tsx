@@ -1,7 +1,7 @@
 'use client'
 
 import { Metadata } from "next";
-import { getUsers } from "../api/fetchUsers";
+import { getUsers } from "../api/fetchUserData";
 import { DailyPlayer, Player, User } from "../../types";
 import Image from 'next/image';
 import { UserType, useAuthContext } from "../../../lib/AuthContext";

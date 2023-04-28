@@ -13,12 +13,13 @@ import Loading from "./loading";
 import Image from "next/image";
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import Button from "../components/button/Button";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateData";
 import Lottie from 'react-lottie';
 import confetti from '../../public/static/lotti/confetti.json'
 import WhatshotIcon from '@mui/icons-material/Whatshot';
+import { getUserHistory } from "./api/fetchUserData";
 
 interface Transfer extends Team {
   type: string;
@@ -28,24 +29,24 @@ interface Transfer extends Team {
 export default function Home() {
   const [loading, setLoading] = useState(true);
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
+  const [guessedPlayers, setGuessedPlayers ] = useState([] as Player[]);
+  const [completed, setCompleted] = useState<boolean | null>(null);
   const [clubs, setClubs] = useState<Transfer[]>([]);
   const [playConfetti, setPlayConfetti] = useState(false);
   const [stats, setStats] = useState<{[key: string]: number}>({
     totalAttempts: 0,
     totalCorrect: 0,
   });
+  const searchParams = useSearchParams();
+  const fetchDate = searchParams.get('date');
   const { user } = useAuthContext();
   const router = useRouter();
 
   const { 
-    guessedPlayers,
-    setGuessedPlayers,
     correctPlayer,
     setCorrectPlayer,
     transferData,
     setTransferData,
-    completed,
-    setCompleted,
   } = useGuessContext();
 
   const {players, setPlayers} = usePlayersContext();
@@ -64,7 +65,7 @@ export default function Home() {
         setLoading(false);
       }
       (async () => {
-        const dailyPlayer = await getDailyPlayer() as DailyPlayer;
+        const dailyPlayer = await getDailyPlayer(fetchDate) as DailyPlayer;
         if(dailyPlayer !== undefined){
           setCorrectPlayer(dailyPlayer.player);
           setTransferData(dailyPlayer.transferData);
@@ -74,14 +75,29 @@ export default function Home() {
             totalCorrect: dailyPlayer.totalCorrect,
           });
         }
-      })();
+        await getUserHistory(fetchDate, user).then((data) => {
+          console.log(data);
+          if(data === undefined) {
+            console.log('no data');
+            return;
+          }
+          setCompleted(data.completed);
+          if(data.guessedPlayers) {
+            setGuessedPlayers(data?.guessedPlayers);
+          } else {
+            setGuessedPlayers([]);
+          }
+          if(fetchDate) setIsDailyPlayer(false);
+        });
+      }
+      )();
     } else {
       router.push('/signIn');
     }
-  }, [setCorrectPlayer, setTransferData, user, router, players.length, setPlayers]);
+  }, [setCorrectPlayer, setTransferData, user, router, players.length, setPlayers, fetchDate]);
 
   const guessLimit = clubs?.length || 0;
-
+  console.log(guessedPlayers);
   const handlePlayerSelect = (player: Player) => {
     setGuessedPlayers((prev) => [...prev, player]);
     const playersCopy = [...guessedPlayers, player];

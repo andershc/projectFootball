@@ -9,6 +9,13 @@ export interface User {
     points: number;
 }
 
+export interface GuessResult {
+  completed: boolean | null;
+  guessedPlayers: Player[];
+  guesses: number;
+  points: number;
+}
+
 export interface Team {
     id: number;
     name: string;
