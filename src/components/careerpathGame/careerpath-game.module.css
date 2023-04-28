@@ -1,0 +1,176 @@
+
+  .mainContent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: 100%;
+  }
+  
+  .guesses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 1rem 1rem;
+    background-color: var(--accent-4);
+  }
+  
+  .guesses > p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+  .transfersContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 90vw;
+  }
+  
+  .transfersContainer > p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+  
+  .clubs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .transfer {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+    height: 100%;
+  }
+  
+  .club {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 100%;
+    min-width: 48px;
+  }
+  
+  .club > p {
+    font-size: 0.8rem;
+    font-weight: 200;
+    color: var(--text-1);
+    height: 10px;
+  }
+  
+  .completedRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border-radius: 0.25rem;
+    background-color: var(--accent-1);
+    text-align: center;
+    min-width: 25 0px;
+    max-width: 400px;
+  }
+  
+  .completedRow > p {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--text-1);
+    
+  }
+  
+  .playerPhoto {
+    border-radius: 100%;
+  }
+  
+  .playerName {
+    font-size: 0.8rem;
+    font-weight: 200;
+    color: var(--text-1);
+  }
+  
+  .guesses {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    margin: 1rem 1rem;
+    background-color: var(--accent-1);
+    max-width: 550px;
+  }
+  
+  .guesses > p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+  }
+  
+  .arrow {
+    width: 20px;
+    margin: 42px 0.3rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-1);
+  }
+  
+  .stats {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: medium;
+    font-weight: 400;
+    color: var(--text-7);
+    text-align: center;
+  }
+  
+  .comeback {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-1);
+    text-align: center;
+  }
+  
+  @media (max-width: 600px) {
+    .grid {
+      width: 100%;
+      flex-direction: column;
+    }
+    .completedRow {
+      width: 100%;
+    }
+    .stats {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: medium;
+      font-weight: 400;
+      color: var(--text-7);
+      text-align: center;
+    }
+  }
+  
