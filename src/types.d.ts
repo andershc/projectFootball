@@ -1,12 +1,12 @@
 // Firebase User Schema
 export interface User {
-    uid: string;
-    email: string;
-    displayName: string;
-    photoURL: string;
-    emailVerified: boolean;
-    username: string;
-    points: number;
+  uid: string;
+  email: string;
+  displayName: string;
+  photoURL: string;
+  emailVerified: boolean;
+  username: string;
+  points: number;
 }
 
 export interface GuessResult {
@@ -17,66 +17,64 @@ export interface GuessResult {
 }
 
 export interface Team {
-    id: number;
-    name: string;
-    logo: string;
+  id: number;
+  name: string;
+  logo: string;
 }
 
 export interface Standings {
-  rank: number,
-  team: Team,
-  points: number,
-  goalsDiff: number,
-  form: string,
-  status: string,
-  description: string,
+  rank: number;
+  team: Team;
+  points: number;
+  goalsDiff: number;
+  form: string;
+  status: string;
+  description: string;
   all: {
-    played: number,
-    win: number,
-    draw: number,
-    lose: number,
+    played: number;
+    win: number;
+    draw: number;
+    lose: number;
     goals: {
-      for: number,
-      against: number,
-    },
-  },
+      for: number;
+      against: number;
+    };
+  };
   home: {
-    played: number,
-    win: number,
-    draw: number,
-    lose: number,
+    played: number;
+    win: number;
+    draw: number;
+    lose: number;
     goals: {
-      for: number,
-      against: number,
-    },
-  },
+      for: number;
+      against: number;
+    };
+  };
   away: {
-    played: number,
-    win: number,
-    draw: number,
-    lose: number,
+    played: number;
+    win: number;
+    draw: number;
+    lose: number;
     goals: {
-      for: number,
-      against: number,
-    },
-  },
-  update: string,
+      for: number;
+      against: number;
+    };
+  };
+  update: string;
 }
 
 export interface LeagueData {
   league: {
-    id: number,
-    name: string,
-    country: string,
-    logo: string,
-    flag: string,
-    season: number,
-    standings: Standings[][],
-  }
-  
-  
+    id: number;
+    name: string;
+    country: string;
+    logo: string;
+    flag: string;
+    season: number;
+    standings: Standings[][];
+  };
 }
-export type Player = {
+export interface Player {
   id: number;
   name: string;
   firstName: string;
@@ -88,37 +86,29 @@ export type Player = {
   team: Team;
   nationality: string;
   league: League;
-};
+}
 
-export type Team = {
-  id: number;
-  name: string;
-  logo: string;
-};
-
-export type League = {
+export interface League {
   id: number;
   name: string;
   country: string;
   logo: string;
-};
+}
 
 export interface TransferData {
-  date: string,
-  teams: Teams,
-  type: string,
+  date: string;
+  teams: Teams;
+  type: string;
 }
 
 export interface Teams {
-  in: Team,
-  out: Team,
+  in: Team;
+  out: Team;
 }
 
 export interface DailyPlayer {
-  player: Player,
-  transferData: TransferData[],
-  totalAttempts: number,
-  totalCorrect: number,
+  player: Player;
+  transferData: TransferData[];
+  totalAttempts: number;
+  totalCorrect: number;
 }
-
-

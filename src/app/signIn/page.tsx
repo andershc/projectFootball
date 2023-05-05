@@ -1,70 +1,95 @@
-'use client'
-import React, { useContext } from "react";
-import { signIn, signInWithGoogle, auth} from "../../../firebase/auth/signIn";
-import { useRouter } from 'next/navigation'
-import { useAuthContext } from "../../../lib/AuthContext";
-import Image from 'next/image'
-import styles from "./signIn-page.module.css"
-import GoogleImage from "../../../public/static/images/google.png"
+/* eslint-disable @typescript-eslint/no-misused-promises */
+"use client";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { signIn, signInWithGoogle } from "../../../firebase/auth/signIn";
+import GoogleImage from "../../../public/static/images/google.png";
+import styles from "./signIn-page.module.css";
 
-function SignInPage() {
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
-    const router = useRouter()
+function SignInPage(): JSX.Element {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const router = useRouter();
 
-    const handleGoogleSignIn = async () => {
-        const { result, error } = await signInWithGoogle();
-        if (error) {
-            return console.log(error)
-        }
-        // else successful
-        console.log("Result ", result)
-        return router.push("/profile")
+  const handleGoogleSignIn = async (): Promise<void> => {
+    const { result, error } = await signInWithGoogle();
+    if (error !== null) {
+      console.log(error);
+      return;
     }
-    
-    const handleForm = async (event: { preventDefault: () => void; }) => {
-        event.preventDefault()
+    // else successful
+    console.log("Result ", result);
+    router.push("/profile");
+  };
 
-        const { result, error } = await signIn(email, password);
+  const handleForm = async (event: {
+    preventDefault: () => void;
+  }): Promise<void> => {
+    event.preventDefault();
 
-        if (error) {
-            if(error === "auth/user-not-found") {
-                return router.push("/signup")
-            }
-            return console.log(error)
-        }
+    const { result, error } = await signIn(email, password);
 
-        // else successful
-        console.log("Result ", result)
-        return router.push("/profile")
+    if (error !== null) {
+      if (error === "auth/user-not-found") {
+        router.push("/signup");
+        return;
+      }
+      console.log(error);
+      return;
     }
-    
 
-    return (
+    // else successful
+    console.log("Result ", result);
+    router.push("/profile");
+  };
+
+  return (
     <div className={styles.wrapper}>
-        <div className={styles.formWrapper}>
-            <h1 className="mt-60 mb-30">Sign in</h1>
-            <form onSubmit={handleForm} className="form">
-                <label htmlFor="email">
-                    <p>Email</p>
-                    <input onChange={(e) => setEmail(e.target.value)} required type="email" name="email" id="email" placeholder="example@mail.com" />
-                </label>
-                <label htmlFor="password">
-                    <p>Password</p>
-                    <input onChange={(e) => setPassword(e.target.value)} required type="password" name="password" id="password" placeholder="password" />
-                </label>
-                {/* Don't have a user? */}
-                <p>Do not have an account?<Link href="/signup">Sign up</Link></p>
-                <button type="submit">Sign In</button>
-            </form>
-            {/*Google Sign in */}
-            
-        </div>
-        <button className={styles.googleButton} onClick={handleGoogleSignIn}>
-            <Image src={GoogleImage} alt={"Google"} width={30} height={30} /> Sign in with Google
-        </button>
-    </div>);
+      <div className={styles.formWrapper}>
+        <h1 className="mt-60 mb-30">Sign in</h1>
+        <form onSubmit={handleForm} className="form">
+          <label htmlFor="email">
+            <p>Email</p>
+            <input
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+              required
+              type="email"
+              name="email"
+              id="email"
+              placeholder="example@mail.com"
+            />
+          </label>
+          <label htmlFor="password">
+            <p>Password</p>
+            <input
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
+              type="password"
+              name="password"
+              id="password"
+              placeholder="password"
+            />
+          </label>
+          {/* Don't have a user? */}
+          <p>
+            Do not have an account?<Link href="/signup">Sign up</Link>
+          </p>
+          <button type="submit">Sign In</button>
+        </form>
+        {/* Google Sign in */}
+      </div>
+      <button className={styles.googleButton} onClick={handleGoogleSignIn}>
+        <Image src={GoogleImage} alt={"Google"} width={30} height={30} /> Sign
+        in with Google
+      </button>
+    </div>
+  );
 }
 
 export default SignInPage;

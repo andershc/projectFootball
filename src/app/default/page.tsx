@@ -1,89 +1,104 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-misused-promises */
+"use client";
 
-import { DailyPlayer, Player, TransferData } from '../../types'
-import { useEffect, useState } from 'react'
-import { getDailyPlayer, getPlayers, getRandomPlayer}  from '../api/fetchPlayers'
-import PlayerInput from '../../components/playerInput/PlayerInput'
-import styles from '../../styles/Home.module.css'
-import HintContainer from '../../components/hintContainer/HintContainer'
-import { useGuessContext } from '../../../lib/GuessContext'
-import GuessContainer from '../../components/guessContainer/GuessContainer'
-import Button from '../../components/button/Button'
-import Loading from '../loading'
-import { useAuthContext } from '../../../lib/AuthContext'
-import { usePlayersContext } from '../../../lib/PlayersContext'
+import { useEffect, useState } from "react";
+import { useAuthContext } from "../../../lib/AuthContext";
+import { usePlayersContext } from "../../../lib/PlayersContext";
+import Button from "../../components/button/Button";
+import GuessContainer from "../../components/guessContainer/GuessContainer";
+import HintContainer from "../../components/hintContainer/HintContainer";
+import PlayerInput from "../../components/playerInput/PlayerInput";
+import styles from "../../styles/Home.module.css";
+import { type DailyPlayer, type Player } from "../../types";
+import { getRandomPlayer } from "../api/fetchPlayers";
+import Loading from "../loading";
 
 const guessLimit = 5;
 
-export default function Default() {
+export default function Default(): JSX.Element {
   const [completed, setCompleted] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [correctPlayer, setCorrectPlayer] = useState({} as DailyPlayer);
+  const [correctPlayer, setCorrectPlayer] = useState<DailyPlayer>();
   const [guessedPlayers, setGuessedPlayers] = useState([] as Player[]);
   const { user } = useAuthContext();
-  const {
-    players,
-   } = usePlayersContext();
+  const { players } = usePlayersContext();
 
   useEffect(() => {
-    const fetchDaily = async () => {
-      if(guessedPlayers.length > 0) return setLoading(false);
-      await getRandomPlayer(players).then((player) => {
-        if(player === undefined) return;
-        setCorrectPlayer(player)
+    const fetchDaily = async (): Promise<void> => {
+      if (guessedPlayers.length > 0) {
         setLoading(false);
+        return;
       }
-    )}
+      await getRandomPlayer(players).then((player) => {
+        if (player === undefined) return;
+        setCorrectPlayer(player);
+        setLoading(false);
+      });
+    };
 
-    if(user?.email){ 
-      fetchDaily();
+    if (user?.email !== undefined) {
+      fetchDaily().catch((error) => {
+        console.error("Error occurred while fetching daily data:", error);
+      });
     }
   }, [guessedPlayers.length, players, setCorrectPlayer, user]);
 
-  const handlePlayerSelect = (player: Player) => {
-    if(guessedPlayers.length >= guessLimit) return;
-    if (player.id === correctPlayer.player.id) {
+  const handlePlayerSelect = (player: Player): void => {
+    if (guessedPlayers.length >= guessLimit) return;
+    if (player.id === correctPlayer?.player.id) {
       setCompleted(true);
       setGuessedPlayers((prev) => [...prev, player]);
     } else {
       setGuessedPlayers((prev) => [...prev, player]);
-      if(guessedPlayers.length === guessLimit - 1) setCompleted(true);
+      if (guessedPlayers.length === guessLimit - 1) setCompleted(true);
     }
   };
 
-
   return (
     <div className={styles.mainContainer}>
-      {loading ? <Loading /> :
-      <div className={styles.mainContent}>
-        <h1>Guess the Player</h1>
-        <h2>{guessedPlayers.length} / {guessLimit}</h2>
-        <HintContainer correctPlayer={correctPlayer.player} numberOfGuesses={guessedPlayers.length} completed={completed}/>
-        {!completed && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
-        <div className={styles.guesses}>
-          <p>Guessed players:</p>
-          {guessedPlayers.map((guessedPlayer) => (
+      {loading ? (
+        <Loading />
+      ) : (
+        <div className={styles.mainContent}>
+          <h1>Guess the Player</h1>
+          <h2>
+            {guessedPlayers.length} / {guessLimit}
+          </h2>
+          {correctPlayer !== undefined && (
+            <HintContainer
+              correctPlayer={correctPlayer?.player}
+              numberOfGuesses={guessedPlayers.length}
+              completed={completed}
+            />
+          )}
+          {!completed && (
+            <PlayerInput players={players} onSelect={handlePlayerSelect} />
+          )}
+          <div className={styles.guesses}>
+            <p>Guessed players:</p>
+            {guessedPlayers.map((guessedPlayer) => (
               <GuessContainer
-                    key={guessedPlayer.id} 
-                    player={guessedPlayer}
-                    correct={guessedPlayer.id === correctPlayer.player.id}
-                    index={guessedPlayers.indexOf(guessedPlayer) + 1}
-                />
+                key={guessedPlayer.id}
+                player={guessedPlayer}
+                correct={guessedPlayer.id === correctPlayer?.player.id}
+                index={guessedPlayers.indexOf(guessedPlayer) + 1}
+              />
             ))}
           </div>
           <Button
-            onClick={() => getRandomPlayer(players).then((player) => {
-              if(player === undefined) return;
-              setCompleted(false);
-              setGuessedPlayers([])
-              setCorrectPlayer(player)
-              }
-            )}
+            onClick={async () => {
+              await getRandomPlayer(players).then((player) => {
+                if (player === undefined) return;
+                setCompleted(false);
+                setGuessedPlayers([]);
+                setCorrectPlayer(player);
+              });
+            }}
             text="Get new player"
             className={styles.newPlayerButton}
           />
-      </div>
-      }
+        </div>
+      )}
     </div>
   );
 }

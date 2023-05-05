@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { Player } from '../../types';
-import styles from './player-input.module.css';
-import Image from 'next/image';
-import accents from 'remove-accents';
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import accents from "remove-accents";
+import { type Player } from "../../types";
+import styles from "./player-input.module.css";
 
 interface PlayerInputProps {
   players: Player[];
   onSelect: (player: Player) => void;
 }
 
-export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
-  const [inputValue, setInputValue] = useState('');
+export default function PlayerInput({
+  players,
+  onSelect,
+}: PlayerInputProps): JSX.Element {
+  const [inputValue, setInputValue] = useState("");
   const [filteredPlayers, setFilteredPlayers] = useState<Player[]>([]);
 
   useEffect(() => {
-    const filterPlayers = () => {
-      const filtered = players.filter((player) =>
-        compareStrings(player.name, inputValue)
-        || compareStrings(player.firstName, inputValue)
-        || compareStrings(player.lastName, inputValue)
+    const filterPlayers = async (): Promise<void> => {
+      const filtered = players.filter(
+        (player) =>
+          compareStrings(player.name, inputValue) ||
+          compareStrings(player.firstName, inputValue) ||
+          compareStrings(player.lastName, inputValue)
       );
       setFilteredPlayers(filtered.slice(0, 10));
     };
@@ -26,13 +31,15 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
     filterPlayers();
   }, [inputValue, players]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ): void => {
     setInputValue(event.target.value);
   };
 
-  const handleSelect = (player: Player) => {
+  const handleSelect = (player: Player): void => {
     onSelect(player);
-    setInputValue('');
+    setInputValue("");
   };
 
   return (
@@ -48,7 +55,13 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
       {inputValue.length > 2 ? (
         <ul className={styles.list}>
           {filteredPlayers.map((player) => (
-            <li className={styles.listItem} key={player.id} onClick={() => handleSelect(player)}>
+            <li
+              className={styles.listItem}
+              key={player.id}
+              onClick={() => {
+                handleSelect(player);
+              }}
+            >
               <Image
                 className={styles.playerPhoto}
                 src={player.photo}
@@ -60,13 +73,14 @@ export default function PlayerInput({ players, onSelect }: PlayerInputProps) {
             </li>
           ))}
         </ul>
-      ): null}
+      ) : null}
     </div>
   );
-};
+}
 
-
-
-function compareStrings(str1: string, str2: string) {
-  return accents.remove(str1).toLowerCase().includes(accents.remove(str2).toLowerCase());
+function compareStrings(str1: string, str2: string): boolean {
+  return accents
+    .remove(str1)
+    .toLowerCase()
+    .includes(accents.remove(str2).toLowerCase());
 }
