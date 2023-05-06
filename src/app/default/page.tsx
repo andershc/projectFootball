@@ -66,6 +66,7 @@ export default function Default() {
               <GuessContainer
                     key={guessedPlayer.id} 
                     player={guessedPlayer}
+                    correctPlayer={correctPlayer.player}
                     correct={guessedPlayer.id === correctPlayer.player.id}
                     index={guessedPlayers.indexOf(guessedPlayer) + 1}
                 />

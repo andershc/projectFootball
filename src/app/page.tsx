@@ -1,24 +1,24 @@
 'use client'
 
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import Image from "next/image";
 import Link from "next/link";
-import styles from "../styles/Home.module.css";
-import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Lottie from 'react-lottie';
 import { useAuthContext } from "../../lib/AuthContext";
 import { useGuessContext } from "../../lib/GuessContext";
+import { usePlayersContext } from "../../lib/PlayersContext";
+import confetti from '../../public/static/lotti/confetti.json';
+import Button from "../components/button/Button";
 import GuessContainer from "../components/guessContainer/GuessContainer";
 import PlayerInput from "../components/playerInput/PlayerInput";
-import { Player, DailyPlayer, Team, TransferData } from "../types";
-import { getPlayers, getDailyPlayer, getRandomPlayer } from "./api/fetchPlayers";
-import Loading from "./loading";
-import Image from "next/image";
-import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
-import Button from "../components/button/Button";
-import { useRouter } from "next/navigation";
-import { usePlayersContext } from "../../lib/PlayersContext";
+import styles from "../styles/Home.module.css";
+import { DailyPlayer, Player, Team, TransferData } from "../types";
+import { getDailyPlayer, getPlayers, getRandomPlayer } from "./api/fetchPlayers";
 import { updateScore } from "./api/updateData";
-import Lottie from 'react-lottie';
-import confetti from '../../public/static/lotti/confetti.json'
-import WhatshotIcon from '@mui/icons-material/Whatshot';
+import Loading from "./loading";
 
 interface Transfer extends Team {
   type: string;
@@ -177,7 +177,7 @@ export default function Home() {
                 </div>
             </div>
           }
-        {completed === null && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
+        {completed === null || !isDailyPlayer && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         { guessedPlayers.length > 0 &&
           <div className={styles.guesses}>
             <p>Guessed players:</p>
@@ -225,6 +225,7 @@ export default function Home() {
             setGuessedPlayers([])
             setCorrectPlayer(player?.player)
             setTransferData(player?.transferData)
+            setClubs(getTransferClubs(player?.transferData, player?.player.team))
             }
           )}
           text="Get new player"

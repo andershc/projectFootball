@@ -1,22 +1,32 @@
-import { Player } from "../../types";
-import { useGuessContext } from "../../../lib/GuessContext";
 import Image from "next/image";
-import styles from "./guess-container.module.css";
-import CheckMarkIcon from "../../../public/static/images/accept.png";
-import CrossIcon from "../../../public/static/images/remove.png";
+import { useEffect, useState } from "react";
 import Lottie from 'react-lottie';
+import { getCountryCode } from "../../../lib/CountryCode";
+import { getPositionAcronym } from "../../../lib/GetPosition";
 import checkmark from '../../../public/static/lotti/checkmark.json';
 import cross from '../../../public/static/lotti/red-cross.json';
+import { Player } from "../../types";
+import styles from "./guess-container.module.css";
 
 export default function GuessContainer({
     player,
+    correctPlayer,
     correct,
     index
 }: {
     player: Player,
+    correctPlayer: Player,
     correct: boolean,
     index: number
 }) {
+    const [flagUrl, setFlagUrl] = useState('https://hatscripts.github.io/circle-flags/flags/xx.svg');
+    useEffect(() => {
+        if (player && player.nationality) {
+          setFlagUrl('https://hatscripts.github.io/circle-flags/flags/' + 
+          getCountryCode(player.nationality) + 
+          '.svg');
+        }
+      }, [correctPlayer]);
     const checkmarkOptions = {
         loop: false,
         autoplay: true,
@@ -46,6 +56,85 @@ export default function GuessContainer({
                 />
                 <p>{player.name}</p>
             </div>
+            <div className={styles.hints}>
+            {/* Nationality of guessed player */}
+            {
+                player.nationality === correctPlayer.nationality ?
+                <div className={`${styles.correctFlag} ${styles.flag}`}>
+                    <Image   
+                        src={flagUrl}
+                        alt="flag"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                :
+                <div className={`${styles.wrongFlag} ${styles.flag}`}>
+                    <Image
+                        src={flagUrl}
+                        alt="flag"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                
+            }
+            {/* League of guessed player */}
+            {
+                player.league.id === correctPlayer.league.id ?
+                <div className={`${styles.correctFlag} ${styles.flag}`}>
+                    <Image   
+                        src={player.league.logo}
+                        alt="league"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                :
+                <div className={`${styles.wrongFlag} ${styles.flag}`}>
+                    <Image
+                        src={player.league.logo}
+                        alt="league"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                
+            }
+            {/* Club of guessed player */}
+            {
+                player.team.id === correctPlayer.team.id ?
+                <div className={`${styles.correctFlag} ${styles.flag}`}>
+                    <Image   
+                        src={player.team.logo}
+                        alt="flag"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                :
+                <div className={`${styles.wrongFlag} ${styles.flag}`}>
+                    <Image
+                        src={player.team.logo}
+                        alt="flag"
+                        width={32}
+                        height={32}
+                    />
+                </div>
+                
+            }
+            {/* Position of guessed player */}
+            {
+                player.nationality === correctPlayer.nationality ?
+                <div className={styles.position} id={styles.correctPosition}>
+                    <p>{getPositionAcronym(player.position)}</p>
+                </div>
+                :
+                <div className={styles.position} id={styles.wrongPosition}>
+                    <p>{getPositionAcronym(player.position)}</p>
+                </div>
+                
+            }
             {
                 correct ?
                     <Lottie
@@ -60,7 +149,7 @@ export default function GuessContainer({
                     width={50}
                 ></Lottie>
             }
-            
+            </div>
         </div>
     );
     }
