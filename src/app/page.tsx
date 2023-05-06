@@ -114,7 +114,7 @@ export default function Home() {
     <div className={styles.mainContainer}>
       {loading ? <Loading /> :
       <div className={styles.mainContent}>
-        <h1 className={styles.title}>Guess the Player</h1>
+        <h1 className={styles.title}>Guess the daily player</h1>
         <h2>{guessedPlayers.length} / {guessLimit}</h2>
         <p className={styles.comeback}>{completed && "Come back tomorrow for a new challenge!"}</p>
         { completed || guessedPlayers.length === guessLimit ?
@@ -185,6 +185,7 @@ export default function Home() {
               <GuessContainer
                 key={guessedPlayer.id} 
                 player={guessedPlayer}
+                correctPlayer={correctPlayer}
                 correct={guessedPlayer.id === correctPlayer.id}
                 index={guessedPlayers.indexOf(guessedPlayer) + 1}
               />

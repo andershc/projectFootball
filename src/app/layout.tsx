@@ -16,7 +16,7 @@ from
 import Head from 'next/head';
 
 export const metadata: Metadata = {
-    title: 'CareerPath',
+    title: 'PlayerGuessr',
     description: 'Football Career Path Game',
     openGraph: {
         images: '../../public/favicon.ico',
