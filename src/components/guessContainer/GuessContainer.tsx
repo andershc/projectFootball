@@ -29,19 +29,21 @@ export default function GuessContainer({
       }, [correctPlayer, player]);
     const checkmarkOptions = {
         loop: false,
-        autoplay: true,
+        autoplay: false,
         animationData: checkmark,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice",
         },
+        delay: 2500
     };
     const crossOptions = {
         loop: false,
-        autoplay: true,
+        autoplay: false,
         animationData: cross,
         rendererSettings: {
             preserveAspectRatio: "xMidYMid slice",
         },
+        delay: 2500
     };
     return (
         <div className={styles.container}>
@@ -87,26 +89,27 @@ export default function GuessContainer({
                         />
                     </div>
                     {/* Position of guessed player */}
-                    <div className={`${styles.hint} ${styles.position} ${player.nationality === correctPlayer.nationality ? styles.correct : styles.wrong}`}>
+                    <div className={`${styles.hint} ${styles.position} ${player.position === correctPlayer.position ? styles.correct : styles.wrong}`}>
                         <p>{getPositionAcronym(player.position)}</p>
                     </div>
                 </div>
             </div>
-            {
-                correct ?
-                    <Lottie
-                        options={checkmarkOptions}
-                        height={50}
-                        width={50}
-                    ></Lottie>
-                :
-                <Lottie
-                    options={crossOptions}
-                    height={50}
-                    width={50}
-                ></Lottie>
-        }
-            
+            <div className={styles.lottieAnimation}>
+                {correct ? (  
+                        <Lottie
+                            options={checkmarkOptions}
+                            height={50}
+                            width={50}
+                        />
+                    ) : (
+                        <Lottie
+                            options={crossOptions}
+                            height={50}
+                            width={50}
+                        />
+                    )
+                }
+            </div>
         </div>
     );
     }
