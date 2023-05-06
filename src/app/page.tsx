@@ -177,7 +177,7 @@ export default function Home() {
                 </div>
             </div>
           }
-        {completed === null || !isDailyPlayer && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
+        {completed === null && <PlayerInput players={players} onSelect={handlePlayerSelect}/>}
         { guessedPlayers.length > 0 &&
           <div className={styles.guesses}>
             <p>Guessed players:</p>
