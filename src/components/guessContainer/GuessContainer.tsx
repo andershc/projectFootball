@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import Lottie from 'react-lottie';
+import Lottie from "react-lottie";
 import { getCountryCode } from "../../../lib/CountryCode";
 import { getPositionAcronym } from "../../../lib/GetPosition";
 import checkmark from '../../../public/static/lotti/checkmark.json';
@@ -26,7 +26,7 @@ export default function GuessContainer({
           getCountryCode(player.nationality) + 
           '.svg');
         }
-      }, [correctPlayer]);
+      }, [correctPlayer, player]);
     const checkmarkOptions = {
         loop: false,
         autoplay: true,
@@ -46,95 +46,52 @@ export default function GuessContainer({
     return (
         <div className={styles.container}>
             <p className={styles.indexNumber}>{index}</p>
-            <div className={styles.player}>
-                <Image
-                    className={styles.playerPhoto}
-                    src={player.photo}
-                    alt={player.name}
-                    width={50}
-                    height={50}
-                />
-                <p>{player.name}</p>
+            <div className={styles.content}>
+                <div className={styles.player}>
+                    <Image
+                        className={styles.playerPhoto}
+                        src={player.photo}
+                        alt={player.name}
+                        width={50}
+                        height={50}
+                    />
+                    <p>{player.name}</p>
+                </div>
+                
+                <div className={styles.hints}>
+                    {/* Nationality of guessed player */}
+                    <div className={`${styles.hint} ${player.nationality === correctPlayer.nationality ? styles.correct : styles.wrong}`}>
+                        <Image
+                        src={flagUrl}
+                        alt="flag"
+                        width={28}
+                        height={28}
+                        />
+                    </div>
+                    {/* League of guessed player */}
+                    <div className={`${styles.hint} ${player.league.id === correctPlayer.league.id ? styles.correct : styles.wrong}`}>
+                        <Image
+                        src={player.league.logo}
+                        alt="league"
+                        width={24}
+                        height={24}
+                        />
+                    </div>
+                    {/* Club of guessed player */}
+                    <div className={`${styles.hint} ${player.team.id === correctPlayer.team.id ? styles.correct : styles.wrong}`}>
+                        <Image
+                        src={player.team.logo}
+                        alt="flag"
+                        width={28}
+                        height={28}
+                        />
+                    </div>
+                    {/* Position of guessed player */}
+                    <div className={`${styles.hint} ${styles.position} ${player.nationality === correctPlayer.nationality ? styles.correct : styles.wrong}`}>
+                        <p>{getPositionAcronym(player.position)}</p>
+                    </div>
+                </div>
             </div>
-            <div className={styles.hints}>
-            {/* Nationality of guessed player */}
-            {
-                player.nationality === correctPlayer.nationality ?
-                <div className={`${styles.correctFlag} ${styles.flag}`}>
-                    <Image   
-                        src={flagUrl}
-                        alt="flag"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                :
-                <div className={`${styles.wrongFlag} ${styles.flag}`}>
-                    <Image
-                        src={flagUrl}
-                        alt="flag"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                
-            }
-            {/* League of guessed player */}
-            {
-                player.league.id === correctPlayer.league.id ?
-                <div className={`${styles.correctFlag} ${styles.flag}`}>
-                    <Image   
-                        src={player.league.logo}
-                        alt="league"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                :
-                <div className={`${styles.wrongFlag} ${styles.flag}`}>
-                    <Image
-                        src={player.league.logo}
-                        alt="league"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                
-            }
-            {/* Club of guessed player */}
-            {
-                player.team.id === correctPlayer.team.id ?
-                <div className={`${styles.correctFlag} ${styles.flag}`}>
-                    <Image   
-                        src={player.team.logo}
-                        alt="flag"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                :
-                <div className={`${styles.wrongFlag} ${styles.flag}`}>
-                    <Image
-                        src={player.team.logo}
-                        alt="flag"
-                        width={32}
-                        height={32}
-                    />
-                </div>
-                
-            }
-            {/* Position of guessed player */}
-            {
-                player.nationality === correctPlayer.nationality ?
-                <div className={styles.position} id={styles.correctPosition}>
-                    <p>{getPositionAcronym(player.position)}</p>
-                </div>
-                :
-                <div className={styles.position} id={styles.wrongPosition}>
-                    <p>{getPositionAcronym(player.position)}</p>
-                </div>
-                
-            }
             {
                 correct ?
                     <Lottie
@@ -148,8 +105,8 @@ export default function GuessContainer({
                     height={50}
                     width={50}
                 ></Lottie>
-            }
-            </div>
+        }
+            
         </div>
     );
     }
