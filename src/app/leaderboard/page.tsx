@@ -41,9 +41,11 @@ export default function UsersPage(): JSX.Element {
               <tr key={user.uid}>
                 <td>{index + 1}</td>
                 <td>
-                  {user?.username !== undefined ||
-                    user?.displayName?.split(" ")[0] !== undefined ||
-                    user.email?.split("@")[0]}
+                  {user?.username === ""
+                    ? user?.displayName?.split(" ")[0] !== undefined
+                      ? user?.displayName.split(" ")[0]
+                      : user.email?.split("@")[0]
+                    : user.username}
                 </td>
                 <td>{user.points}</td>
               </tr>
