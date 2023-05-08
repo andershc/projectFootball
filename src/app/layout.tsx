@@ -10,7 +10,7 @@ import "../styles/globals.css";
 import Loading from "./loading";
 
 export const metadata: Metadata = {
-  title: "CareerPath",
+  title: "PlayerGuessr",
   description: "Football Career Path Game",
   openGraph: {
     images: "../../public/favicon.ico",

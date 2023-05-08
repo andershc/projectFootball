@@ -89,6 +89,9 @@
   z-index: 1;
 }
 @media (max-width: 600px) {
+  .mainContent {
+    width: 90%;
+  }
   .grid {
     width: 100%;
     flex-direction: column;
