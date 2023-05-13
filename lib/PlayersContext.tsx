@@ -1,35 +1,37 @@
-'use client'
+"use client";
 
-import React, { useContext } from 'react';
-import { Player, DailyPlayer } from '../src/types';
+import React, { useContext } from "react";
+import { type DailyPlayer, type Player } from "../src/types";
 
-type PlayersContextType = {
-    players: Player[];
-    setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
-    dailyPlayer: DailyPlayer;
-    setDailyPlayer: React.Dispatch<React.SetStateAction<DailyPlayer>>;
+interface PlayersContextType {
+  players: Player[];
+  setPlayers: React.Dispatch<React.SetStateAction<Player[]>>;
+  dailyPlayer: DailyPlayer | undefined;
+  setDailyPlayer: React.Dispatch<React.SetStateAction<DailyPlayer | undefined>>;
 }
 
 export const PlayersContext = React.createContext<PlayersContextType>({
-    players: [],
-    setPlayers: () => {},
-    dailyPlayer: {} as DailyPlayer,
-    setDailyPlayer: () => {}
+  players: [],
+  setPlayers: () => {},
+  dailyPlayer: undefined,
+  setDailyPlayer: () => {},
 });
 
-export const usePlayersContext = () => useContext(PlayersContext);
+export const usePlayersContext = (): any => useContext(PlayersContext);
 
 export const PlayersContextProvider = ({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
-}) => {
-    const [players, setPlayers] = React.useState([] as Player[]);
-    const [dailyPlayer, setDailyPlayer] = React.useState({} as DailyPlayer);
+  children: React.ReactNode;
+}): JSX.Element => {
+  const [players, setPlayers] = React.useState<Player[]>([]);
+  const [dailyPlayer, setDailyPlayer] = React.useState<DailyPlayer>();
 
-    return (
-        <PlayersContext.Provider value={{ players, setPlayers, dailyPlayer, setDailyPlayer }}>
-            {children}
-        </PlayersContext.Provider>
-    );
+  return (
+    <PlayersContext.Provider
+      value={{ players, setPlayers, dailyPlayer, setDailyPlayer }}
+    >
+      {children}
+    </PlayersContext.Provider>
+  );
 };

@@ -1,37 +1,36 @@
-'use client'
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../../lib/AuthContext';
-import { useTheme } from 'next-themes'
-import Button from '../button/Button';
-import styles from './navbar.module.css';
-import LeaderboardIcon from '@mui/icons-material/Leaderboard';
-import HomeIcon from '@mui/icons-material/Home';
-import useWindowWidth from '../../../lib/hooks';
+import HomeIcon from "@mui/icons-material/Home";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import { useTheme } from "next-themes";
+import Image from "next/image";
+import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "../../../lib/AuthContext";
+import useWindowWidth from "../../../lib/hooks";
+import Button from "../button/Button";
+import styles from "./navbar.module.css";
 
 // Top navbar
-export default function Navbar() {
+export default function Navbar(): JSX.Element {
   const { user } = useContext(AuthContext);
-  const username = user?.['displayName'];
-  const { theme, setTheme } = useTheme()
+  const { setTheme } = useTheme();
   const width = useWindowWidth();
-  
+
   return (
     <nav className={styles.navbar}>
       <ul>
         <li className={styles.leftSide}>
-          { width !== null && width > 900 &&
-             <Link href="/">
-             <button className="btn-logo">
-               <HomeIcon/>
-             </button>
-           </Link>
-          }
+          {width !== null && width > 900 && (
+            <Link href="/">
+              <button className="btn-logo">
+                <HomeIcon />
+              </button>
+            </Link>
+          )}
           <Link href="/leaderboard">
             <button className="btn-logo">
-              <LeaderboardIcon fontSize='medium'/>
+              <LeaderboardIcon fontSize="medium" />
             </button>
           </Link>
         </li>
@@ -42,34 +41,45 @@ export default function Navbar() {
         </li>
         <li className={styles.rightSide}>
           {/* user is signed-in and has username */}
-          {user?.email && (
-              <>
-                { width !== null && width > 900 &&
-                 <div className={styles.themeContainer}>
-                  <Button 
-                    onClick={() => setTheme('light')}
-                    text='Light'
+          {user?.email != null && (
+            <>
+              {width !== null && width > 900 && (
+                <div className={styles.themeContainer}>
+                  <Button
+                    onClick={() => {
+                      setTheme("light");
+                    }}
+                    text="Light"
                     className={styles.themeButton}
-                    />
-                  <Button 
-                    onClick={() => setTheme('dark')} 
-                    text='Dark'
+                  />
+                  <Button
+                    onClick={() => {
+                      setTheme("dark");
+                    }}
+                    text="Dark"
                     className={styles.themeButton}
-                    />
-                </div>}
-                <Link href="/profile" className={styles.profilePic}>
-                  {<Image 
-                    src={user?.['photoURL'] || '/static/images/hacker.png'}
+                  />
+                </div>
+              )}
+              <Link href="/profile" className={styles.profilePic}>
+                {
+                  <Image
+                    src={
+                      user?.photoURL !== null && user?.photoURL !== undefined
+                        ? user.photoURL
+                        : "/static/images/hacker.png"
+                    }
                     alt="user profile"
                     width={50}
                     height={50}
-                  />}
-                </Link>
-              </>
+                  />
+                }
+              </Link>
+            </>
           )}
         </li>
         {/* user is not signed OR has not created username */}
-        {!user?.email && (
+        {user?.email == null && (
           <li>
             <Link href="/signIn">
               <button className="btn-blue">Log in</button>

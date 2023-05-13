@@ -1,88 +1,43 @@
-'use client'
+"use client";
 
-import React, { useContext, useEffect } from 'react';
-import { Player, TransferData } from '../src/types';
-import firebase_app from '../firebase/config';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import moment from 'moment';
+import React, { useContext } from "react";
+import { type Player, type TransferData } from "../src/types";
 
-const auth = getAuth(firebase_app);
-
-type GuessContextType = {
-    guessedPlayers: Player[]
-    setGuessedPlayers: React.Dispatch<React.SetStateAction<Player[]>>
-    correctPlayer: Player
-    setCorrectPlayer: React.Dispatch<React.SetStateAction<Player>>
-    transferData: TransferData[]
-    setTransferData: React.Dispatch<React.SetStateAction<TransferData[]>>
-    completed: boolean | null
-    setCompleted: React.Dispatch<React.SetStateAction<boolean | null>>
+interface GuessContextType {
+  correctPlayer: Player | undefined;
+  setCorrectPlayer: React.Dispatch<React.SetStateAction<Player | undefined>>;
+  transferData: TransferData[];
+  setTransferData: React.Dispatch<React.SetStateAction<TransferData[]>>;
 }
 
 export const GuessContext = React.createContext<GuessContextType>({
-    guessedPlayers: Array.apply({}, Array(8)) as Player[],
-    setGuessedPlayers: () => {},
-    correctPlayer: {} as Player,
-    setCorrectPlayer: () => {},
-    transferData: [] as TransferData[],
-    setTransferData: () => {},
-    completed: null,
-    setCompleted: () => {}
+  correctPlayer: undefined,
+  setCorrectPlayer: () => {},
+  transferData: [] as TransferData[],
+  setTransferData: () => {},
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useGuessContext = () => useContext(GuessContext);
 
 export const GuessContextProvider = ({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
-}) => {
-    const [guessedPlayers, setGuessedPlayers ] = React.useState([] as Player[]);
-    const [correctPlayer, setCorrectPlayer] = React.useState({} as Player);
-    const [transferData, setTransferData] = React.useState([] as TransferData[]);
-    const [completed, setCompleted] = React.useState<boolean | null>(null);
-    const date = moment().tz('America/New_York');
-    const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
-    React.useEffect(() => {
-        //if(process.env.NODE_ENV === 'development') return;
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            console.log('user', user);
-            if (user) {
-                // Fetch user data from firestore
-                const userRef = doc(getFirestore(firebase_app),
-                'users',
-                user.uid,
-                'history',
-                formatCurrentDate
-                );
-                await getDoc(userRef).then((doc) => {
-                    if (doc.exists()) {
-                        const data = doc.data();
-                        setCompleted(data.completed)
-                        setGuessedPlayers(data.guessedPlayers)  
-                        console.log('Document data:', data);                     
-                    } else {
-                        setCompleted(null)
-                        console.log('No such document!');
-                    }
-                });
-            } else {
-                return
-            }
-        });
+  children: React.ReactNode;
+}): JSX.Element => {
+  const [correctPlayer, setCorrectPlayer] = React.useState<Player>();
+  const [transferData, setTransferData] = React.useState([] as TransferData[]);
 
-        return () => unsubscribe();
-    }, [formatCurrentDate]);
-
-    return (
-        <GuessContext.Provider value={{ 
-            guessedPlayers, setGuessedPlayers,
-            correctPlayer, setCorrectPlayer,
-            transferData, setTransferData,
-            completed, setCompleted,
-            }}>
-            {children}
-        </GuessContext.Provider>
-    );
+  return (
+    <GuessContext.Provider
+      value={{
+        correctPlayer,
+        setCorrectPlayer,
+        transferData,
+        setTransferData,
+      }}
+    >
+      {children}
+    </GuessContext.Provider>
+  );
 };
