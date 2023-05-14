@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import { useAuthContext } from "../../lib/AuthContext";
 import { useGuessContext } from "../../lib/GuessContext";
-import { usePlayersContext } from "../../lib/PlayersContext";
 import confetti from "../../public/static/lotti/confetti.json";
 import Button from "../components/button/Button";
 import CareerPathGame from "../components/careerpathGame";
@@ -19,8 +18,10 @@ import {
   getRandomPlayer,
 } from "./api/fetchPlayers";
 import { getUserHistory } from "./api/fetchUserData";
+
 import { updateScore } from "./api/updateData";
 import Loading from "./loading";
+import { usePlayersContext } from "../../lib/PlayersContext";
 
 interface Transfer extends Team {
   type: string;

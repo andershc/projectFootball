@@ -74,17 +74,20 @@ export default function Default(): JSX.Element {
           {!completed && (
             <PlayerInput players={players} onSelect={handlePlayerSelect} />
           )}
-          <div className={styles.guesses}>
-            <p>Guessed players:</p>
-            {guessedPlayers.map((guessedPlayer) => (
-              <GuessContainer
-                key={guessedPlayer.id}
-                player={guessedPlayer}
-                correct={guessedPlayer.id === correctPlayer?.player.id}
-                index={guessedPlayers.indexOf(guessedPlayer) + 1}
-              />
-            ))}
-          </div>
+          {correctPlayer !== undefined && (
+            <div className={styles.guesses}>
+              <p>Guessed players:</p>
+              {guessedPlayers.map((guessedPlayer) => (
+                <GuessContainer
+                  key={guessedPlayer.id}
+                  player={guessedPlayer}
+                  correct={guessedPlayer.id === correctPlayer?.player.id}
+                  index={guessedPlayers.indexOf(guessedPlayer) + 1}
+                  correctPlayer={correctPlayer?.player}
+                />
+              ))}
+            </div>
+          )}
           <Button
             onClick={async () => {
               await getRandomPlayer(players).then((player) => {

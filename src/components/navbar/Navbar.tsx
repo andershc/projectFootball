@@ -36,7 +36,7 @@ export default function Navbar(): JSX.Element {
         </li>
         <li className={styles.center}>
           <Link href="/">
-            <h1>CareerPath</h1>
+            <h1>PlayerGuessr</h1>
           </Link>
         </li>
         <li className={styles.rightSide}>

@@ -106,7 +106,7 @@ export default function CareerPathGame({
       {completed === null && (
         <PlayerInput players={players} onSelect={handlePlayerSelect} />
       )}
-      {guessedPlayers.length > 0 && (
+      {guessedPlayers.length > 0 && correctPlayer !== undefined && (
         <div className={styles.guesses}>
           <p>Guessed players:</p>
           {guessedPlayers.map((guessedPlayer) => (
@@ -115,6 +115,7 @@ export default function CareerPathGame({
               player={guessedPlayer}
               correct={guessedPlayer.id === correctPlayer?.id}
               index={guessedPlayers.indexOf(guessedPlayer) + 1}
+              correctPlayer={correctPlayer}
             />
           ))}
         </div>
