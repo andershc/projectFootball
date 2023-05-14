@@ -21,8 +21,15 @@ export async function getUsers(
 
 export async function getUserHistory(
   date: string | null,
-  user: UserType
+  user: UserType | undefined | null
 ): Promise<GuessResult | undefined> {
+  if (user === undefined || user === null)
+    return {
+      completed: null,
+      guessedPlayers: [],
+      guesses: 0,
+      points: 0,
+    } satisfies GuessResult;
   let fetchDate = moment().tz("America/New_York");
   if (date !== null) {
     fetchDate = moment(date).tz("America/New_York");
