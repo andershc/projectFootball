@@ -80,7 +80,6 @@ export default function Home(): JSX.Element {
           });
         }
         const userHistoryData = await getUserHistory(fetchDate, user);
-        console.log(userHistoryData);
 
         if (userHistoryData === undefined) {
           console.log("no data");

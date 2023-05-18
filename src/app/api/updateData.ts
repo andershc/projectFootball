@@ -17,6 +17,15 @@ export async function updateScore(
     completed === true
       ? Math.round(((guessLimit - guesses.length + 1) / guessLimit) * 10)
       : 0;
+  if (completed !== null) {
+    await updateDailyPlayerStats(completed)
+      .then(() => {
+        console.log("Daily player stats updated successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
   if (currentUser !== null) {
     localStorage.setItem("guesses", JSON.stringify(guesses));
     localStorage.setItem("score", JSON.stringify(score));
@@ -30,15 +39,6 @@ export async function updateScore(
     .catch((error) => {
       console.log(error);
     });
-  if (completed !== null) {
-    await updateDailyPlayerStats(completed)
-      .then(() => {
-        console.log("Daily player stats updated successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 }
 
 export async function updateUsername(
