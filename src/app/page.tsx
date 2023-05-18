@@ -86,7 +86,6 @@ export default function Home(): JSX.Element {
           console.log("no data");
           return;
         }
-
         setCompleted(userHistoryData.completed);
         setGuessedPlayers(userHistoryData?.guessedPlayers);
         if (fetchDate !== null) setIsDailyPlayer(false);

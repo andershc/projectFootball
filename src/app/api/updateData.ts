@@ -17,6 +17,12 @@ export async function updateScore(
     completed === true
       ? Math.round(((guessLimit - guesses.length + 1) / guessLimit) * 10)
       : 0;
+  if (currentUser !== null) {
+    localStorage.setItem("guesses", JSON.stringify(guesses));
+    localStorage.setItem("score", JSON.stringify(score));
+    localStorage.setItem("completed", JSON.stringify(completed));
+    return;
+  }
   await updateDailyScore(currentUser, score, completed, guesses)
     .then(() => {
       console.log("Score updated successfully");

@@ -2,7 +2,7 @@ import moment from "moment";
 import { getUserHistoryFromDate } from "../../../firebase/firestore/getData";
 import getAllUsers from "../../../firebase/firestore/getUsers";
 import { type UserType } from "../../../lib/AuthContext";
-import { type GuessResult } from "../../types";
+import { type GuessResult, type Player } from "../../types";
 
 export async function getUsers(
   currentUser: UserType | undefined | null
@@ -23,13 +23,9 @@ export async function getUserHistory(
   date: string | null,
   user: UserType | undefined | null
 ): Promise<GuessResult | undefined> {
-  if (user === undefined || user === null)
-    return {
-      completed: null,
-      guessedPlayers: [],
-      guesses: 0,
-      points: 0,
-    } satisfies GuessResult;
+  if (user === undefined || user === null) {
+    return getLocalStorageData();
+  }
   let fetchDate = moment().tz("America/New_York");
   if (date !== null) {
     fetchDate = moment(date).tz("America/New_York");
@@ -48,4 +44,30 @@ export async function getUserHistory(
       return undefined;
     });
   return history;
+}
+
+// Method for getting local storage data and returning it as a GuessResult object
+function getLocalStorageData(): GuessResult {
+  const completed: boolean | null =
+    localStorage.getItem("completed") === "true"
+      ? !(localStorage.getItem("completed") == null)
+      : null;
+  const guessedPlayers: Player[] | null = convertToPlayerList(
+    localStorage.getItem("guesses")
+  );
+  return {
+    completed,
+    guessedPlayers: guessedPlayers !== null ? guessedPlayers : [],
+    guesses: guessedPlayers !== null ? guessedPlayers.length : 0,
+    points: 0,
+  } satisfies GuessResult;
+}
+
+// Method for converting JSON string to Player list object
+function convertToPlayerList(json: string | null): Player[] | null {
+  if (json === null || json === undefined) {
+    return null;
+  }
+  const playerList: Player[] = JSON.parse(json);
+  return playerList;
 }
