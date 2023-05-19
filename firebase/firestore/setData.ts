@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 import moment from "moment";
 import { type UserType } from "../../lib/AuthContext";
-import { type DailyPlayer, type Player } from "../../src/types";
+import { type DailyPlayerStats, type Player } from "../../src/types";
 import firebase_app from "../config";
 
 const db = getFirestore(firebase_app);
@@ -110,23 +110,23 @@ export async function updateDailyPlayerStats(
 ): Promise<void> {
   const date = moment().tz("America/New_York");
   const formatCurrentDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
-  const dailyPlayerRef = doc(db, "dailyPlayer", formatCurrentDate);
+  const dailyPlayerStatsRef = doc(db, "dailyPlayerStats", formatCurrentDate);
   try {
-    const dailyPlayerDoc = await getDoc(dailyPlayerRef);
-    if (dailyPlayerDoc.exists()) {
-      const dailyPlayer = dailyPlayerDoc.data() as DailyPlayer;
+    const dailyPlayerStatsDoc = await getDoc(dailyPlayerStatsRef);
+    if (dailyPlayerStatsDoc.exists()) {
+      const dailyPlayerStats = dailyPlayerStatsDoc.data() as DailyPlayerStats;
       await setDoc(
-        dailyPlayerRef,
+        doc(db, "dailyPlayerStats", formatCurrentDate),
         {
           totalCorrect:
-            (dailyPlayer.totalCorrect !== null &&
-            dailyPlayer.totalCorrect !== undefined
-              ? dailyPlayer.totalCorrect
+            (dailyPlayerStats.totalCorrect !== null &&
+            dailyPlayerStats.totalCorrect !== undefined
+              ? dailyPlayerStats.totalCorrect
               : 0) + (completed ? 1 : 0),
           totalAttempts:
-            (dailyPlayer.totalAttempts !== null &&
-            dailyPlayer.totalAttempts !== undefined
-              ? dailyPlayer.totalAttempts
+            (dailyPlayerStats.totalAttempts !== null &&
+            dailyPlayerStats.totalAttempts !== undefined
+              ? dailyPlayerStats.totalAttempts
               : 0) + 1,
         },
         { merge: true }
