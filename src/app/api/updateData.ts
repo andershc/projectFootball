@@ -1,10 +1,11 @@
+import moment from "moment";
 import {
   setUsername,
   updateDailyPlayerStats,
   updateDailyScore,
 } from "../../../firebase/firestore/setData";
 import { type UserType } from "../../../lib/AuthContext";
-import { type Player } from "../../types";
+import { type GuessResult, type Player } from "../../types";
 
 export async function updateScore(
   currentUser: UserType | null | undefined,
@@ -27,9 +28,17 @@ export async function updateScore(
       });
   }
   if (currentUser !== null) {
-    localStorage.setItem("guesses", JSON.stringify(guesses));
-    localStorage.setItem("score", JSON.stringify(score));
-    localStorage.setItem("completed", JSON.stringify(completed));
+    const date = moment().tz("America/New_York");
+    const formatCurrentDate = `${date.year()}-${date.date()}-${
+      date.month() + 1
+    }`;
+    const gameData: GuessResult = {
+      guessedPlayers: guesses,
+      guesses: guesses.length,
+      points: score,
+      completed,
+    };
+    localStorage.setItem(formatCurrentDate, JSON.stringify(gameData));
     return;
   }
   await updateDailyScore(currentUser, score, completed, guesses)

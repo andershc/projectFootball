@@ -133,6 +133,14 @@ export async function updateDailyPlayerStats(
       );
     } else {
       console.log("Daily player not found for " + formatCurrentDate);
+      await setDoc(
+        doc(db, "dailyPlayerStats", formatCurrentDate),
+        {
+          totalCorrect: completed ? 1 : 0,
+          totalAttempts: 1,
+        },
+        { merge: true }
+      );
     }
   } catch (e) {
     console.log(e);
