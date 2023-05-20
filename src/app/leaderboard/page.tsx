@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAuthContext, type UserType } from "../../../lib/AuthContext";
 import { getUsers } from "../api/fetchUserData";
@@ -9,7 +10,10 @@ import styles from "./leaderboard.module.css";
 export default function UsersPage(): JSX.Element {
   const [users, setUsers] = useState([] as UserType[]);
   const { user } = useAuthContext();
+  const router = useRouter();
+
   useEffect(() => {
+    if (user?.email == null) router.push("/signIn");
     const fetchUsers = async (): Promise<void> => {
       // Fetch all users from getUsers
       const users = (await getUsers(user)) as UserType[];
