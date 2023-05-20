@@ -112,3 +112,8 @@ export interface DailyPlayer {
   totalAttempts: number;
   totalCorrect: number;
 }
+
+export interface DailyPlayerStats {
+  totalAttempts: number;
+  totalCorrect: number;
+}

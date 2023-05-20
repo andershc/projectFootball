@@ -60,7 +60,17 @@ export async function getDailyPlayer(
     .then((data) => {
       console.log("Daily player data fetched successfully");
       dailyPlayer = data as DailyPlayer;
-      return dailyPlayer;
+    })
+    .catch((error) => {
+      console.log(error);
+      return undefined;
+    });
+  await getData("dailyPlayerStats", formatDate)
+    .then((data) => {
+      console.log("Daily player stats data fetched successfully");
+      if (dailyPlayer === undefined) return undefined;
+      dailyPlayer.totalAttempts = data?.totalAttempts;
+      dailyPlayer.totalCorrect = data?.totalCorrect;
     })
     .catch((error) => {
       console.log(error);

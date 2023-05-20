@@ -29,7 +29,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 70%;
   height: 100%;
 }
 
@@ -47,6 +47,17 @@
   border-radius: 50%;
   cursor: pointer;
   min-width: 50px;
+}
+.loginButton {
+  color: var(--text-1);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  min-width: 75px;
+  width: 30%;
 }
 
 .leftSide {

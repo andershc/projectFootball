@@ -19,9 +19,9 @@ import {
 } from "./api/fetchPlayers";
 import { getUserHistory } from "./api/fetchUserData";
 
+import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateData";
 import Loading from "./loading";
-import { usePlayersContext } from "../../lib/PlayersContext";
 
 interface Transfer extends Team {
   type: string;
@@ -50,56 +50,48 @@ export default function Home(): JSX.Element {
   const { players, setPlayers } = usePlayersContext();
 
   useEffect(() => {
-    if (user?.email !== undefined) {
-      if (players.length === 0) {
-        void (async () => {
-          try {
-            const playersData = await getPlayers();
-            if (playersData !== undefined) {
-              setLoading(false);
-              setPlayers(playersData);
-            }
-          } catch (error) {
-            console.error(error);
-          }
-        })();
-      } else {
-        setLoading(false);
-      }
+    if (players.length === 0) {
       void (async () => {
         try {
-          const dailyPlayer = await getDailyPlayer(fetchDate);
-          if (dailyPlayer !== undefined) {
-            setCorrectPlayer(dailyPlayer.player);
-            setTransferData(dailyPlayer.transferData);
-            setClubs(
-              getTransferClubs(
-                dailyPlayer.transferData,
-                dailyPlayer.player.team
-              )
-            );
-            setStats({
-              totalAttempts: dailyPlayer.totalAttempts,
-              totalCorrect: dailyPlayer.totalCorrect,
-            });
+          const playersData = await getPlayers();
+          if (playersData !== undefined) {
+            setLoading(false);
+            setPlayers(playersData);
           }
-
-          const userHistoryData = await getUserHistory(fetchDate, user);
-          console.log(userHistoryData);
-          if (userHistoryData === undefined) {
-            console.log("no data");
-            return;
-          }
-          setCompleted(userHistoryData.completed);
-          setGuessedPlayers(userHistoryData?.guessedPlayers);
-          if (fetchDate !== null) setIsDailyPlayer(false);
         } catch (error) {
           console.error(error);
         }
       })();
     } else {
-      router.push("/signIn");
+      setLoading(false);
     }
+    void (async () => {
+      try {
+        const dailyPlayer = await getDailyPlayer(fetchDate);
+        if (dailyPlayer !== undefined) {
+          setCorrectPlayer(dailyPlayer.player);
+          setTransferData(dailyPlayer.transferData);
+          setClubs(
+            getTransferClubs(dailyPlayer.transferData, dailyPlayer.player.team)
+          );
+          setStats({
+            totalAttempts: dailyPlayer.totalAttempts,
+            totalCorrect: dailyPlayer.totalCorrect,
+          });
+        }
+        const userHistoryData = await getUserHistory(fetchDate, user);
+
+        if (userHistoryData === undefined) {
+          console.log("no data");
+          return;
+        }
+        setCompleted(userHistoryData.completed);
+        setGuessedPlayers(userHistoryData?.guessedPlayers);
+        if (fetchDate !== null) setIsDailyPlayer(false);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, [
     setCorrectPlayer,
     setTransferData,

@@ -41,26 +41,26 @@ export default function Navbar(): JSX.Element {
         </li>
         <li className={styles.rightSide}>
           {/* user is signed-in and has username */}
+          {width !== null && width > 900 && (
+            <div className={styles.themeContainer}>
+              <Button
+                onClick={() => {
+                  setTheme("light");
+                }}
+                text="Light"
+                className={styles.themeButton}
+              />
+              <Button
+                onClick={() => {
+                  setTheme("dark");
+                }}
+                text="Dark"
+                className={styles.themeButton}
+              />
+            </div>
+          )}
           {user?.email != null && (
             <>
-              {width !== null && width > 900 && (
-                <div className={styles.themeContainer}>
-                  <Button
-                    onClick={() => {
-                      setTheme("light");
-                    }}
-                    text="Light"
-                    className={styles.themeButton}
-                  />
-                  <Button
-                    onClick={() => {
-                      setTheme("dark");
-                    }}
-                    text="Dark"
-                    className={styles.themeButton}
-                  />
-                </div>
-              )}
               <Link href="/profile" className={styles.profilePic}>
                 {
                   <Image
@@ -77,15 +77,13 @@ export default function Navbar(): JSX.Element {
               </Link>
             </>
           )}
-        </li>
-        {/* user is not signed OR has not created username */}
-        {user?.email == null && (
-          <li>
+          {/* user is not signed OR has not created username */}
+          {user?.email == null && (
             <Link href="/signIn">
-              <button className="btn-blue">Log in</button>
+              <p className={styles.loginButton}>Log in</p>
             </Link>
-          </li>
-        )}
+          )}
+        </li>
       </ul>
     </nav>
   );
