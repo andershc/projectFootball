@@ -1,11 +1,11 @@
 import Image from "next/image";
-import Lottie from "react-lottie";
-import { type Player } from "../../types";
 import { useEffect, useState } from "react";
+import Lottie from "react-lottie";
 import { getCountryCode } from "../../../lib/CountryCode";
 import { getPositionAcronym } from "../../../lib/GetPosition";
 import checkmark from "../../../public/static/lotti/checkmark.json";
 import cross from "../../../public/static/lotti/red-cross.json";
+import { type Player } from "../../types";
 import styles from "./guess-container.module.css";
 
 export default function GuessContainer({
@@ -51,9 +51,9 @@ export default function GuessContainer({
   };
   return (
     <div className={styles.container}>
-      <p className={styles.indexNumber}>{index}</p>
       <div className={styles.content}>
         <div className={styles.player}>
+          <p className={styles.indexNumber}>{index}</p>
           <Image
             className={styles.playerPhoto}
             src={player.photo}
@@ -110,14 +110,14 @@ export default function GuessContainer({
           >
             <p>{getPositionAcronym(player.position)}</p>
           </div>
+          <div className={styles.lottieAnimation}>
+            {correct ? (
+              <Lottie options={checkmarkOptions} height={49} width={49} />
+            ) : (
+              <Lottie options={crossOptions} height={49} width={49} />
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles.lottieAnimation}>
-        {correct ? (
-          <Lottie options={checkmarkOptions} height={50} width={50} />
-        ) : (
-          <Lottie options={crossOptions} height={50} width={50} />
-        )}
       </div>
     </div>
   );

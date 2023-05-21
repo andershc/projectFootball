@@ -41,9 +41,6 @@ export default function CareerPathGame({
       <h2>
         {guessedPlayers.length} / {guessLimit}
       </h2>
-      <p className={styles.comeback}>
-        {completed === true && "Come back tomorrow for a new challenge!"}
-      </p>
       {completed === true || guessedPlayers.length === guessLimit ? (
         <div className={styles.completedRow}>
           {completed === true ? (
@@ -65,6 +62,9 @@ export default function CareerPathGame({
             height={60}
           />
           <p className={styles.playerName}>{correctPlayer?.name}</p>
+          <p className={styles.comeback}>
+            Come back tomorrow for a new challenge!
+          </p>
         </div>
       ) : null}
 

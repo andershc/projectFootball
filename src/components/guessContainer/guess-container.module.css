@@ -2,16 +2,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: 100%;
     width: 100%;
     border-top: 1px solid var(--accent-2);
     transition: all 0.3s ease-out;
     padding: 1rem 1.5rem;
-    column-gap: 1rem;
-}
-.container:last {
-    border-top: 0;
 }
 
 .content {
@@ -61,9 +57,9 @@
 }
 
 .position {
-    margin-right: 0.5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     font-weight: 800;
     font-size: 0.9rem;
 }
@@ -118,7 +114,7 @@
 
 @media (max-width: 600px) {
     .container {
-        padding: 1rem 0.5rem 1rem 1rem;
+        padding: 1rem 0rem;
         column-gap: 0.3rem;
     }
     .indexNumber {
@@ -127,7 +123,7 @@
     .content {
         flex-direction: column;
         justify-content: space-between;
-        width: 90%;
+        width: 100%;
     }
     .player {
         width: 100%;
