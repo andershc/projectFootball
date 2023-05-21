@@ -2,6 +2,8 @@
 
 import HomeIcon from "@mui/icons-material/Home";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import LoginIcon from "@mui/icons-material/Login";
+import { Tooltip } from "@mui/material";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,25 +16,26 @@ import styles from "./navbar.module.css";
 // Top navbar
 export default function Navbar(): JSX.Element {
   const { user } = useContext(AuthContext);
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const width = useWindowWidth();
-
   return (
     <nav className={styles.navbar}>
       <ul>
         <li className={styles.leftSide}>
           {width !== null && width > 900 && (
-            <Link href="/">
-              <button className="btn-logo">
-                <HomeIcon />
-              </button>
-            </Link>
+            <Tooltip title="Home">
+              <Link href="/">
+                <button className="btn-logo">
+                  <HomeIcon />
+                </button>
+              </Link>
+            </Tooltip>
           )}
-          <Link href="/leaderboard">
-            <button className="btn-logo">
+          <Tooltip title="Leaderboard">
+            <Link href="/leaderboard" className={styles.leaderBoardButton}>
               <LeaderboardIcon fontSize="medium" />
-            </button>
-          </Link>
+            </Link>
+          </Tooltip>
         </li>
         <li className={styles.center}>
           <Link href="/">
@@ -45,16 +48,9 @@ export default function Navbar(): JSX.Element {
             <div className={styles.themeContainer}>
               <Button
                 onClick={() => {
-                  setTheme("light");
+                  setTheme(theme === "dark" ? "light" : "dark");
                 }}
-                text="Light"
-                className={styles.themeButton}
-              />
-              <Button
-                onClick={() => {
-                  setTheme("dark");
-                }}
-                text="Dark"
+                text={theme === "dark" ? "Dark" : "Light"}
                 className={styles.themeButton}
               />
             </div>
@@ -79,9 +75,11 @@ export default function Navbar(): JSX.Element {
           )}
           {/* user is not signed OR has not created username */}
           {user?.email == null && (
-            <Link href="/signIn">
-              <p className={styles.loginButton}>Log in</p>
-            </Link>
+            <Tooltip title="Login">
+              <Link href="/signIn" className={styles.loginButton}>
+                <LoginIcon fontSize="medium" />
+              </Link>
+            </Tooltip>
           )}
         </li>
       </ul>

@@ -7,7 +7,7 @@
   color: var(--text-1);
   position: fixed;
   top: 0;
-  padding: 0 10vw;
+  padding: 0 15vw;
   font-weight: bold;
   border-bottom: 1px solid var(--accent-3);
   z-index: 99;
@@ -29,7 +29,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 70%;
   height: 100%;
 }
 
@@ -40,8 +39,10 @@
   justify-content: center;
   background-color: var(--accent-5);
   color: var(--text-1);
-  width: 20%;
+  font-weight: bold;
+  width: 30px;
   height: 30px;
+  border-radius: 5px;
 }
 .profilePic img {
   border-radius: 50%;
@@ -51,13 +52,24 @@
 .loginButton {
   color: var(--text-1);
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  padding: 0.5rem 1rem;
   cursor: pointer;
+  font-weight: bold;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.leaderBoardButton {
+  color: var(--accent-4);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
   font-weight: bold;
   font-size: 1rem;
   min-width: 75px;
   width: 30%;
+}
+.leaderBoardButton:hover {
+  filter: brightness(90%);
 }
 
 .leftSide {
@@ -91,12 +103,15 @@
     padding: 0 5vw;
   }
   .themeButton {
-    width: 100%;
+    width: 80%;
   }
   .leftSide {
     width: 10%;
   }
   .rightSide {
     width: 10%;
+  }
+  .loginButton {
+    min-width: none;
   }
 }
