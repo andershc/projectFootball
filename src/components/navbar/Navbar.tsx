@@ -3,7 +3,6 @@
 import HomeIcon from "@mui/icons-material/Home";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import LoginIcon from "@mui/icons-material/Login";
-import { Tooltip } from "@mui/material";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -23,19 +22,16 @@ export default function Navbar(): JSX.Element {
       <ul>
         <li className={styles.leftSide}>
           {width !== null && width > 900 && (
-            <Tooltip title="Home">
-              <Link href="/">
-                <button className="btn-logo">
-                  <HomeIcon />
-                </button>
-              </Link>
-            </Tooltip>
-          )}
-          <Tooltip title="Leaderboard">
-            <Link href="/leaderboard" className={styles.leaderBoardButton}>
-              <LeaderboardIcon fontSize="medium" />
+            <Link href="/">
+              <button className="btn-logo">
+                <HomeIcon />
+              </button>
             </Link>
-          </Tooltip>
+          )}
+
+          <Link href="/leaderboard" className={styles.leaderBoardButton}>
+            <LeaderboardIcon fontSize="medium" />
+          </Link>
         </li>
         <li className={styles.center}>
           <Link href="/">
@@ -75,11 +71,9 @@ export default function Navbar(): JSX.Element {
           )}
           {/* user is not signed OR has not created username */}
           {user?.email == null && (
-            <Tooltip title="Login">
-              <Link href="/signIn" className={styles.loginButton}>
-                <LoginIcon fontSize="medium" />
-              </Link>
-            </Tooltip>
+            <Link href="/signIn" className={styles.loginButton}>
+              <LoginIcon fontSize="medium" />
+            </Link>
           )}
         </li>
       </ul>
