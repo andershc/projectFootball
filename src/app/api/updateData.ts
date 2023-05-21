@@ -27,7 +27,8 @@ export async function updateScore(
         console.log(error);
       });
   }
-  if (currentUser !== null) {
+  if (currentUser === null || currentUser === undefined) {
+    console.log("User is not logged in");
     const date = moment().tz("America/New_York");
     const formatCurrentDate = `${date.year()}-${date.date()}-${
       date.month() + 1
@@ -39,15 +40,16 @@ export async function updateScore(
       completed,
     };
     localStorage.setItem(formatCurrentDate, JSON.stringify(gameData));
-    return;
+  } else {
+    console.log("User is logged in");
+    await updateDailyScore(currentUser, score, completed, guesses)
+      .then(() => {
+        console.log("Score updated successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
-  await updateDailyScore(currentUser, score, completed, guesses)
-    .then(() => {
-      console.log("Score updated successfully");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 }
 
 export async function updateUsername(
