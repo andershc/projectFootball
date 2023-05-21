@@ -21,6 +21,7 @@ export async function updateDailyScore(
   guessedPlayers: Player[]
 ): Promise<void> {
   // Update the user's score in DB
+  console.log("Updating user score");
   if (currentUser != null) {
     const date = moment().tz("America/New_York");
     const formatCurrentDate = `${date.year()}-${date.date()}-${
