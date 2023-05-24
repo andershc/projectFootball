@@ -145,6 +145,8 @@ export default function Home(): JSX.Element {
     },
   };
 
+  console.log("Completed: ", completed);
+
   return (
     <div className={styles.mainContainer}>
       {loading ? (

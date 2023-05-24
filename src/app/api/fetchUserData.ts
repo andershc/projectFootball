@@ -55,7 +55,7 @@ function getLocalStorageData(): GuessResult {
     const gameData: GuessResult = JSON.parse(gameDataString);
     const { guesses, guessedPlayers, completed } = gameData;
     return {
-      completed: completed !== null ? completed : false,
+      completed: completed !== null ? completed : null,
       guessedPlayers: guessedPlayers !== null ? guessedPlayers : [],
       guesses,
       points: 0,
