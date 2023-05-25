@@ -68,7 +68,7 @@ export default function HintContainer({
             src={player.league.logo}
             alt="team logo"
             width={32}
-            height={32}
+            className={styles.leagueLogo}
           />
         ) : (
           <Image

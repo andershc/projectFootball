@@ -117,3 +117,8 @@ export interface DailyPlayerStats {
   totalAttempts: number;
   totalCorrect: number;
 }
+
+interface ImageSize {
+  width: number;
+  height: number;
+}

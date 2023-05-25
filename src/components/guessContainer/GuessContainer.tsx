@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import { getCountryCode } from "../../../lib/CountryCode";
 import { getPositionAcronym } from "../../../lib/GetPosition";
+import { getImageSize } from "../../../lib/getImageSize";
 import checkmark from "../../../public/static/lotti/checkmark.json";
 import cross from "../../../public/static/lotti/red-cross.json";
-import { type Player } from "../../types";
+import { type ImageSize, type Player } from "../../types";
 import styles from "./guess-container.module.css";
 
 export default function GuessContainer({
@@ -22,6 +23,9 @@ export default function GuessContainer({
   const [flagUrl, setFlagUrl] = useState(
     "https://hatscripts.github.io/circle-flags/flags/xx.svg"
   );
+  const [leagueLogoSize, setLeagueLogoSize] = useState<ImageSize | null>(null);
+  const [clubLogoSize, setClubLogoSize] = useState<ImageSize | null>(null);
+
   useEffect(() => {
     if (player?.nationality !== "") {
       setFlagUrl(
@@ -29,8 +33,17 @@ export default function GuessContainer({
           getCountryCode(player.nationality) +
           ".svg"
       );
+      void (async () => {
+        await getImageSize(player.league.logo, 26).then((size) => {
+          setLeagueLogoSize(size);
+        });
+        await getImageSize(player.team.logo, 28).then((size) => {
+          setClubLogoSize(size);
+        });
+      })();
     }
   }, [correctPlayer, player]);
+
   const checkmarkOptions = {
     loop: false,
     autoplay: false,
@@ -49,6 +62,7 @@ export default function GuessContainer({
     },
     delay: 2500,
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -86,8 +100,8 @@ export default function GuessContainer({
             <Image
               src={player.league.logo}
               alt="league"
-              width={24}
-              height={24}
+              width={leagueLogoSize?.width ?? 16}
+              height={leagueLogoSize?.height ?? 24}
             />
           </div>
           {/* Club of guessed player */}
@@ -98,7 +112,12 @@ export default function GuessContainer({
                 : styles.wrong
             }`}
           >
-            <Image src={player.team.logo} alt="flag" width={28} height={28} />
+            <Image
+              src={player.team.logo}
+              alt="flag"
+              width={clubLogoSize?.width ?? 28}
+              height={clubLogoSize?.height ?? 28}
+            />
           </div>
           {/* Position of guessed player */}
           <div

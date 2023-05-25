@@ -118,3 +118,7 @@
     font-weight: 200;
     color: var(--text-1);
 }
+.leeagueLogo {
+    width: 32px;
+    border-radius: 100%;
+}
