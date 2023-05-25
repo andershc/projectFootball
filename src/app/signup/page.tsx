@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 import signUp from "../../../firebase/auth/signup";
+import styles from "./signup.module.css";
 
 function SignUpPage(): JSX.Element {
   const [email, setEmail] = React.useState("");
@@ -26,8 +27,8 @@ function SignUpPage(): JSX.Element {
     router.push("/profile");
   };
   return (
-    <div className="wrapper">
-      <div className="form-wrapper">
+    <div className={styles.wrapper}>
+      <div className={styles.formWrapper}>
         <h1 className="mt-60 mb-30">Sign up</h1>
         <form onSubmit={handleForm} className="form">
           <label htmlFor="email">

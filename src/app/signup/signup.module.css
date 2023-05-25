@@ -1,0 +1,51 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding: 0 20px;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
+}
+
+.formWrapper button {
+    width: 100%;
+    height: 50px;
+    background-color: var(--accent-1);
+    color: var(--white);
+    border: none;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.formWrapper input {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: large;
+}
+
+.formWrapper a {
+    margin-left: 16px;
+    color: var(--accent-5);
+    text-decoration: none;
+}
+
+.googleButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    height: 50px;
+    background-color: var(--white);
+    border-radius: 5px;
+    margin: 10px 0;
+}
