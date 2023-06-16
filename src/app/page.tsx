@@ -19,6 +19,7 @@ import {
 } from "./api/fetchPlayers";
 import { getUserHistory } from "./api/fetchUserData";
 
+import HistoryIcon from "@mui/icons-material/History";
 import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateData";
 import Loading from "./loading";
@@ -109,8 +110,8 @@ export default function Home(): JSX.Element {
     const playersCopy = [...guessedPlayers, player];
     if (player.id === correctPlayer?.id) {
       setCompleted(true);
+      setPlayConfetti(true);
       if (isDailyPlayer) {
-        setPlayConfetti(true);
         await updateScore(user, playersCopy, guessLimit, true);
       }
     } else {
@@ -176,6 +177,22 @@ export default function Home(): JSX.Element {
           </Link>
         </div>
       )}
+      <div className={styles.gamesContainer}>
+        <Button
+          onClick={() => {
+            // Set the date to yesterday if fetchdate has a value, otherwise set it to the day before fetchdate
+            const date =
+              fetchDate != null
+                ? new Date(fetchDate)
+                : new Date(new Date().setDate(new Date().getDate() - 1));
+            date.setDate(date.getDate() - 1);
+            router.push(`/?date=${date.toISOString().split("T")[0]}`);
+          }}
+          text="Get yesterday's player"
+          className={styles.newPlayerButton}
+          icon={<HistoryIcon />}
+        />
+      </div>
       {playConfetti && (
         <div className={styles.confetti}>
           <Lottie options={defaultOptions} height={"100%"} width={"100%"} />

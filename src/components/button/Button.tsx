@@ -8,7 +8,7 @@ export default function Button({
   className,
 }: {
   text?: string;
-  icon?: string;
+  icon?: string | JSX.Element;
   onClick: () => void;
   className?: string;
 }): JSX.Element {
@@ -17,8 +17,7 @@ export default function Button({
       className={className !== undefined ? className : styles.button}
       onClick={onClick}
     >
-      {text !== undefined ? <p>{text}</p> : null}
-      {icon !== undefined ? (
+      {icon !== undefined && typeof icon === "string" ? (
         <Image
           src={icon}
           alt="icon"
@@ -27,6 +26,8 @@ export default function Button({
           className={styles.icon}
         />
       ) : null}
+      {icon !== undefined && typeof icon !== "string" ? icon : null}
+      {text !== undefined ? <p>{text}</p> : null}
     </button>
   );
 }

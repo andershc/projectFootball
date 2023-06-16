@@ -50,6 +50,9 @@
   font-size: large;
   width: 100%;
   margin: auto;
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
 }
 
 .gamesContainer {
