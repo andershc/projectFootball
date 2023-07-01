@@ -28,7 +28,7 @@ interface Transfer extends Team {
   year: string;
 }
 
-export default function Home(): JSX.Element {
+export default async function Home(): Promise<JSX.Element> {
   const [loading, setLoading] = useState(true);
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
   const [guessedPlayers, setGuessedPlayers] = useState([] as Player[]);
@@ -55,15 +55,12 @@ export default function Home(): JSX.Element {
         try {
           const playersData = await getPlayers();
           if (playersData !== undefined) {
-            setLoading(false);
             setPlayers(playersData);
           }
         } catch (error) {
           console.error(error);
         }
       })();
-    } else {
-      setLoading(false);
     }
     void (async () => {
       try {
@@ -92,6 +89,7 @@ export default function Home(): JSX.Element {
         console.error(error);
       }
     })();
+    setLoading(false);
   }, [
     setCorrectPlayer,
     setTransferData,
