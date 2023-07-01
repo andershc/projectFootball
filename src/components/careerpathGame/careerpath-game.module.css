@@ -154,6 +154,18 @@
     color: var(--text-1);
     text-align: center;
   }
+
+  .newPlayerButton {
+    background-color: var(--accent-3);
+    color: var(--text-1);
+    font-size: small;
+    width: 250px;
+    margin: auto;
+    padding: 4px 16px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+  }
   
   @media (max-width: 600px) {
     .grid {

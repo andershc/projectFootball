@@ -1,7 +1,10 @@
 import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
+import HistoryIcon from "@mui/icons-material/History";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 import { type Player, type Team } from "../../types";
+import Button from "../button/Button";
 import GuessContainer from "../guessContainer/GuessContainer";
 import PlayerInput from "../playerInput/PlayerInput";
 import styles from "./careerpath-game.module.css";
@@ -31,6 +34,9 @@ export default function CareerPathGame({
   stats,
 }: CareerPathGameProps): JSX.Element {
   const guessLimit = clubs.length;
+  const searchParams = useSearchParams();
+  const fetchDate = searchParams.get("date");
+  const router = useRouter();
 
   return (
     <div className={styles.mainContent}>
@@ -133,6 +139,21 @@ export default function CareerPathGame({
           </p>
         </div>
       )}
+      <h3>Want to play more?</h3>
+      <Button
+        onClick={() => {
+          // Set the date to yesterday if fetchdate has a value, otherwise set it to the day before fetchdate
+          const date =
+            fetchDate != null
+              ? new Date(fetchDate)
+              : new Date(new Date().setDate(new Date().getDate() - 1));
+          date.setDate(date.getDate() - 1);
+          router.push(`/?date=${date.toISOString().split("T")[0]}`);
+        }}
+        text="Get yesterday's player"
+        className={styles.newPlayerButton}
+        icon={<HistoryIcon />}
+      />
     </div>
   );
 }

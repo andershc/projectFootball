@@ -47,9 +47,10 @@
 .newPlayerButton {
   background-color: var(--accent-3);
   color: var(--text-1);
-  font-size: large;
+  font-size: small;
   width: 100%;
   margin: auto;
+  padding: 4px 16px;
   display: flex;
   flex-direction: row;
   column-gap: 8px;
