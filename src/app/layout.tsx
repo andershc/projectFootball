@@ -30,11 +30,13 @@ export default function RootLayout({
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
         <body>
-          <Navbar />
           <Suspense fallback={<Loading />}>
             <AuthContextProvider>
               <PlayersContextProvider>
-                <GuessContextProvider>{children}</GuessContextProvider>
+                <GuessContextProvider>
+                  <Navbar />
+                  {children}
+                </GuessContextProvider>
               </PlayersContextProvider>
             </AuthContextProvider>
           </Suspense>

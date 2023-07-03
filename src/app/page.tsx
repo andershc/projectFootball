@@ -55,12 +55,15 @@ export default async function Home(): Promise<JSX.Element> {
         try {
           const playersData = await getPlayers();
           if (playersData !== undefined) {
+            setLoading(false);
             setPlayers(playersData);
           }
         } catch (error) {
           console.error(error);
         }
       })();
+    } else {
+      setLoading(false);
     }
     void (async () => {
       try {
@@ -89,7 +92,6 @@ export default async function Home(): Promise<JSX.Element> {
         console.error(error);
       }
     })();
-    setLoading(false);
   }, [
     setCorrectPlayer,
     setTransferData,
