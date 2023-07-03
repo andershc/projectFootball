@@ -28,7 +28,7 @@ interface Transfer extends Team {
   year: string;
 }
 
-export default function Home(): JSX.Element {
+export default async function Home(): Promise<JSX.Element> {
   const [loading, setLoading] = useState(true);
   const [isDailyPlayer, setIsDailyPlayer] = useState(true);
   const [guessedPlayers, setGuessedPlayers] = useState([] as Player[]);

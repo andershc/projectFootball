@@ -19,7 +19,7 @@ interface CareerPathGameProps {
   completed: boolean | null;
   clubs: Transfer[];
   correctPlayer: Player | undefined;
-  players: Player[];
+  players: Player[] | undefined;
   handlePlayerSelect: (player: Player) => void;
   stats: Record<string, number>;
 }
@@ -109,7 +109,7 @@ export default function CareerPathGame({
           ))}
         </div>
       </div>
-      {completed === null && (
+      {completed === null && players !== undefined && (
         <PlayerInput players={players} onSelect={handlePlayerSelect} />
       )}
       {guessedPlayers.length > 0 && correctPlayer !== undefined && (
