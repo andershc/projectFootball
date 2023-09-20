@@ -1,4 +1,3 @@
-import moment from "moment";
 import {
   setUsername,
   updateDailyPlayerStats,
@@ -11,7 +10,8 @@ export async function updateScore(
   currentUser: UserType | null | undefined,
   guesses: Player[],
   guessLimit: number,
-  completed: boolean | null
+  completed: boolean | null,
+  date: string
 ): Promise<void> {
   // Calculate score
   const score =
@@ -29,17 +29,15 @@ export async function updateScore(
   }
   if (currentUser === null || currentUser === undefined) {
     console.log("User is not logged in");
-    const date = moment().tz("America/New_York");
-    const formatCurrentDate = `${date.year()}-${date.date()}-${
-      date.month() + 1
-    }`;
     const gameData: GuessResult = {
       guessedPlayers: guesses,
       guesses: guesses.length,
       points: score,
       completed,
     };
-    localStorage.setItem(formatCurrentDate, JSON.stringify(gameData));
+    // Save game data to local storage if there is no data for the current date
+    console.log(localStorage.getItem(date));
+    localStorage.setItem(date, JSON.stringify(gameData));
   } else {
     console.log("User is logged in");
     await updateDailyScore(currentUser, score, completed, guesses)
