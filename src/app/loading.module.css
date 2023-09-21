@@ -64,6 +64,7 @@
     background-color: var(--accent-3);
     border-radius: 5px;
     margin: 1rem 0;
+    animation: pulse 2s ease-in-out infinite;
   }
   
   .circle {
@@ -75,6 +76,7 @@
     width: 48px;
     height: 48px;
     border-radius: 100%;
+    animation: pulse 2s ease-in-out infinite;
   }
   .arrow {
     width: 20px;
@@ -91,6 +93,7 @@
     flex-direction: row;
     column-gap: 8px;
     border-radius: 4px;
+    animation: pulse 2s ease-in-out infinite;
   }
   
   .inputContainerLoader {
@@ -126,3 +129,14 @@
     }
   }
   
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
