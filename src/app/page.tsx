@@ -105,6 +105,7 @@ export default function Home(): JSX.Element {
 
   const guessLimit = clubs?.length ?? 0;
 
+  // Method to handle when a player is selected
   const handlePlayerSelect = async (player: Player): Promise<void> => {
     setGuessedPlayers((prev) => [...prev, player]);
     const playersCopy = [...guessedPlayers, player];
@@ -118,7 +119,7 @@ export default function Home(): JSX.Element {
         }`;
         await updateScore(user, playersCopy, guessLimit, true, formattedDate);
       }
-    } else if (fetchDate !== null) {
+    } else {
       if (playersCopy.length === guessLimit) {
         setCompleted(false);
         void updateScore(user, playersCopy, guessLimit, false, fetchDate);
@@ -149,8 +150,6 @@ export default function Home(): JSX.Element {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
-  console.log("Completed: ", completed);
 
   return (
     <div className={styles.mainContainer}>

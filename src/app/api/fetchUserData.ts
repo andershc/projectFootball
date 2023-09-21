@@ -28,9 +28,7 @@ export async function getUserHistory(
     fetchDate = moment(date).tz("America/New_York");
   }
   let history: GuessResult | undefined;
-  const formatDate = `${fetchDate.year()}-${fetchDate.date()}-${
-    fetchDate.month() + 1
-  }`;
+  const formatDate = fetchDate.format("YYYY-MM-DD");
   if (user === undefined || user === null) {
     return getLocalStorageData(formatDate);
   }
@@ -48,6 +46,8 @@ export async function getUserHistory(
 
 // Method for getting local storage data and returning it as a GuessResult object
 function getLocalStorageData(date: string): GuessResult {
+  console.log("Getting local storage data");
+  console.log("Date:", date);
   const gameDataString: string | null = localStorage.getItem(date);
   if (gameDataString !== null) {
     const gameData: GuessResult = JSON.parse(gameDataString);
