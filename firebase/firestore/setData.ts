@@ -24,9 +24,7 @@ export async function updateDailyScore(
   console.log("Updating user score");
   if (currentUser != null) {
     const date = moment().tz("America/New_York");
-    const formatCurrentDate = `${date.year()}-${date.date()}-${
-      date.month() + 1
-    }`;
+    const formatCurrentDate = date.format("YYYY-MM-DD");
     const userRef = doc(
       db,
       "users",
@@ -110,7 +108,7 @@ export async function updateDailyPlayerStats(
   completed: boolean
 ): Promise<void> {
   const date = moment().tz("America/New_York");
-  const formatCurrentDate = `${date.year()}-${date.month() + 1}-${date.date()}`;
+  const formatCurrentDate = date.format("YYYY-MM-DD");
   const dailyPlayerStatsRef = doc(db, "dailyPlayerStats", formatCurrentDate);
   try {
     const dailyPlayerStatsDoc = await getDoc(dailyPlayerStatsRef);
