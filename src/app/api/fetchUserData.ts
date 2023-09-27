@@ -23,17 +23,15 @@ export async function getUserHistory(
   date: string | null,
   user: UserType | undefined | null
 ): Promise<GuessResult | undefined> {
-  if (user === undefined || user === null) {
-    return getLocalStorageData();
-  }
   let fetchDate = moment().tz("America/New_York");
   if (date !== null) {
     fetchDate = moment(date).tz("America/New_York");
   }
   let history: GuessResult | undefined;
-  const formatDate = `${fetchDate.year()}-${fetchDate.date()}-${
-    fetchDate.month() + 1
-  }`;
+  const formatDate = fetchDate.format("YYYY-MM-DD");
+  if (user === undefined || user === null) {
+    return getLocalStorageData(formatDate);
+  }
   await getUserHistoryFromDate(formatDate, user)
     .then((data) => {
       console.log("User history data fetched successfully");
@@ -47,10 +45,10 @@ export async function getUserHistory(
 }
 
 // Method for getting local storage data and returning it as a GuessResult object
-function getLocalStorageData(): GuessResult {
-  const date = moment().tz("America/New_York");
-  const formatCurrentDate = `${date.year()}-${date.date()}-${date.month() + 1}`;
-  const gameDataString: string | null = localStorage.getItem(formatCurrentDate);
+function getLocalStorageData(date: string): GuessResult {
+  console.log("Getting local storage data");
+  console.log("Date:", date);
+  const gameDataString: string | null = localStorage.getItem(date);
   if (gameDataString !== null) {
     const gameData: GuessResult = JSON.parse(gameDataString);
     const { guesses, guessedPlayers, completed } = gameData;

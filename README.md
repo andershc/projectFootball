@@ -15,3 +15,5 @@ yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+[![wakatime](https://wakatime.com/badge/user/709a2d88-124b-4f17-9ffd-951628290746/project/2af4efc7-73b8-49e7-b682-a1ad209c14e5.svg)](https://wakatime.com/badge/user/709a2d88-124b-4f17-9ffd-951628290746/project/2af4efc7-73b8-49e7-b682-a1ad209c14e5)

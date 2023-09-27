@@ -19,6 +19,7 @@ import {
 } from "./api/fetchPlayers";
 import { getUserHistory } from "./api/fetchUserData";
 
+import moment from "moment";
 import { usePlayersContext } from "../../lib/PlayersContext";
 import { updateScore } from "./api/updateData";
 import Loading from "./loading";
@@ -104,6 +105,7 @@ export default function Home(): JSX.Element {
 
   const guessLimit = clubs?.length ?? 0;
 
+  // Method to handle when a player is selected
   const handlePlayerSelect = async (player: Player): Promise<void> => {
     setGuessedPlayers((prev) => [...prev, player]);
     const playersCopy = [...guessedPlayers, player];
@@ -111,14 +113,18 @@ export default function Home(): JSX.Element {
       setCompleted(true);
       setPlayConfetti(true);
       if (isDailyPlayer) {
-        await updateScore(user, playersCopy, guessLimit, true);
+        const date = moment().tz("America/New_York");
+        const formattedDate = `${date.year()}-${date.date()}-${
+          date.month() + 1
+        }`;
+        await updateScore(user, playersCopy, guessLimit, true, formattedDate);
       }
     } else {
       if (playersCopy.length === guessLimit) {
         setCompleted(false);
-        void updateScore(user, playersCopy, guessLimit, false);
+        void updateScore(user, playersCopy, guessLimit, false, fetchDate);
       } else {
-        void updateScore(user, playersCopy, 0, null);
+        void updateScore(user, playersCopy, 0, null, fetchDate);
       }
     }
   };
@@ -144,8 +150,6 @@ export default function Home(): JSX.Element {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
-  console.log("Completed: ", completed);
 
   return (
     <div className={styles.mainContainer}>

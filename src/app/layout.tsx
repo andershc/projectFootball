@@ -25,6 +25,13 @@ export default function RootLayout({
   return (
     <ServerThemeProvider>
       <html lang="en">
+        <head>
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5185221042878217"
+            crossOrigin="anonymous"
+          />
+        </head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
